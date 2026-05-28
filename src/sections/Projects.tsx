@@ -30,19 +30,14 @@ export const Projects: React.FC = () => {
               >
                 {/* Image Column */}
                 <div className={`col-span-12 md:col-span-8 md:row-start-1 ${isEven ? 'md:col-start-1' : 'md:col-start-5'}`}>
-                   <div className="aspect-[16/9] border-heavy bg-surface-container overflow-hidden group relative">
+                   <Link to={`/projeler/${project.id}`} className="block aspect-[16/9] border-heavy bg-surface-container overflow-hidden group relative cursor-pointer">
                       <img 
                         src={project.imageUrl} 
                         alt={project.title} 
                         className="w-full h-full object-cover grayscale-[30%] contrast-125 transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
                       />
-                      {/* Decorative Plan Overlay */}
-                      <div className="absolute top-8 right-8 w-32 h-32 border-4 border-primary bg-surface p-2 z-20 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="w-full h-full border-2 border-primary border-dashed flex items-center justify-center">
-                          <span className="font-label-caps text-center text-primary leading-tight">PLAN<br/>VIEW</span>
-                        </div>
-                      </div>
-                   </div>
+                      {/* Decorative Image Glow or hover tint if needed, otherwise clean list */}
+                   </Link>
                 </div>
 
                 {/* Info Block - Overlapping grid row layout to prevent height collapse & collisions */}
