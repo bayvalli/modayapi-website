@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, MapPin, Maximize2, Building2, Layers, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ArrowLeft, MapPin, Maximize2, Building2, Layers, CheckCircle2, ArrowRight, ZoomIn } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { Project, FloorPlan } from '../types';
 import { BrutalistButton } from '../components/BrutalistButton';
+import { ZoomLightbox } from '../components/ZoomLightbox';
 
 const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [project, setProject] = useState<Project | null>(null);
   const [activeImage, setActiveImage] = useState<number>(0);
+  const [isGalleryLightboxOpen, setIsGalleryLightboxOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const foundProject = PROJECTS.find(p => p.id === id);
@@ -75,7 +77,17 @@ const ProjectDetail: React.FC = () => {
         {/* Gallery Section */}
         <div className="grid grid-cols-12 gap-gutter mb-block-gap">
           <div className="col-span-12 lg:col-span-9 flex flex-col gap-6">
-            <div className="aspect-[16/9] border-heavy bg-surface-container overflow-hidden group relative">
+            <div 
+              onClick={() => setIsGalleryLightboxOpen(true)}
+              className="aspect-[16/9] border-heavy bg-surface-container overflow-hidden group relative cursor-zoom-in"
+              title="Tam Ekran ve Zoom için tıklayın"
+            >
+              {/* Floating Hover Zoom Pill */}
+              <div className="absolute top-6 left-6 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-primary/90 text-on-primary text-[10px] font-mono uppercase tracking-widest px-3 py-1.5 flex items-center gap-2 border border-on-primary/10 select-none">
+                <ZoomIn size={12} />
+                BÜYÜT / ZOOM
+              </div>
+
               <AnimatePresence mode="wait">
                 <motion.img 
                   key={activeImage}
@@ -85,14 +97,21 @@ const ProjectDetail: React.FC = () => {
                   transition={{ duration: 0.6 }}
                   src={galleryImages[activeImage]} 
                   alt={`${project.title} - ${activeImage + 1}`}
-                  className="w-full h-full object-cover contrast-110"
+                  className="w-full h-full object-cover contrast-110 group-hover:scale-[1.03] transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
               </AnimatePresence>
-              <div className="absolute bottom-8 right-8 bg-primary text-on-primary px-4 py-2 font-mono text-xs uppercase flex items-center gap-3">
+              
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsGalleryLightboxOpen(true);
+                }}
+                className="absolute bottom-8 right-8 bg-primary hover:bg-secondary hover:text-on-secondary text-on-primary px-4 py-2 font-mono text-xs uppercase flex items-center gap-3 transition-colors duration-200 shadow-xl border border-on-primary/10 z-10 cursor-pointer"
+              >
                 <Maximize2 size={14} />
                 {activeImage + 1} / {galleryImages.length}
-              </div>
+              </button>
             </div>
             
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
@@ -210,6 +229,16 @@ const ProjectDetail: React.FC = () => {
           </Link>
         </div>
       </div>
+
+      <ZoomLightbox 
+        isOpen={isGalleryLightboxOpen}
+        onClose={() => setIsGalleryLightboxOpen(false)}
+        images={galleryImages}
+        activeIndex={activeImage}
+        onNavigate={setActiveImage}
+        title={project.title}
+        subtitle={`${project.category} // DETAY GÖRSELLERİ`}
+      />
     </motion.div>
   );
 };
@@ -220,6 +249,7 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
   const [activeFloor, setActiveFloor] = useState<'down' | 'up'>('down');
   const [hoveredRoom, setHoveredRoom] = useState<string | null>(null);
   const [viewerMode, setViewerMode] = useState<'cad' | 'image'>('cad');
+  const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
 
   const activePlan = floorPlans[activePlanIdx];
 
@@ -612,32 +642,52 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
             }}></div>
 
             {/* Selector bar if original raster image is provided alongside CAD interactive layout */}
-            {activePlan.imageUrl && (
-              <div className="absolute top-4 right-4 z-10 flex border-2 border-primary bg-surface-bright p-[2px]">
-                <button
-                  onClick={() => setViewerMode('image')}
-                  className={`px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-widest transition-all ${
-                    viewerMode === 'image'
-                      ? 'bg-primary text-on-primary'
-                      : 'text-primary hover:bg-primary/5'
-                  }`}
-                >
-                  Orijinal Plan (PNG)
-                </button>
-                <button
-                  onClick={() => setViewerMode('cad')}
-                  className={`px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-widest transition-all ${
-                    viewerMode === 'cad'
-                      ? 'bg-primary text-on-primary'
-                      : 'text-primary hover:bg-primary/5'
-                  }`}
-                >
-                  CAD Çizimi
-                </button>
-              </div>
-            )}
+            <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+              {activePlan.imageUrl && (
+                <div className="flex border-2 border-primary bg-surface-bright p-[2px]">
+                  <button
+                    onClick={() => setViewerMode('image')}
+                    className={`px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-widest transition-all ${
+                      viewerMode === 'image'
+                        ? 'bg-primary text-on-primary'
+                        : 'text-primary hover:bg-primary/5'
+                    }`}
+                  >
+                    Orijinal Plan (PNG)
+                  </button>
+                  <button
+                    onClick={() => setViewerMode('cad')}
+                    className={`px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-widest transition-all ${
+                      viewerMode === 'cad'
+                        ? 'bg-primary text-on-primary'
+                        : 'text-primary hover:bg-primary/5'
+                    }`}
+                  >
+                    CAD Çizimi
+                  </button>
+                </div>
+              )}
+              <button
+                onClick={() => setIsLightboxOpen(true)}
+                className="bg-primary hover:bg-secondary text-on-primary hover:text-on-secondary px-3 py-1.5 border-2 border-primary font-mono text-[9px] font-bold uppercase tracking-widest transition-colors duration-200 flex items-center gap-1.5 cursor-pointer shadow-md select-none"
+                title="Büyük Ekran Sürümü"
+              >
+                <Maximize2 size={10} />
+                ZOOM
+              </button>
+            </div>
 
-            <div className="relative border-2 border-dashed border-primary/20 aspect-[500/400] w-full flex items-center justify-center overflow-hidden">
+            <div 
+              onClick={() => setIsLightboxOpen(true)}
+              className="relative border-2 border-dashed border-primary/20 aspect-[500/400] w-full flex items-center justify-center overflow-hidden cursor-zoom-in group/plan"
+              title="Kat planını büyük ekranda görmek için tıklayın"
+            >
+              {/* Hover Fullscreen Overlay */}
+              <div className="absolute top-4 left-4 z-10 opacity-0 group-hover/plan:opacity-100 transition-opacity duration-200 bg-primary/95 text-on-primary text-[9px] font-mono px-3 py-1.5 uppercase tracking-widest flex items-center gap-2 border border-on-primary/10 select-none">
+                <Maximize2 size={10} />
+                TAM EKRAN / ZOOM
+              </div>
+
               <AnimatePresence mode="wait">
                 {viewerMode === 'image' && activePlan.imageUrl ? (
                   <motion.div
@@ -751,6 +801,95 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
           </div>
         </div>
       </div>
+
+      {/* Lightbox Modal for Floor Plans containing either the big PNG plan or interactive scalable vector CAD diagram */}
+      <ZoomLightbox
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+        title={activePlan.name}
+        subtitle={`${activePlan.type} // ${viewerMode === 'image' ? 'DETAYLI ORİJİNAL PLAN' : 'İNTERAKTİF CAD MODELİ'}`}
+        images={viewerMode === 'image' && activePlan.imageUrl ? [activePlan.imageUrl] : undefined}
+        activeIndex={viewerMode === 'image' ? 0 : undefined}
+      >
+        {viewerMode === 'cad' && (
+          <div className="w-[500px] h-[400px] max-w-full text-white relative">
+            <svg
+              viewBox="0 0 500 400"
+              className="w-full h-full text-white"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Compass symbol in Lightbox */}
+              <g transform="translate(460, 40)" opacity="0.6" className="pointer-events-none text-white">
+                <circle r="25" fill="none" stroke="currentColor" strokeWidth="1" />
+                <path d="M 0 -25 L -5 -5 L -20 0 L -5 5 L 0 20 L 5 5 L 20 0 L 5 -5 Z" fill="currentColor" />
+                <text x="0" y="-30" textAnchor="middle" fontSize="10" className="font-mono fill-white font-bold">N</text>
+              </g>
+
+              {/* Legend/Technical Info */}
+              <g transform="translate(20, 380)" opacity="0.7" className="pointer-events-none font-mono text-white" fontSize="8" letterSpacing="0.1em">
+                <text x="0" y="0">ALAN ANALİZ TABLOSU // VERIFIED M2</text>
+                <text x="0" y="10">MAY MODA YAPI AR-GE YAPISAL STATİKLİK</text>
+              </g>
+
+              {/* CAD Grid Lines */}
+              {renderDoorsAndWindows()}
+
+              {currentSVGLayout.map((room, idx) => {
+                const isHovered = hoveredRoom === room.name;
+                return (
+                  <g 
+                    key={idx}
+                    onMouseEnter={() => setHoveredRoom(room.name || null)}
+                    onMouseLeave={() => setHoveredRoom(null)}
+                    className="cursor-pointer group/room transition-all duration-300"
+                  >
+                    {/* Interactive block zone */}
+                    <rect
+                      x={room.x}
+                      y={room.y}
+                      width={room.w}
+                      height={room.h}
+                      fill={isHovered ? 'rgba(255, 255, 255, 0.15)' : room.color || 'rgba(255,255,255,0.03)'}
+                      stroke="currentColor"
+                      strokeWidth={isHovered ? '2.5' : '1.5'}
+                      strokeDasharray={room.name.toLowerCase().includes('balkon') || room.name.toLowerCase().includes('teras') ? "4 4" : undefined}
+                      className="transition-all duration-200"
+                      style={{
+                        filter: isHovered ? 'drop-shadow(0 0 6px rgba(255, 255, 255, 0.2))' : 'none'
+                      }}
+                    />
+                    
+                    {/* Architectural interior layout elements */}
+                    {renderRoomInterior(room)}
+                    
+                    {/* Room Name label */}
+                    <text
+                      x={room.x + room.w / 2}
+                      y={room.y + room.h / 2 - 4}
+                      textAnchor="middle"
+                      fontSize={room.w < 100 ? "9" : "11"}
+                      className={`font-sans select-none tracking-tight transition-all duration-200 uppercase ${isHovered ? 'font-black scale-105 fill-current text-white' : 'font-semibold fill-white/80'}`}
+                    >
+                      {room.name}
+                    </text>
+
+                    {/* Area value label */}
+                    <text
+                      x={room.x + room.w / 2}
+                      y={room.y + room.h / 2 + 10}
+                      textAnchor="middle"
+                      fontSize={room.w < 100 ? "8" : "9"}
+                      className={`font-mono select-none tracking-widest transition-all duration-150 ${isHovered ? 'font-black fill-current text-white' : 'fill-white/60'}`}
+                    >
+                      {room.area}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+        )}
+      </ZoomLightbox>
     </div>
   );
 };
