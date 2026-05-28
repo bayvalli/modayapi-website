@@ -139,17 +139,18 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'proj-03',
-    title: 'Endüstriyel Pavyon',
-    location: 'Ankara Merkez',
-    area: '50.000 m²',
-    features: 'Çelik Konstrüksiyon, LEED Altın Sertifikası',
-    category: 'KAMU ALTYAPI TAAHHÜDÜ 03',
-    imageUrl: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=2000',
-    description: 'Çelik konstrüksiyonun hızı ve modülerliğini kamu altyapı projeleriyle buluşturan bu pavyon, LEED Altın sertifikası kriterlerine uygun olarak inşa edilmiştir. Enerji geri kazanımı ve yağmur suyu toplama sistemleri projenin kalbini oluşturmaktadır.',
+    title: 'Moda Kızılca',
+    location: 'Yalvaç, Isparta',
+    area: '770 m²',
+    features: 'Asmolen Döşeme Sistemi, Kapalı Garaj, Bahçe Kullanımı, Kat Karşılığı Yapı Taahhüdü',
+    category: 'TAAHHÜT PROJESİ 03',
+    imageUrl: '/assets/moda-kizilca-1.JPG',
+    description: 'Isparta Yalvaç’ta hayata geçirilen Moda Kızılca projesi, kat karşılığı sözleşmesi doğrultusunda inşa edilmiş modern ve kapsamlı bir konut taahhüt projesidir. Toplam 770 m² proje alanına sahip olan yapı, yapısal dayanıklılığı ve üstün akustik-termal konforu garanti eden modern asmolen döşeme sistemiyle tasarlanmıştır. Sakinlerine her mevsim kullanım kolaylığı sağlayan kapalı garaj alanı ve geniş bahçe/yeşil alan entegrasyonu sunan projede, tüm mühendislik ve uygulama aşamaları kurumsal kalite standartlarımıza bağlı kalınarak tamamlanmıştır.',
     images: [
-      'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=2000',
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2000',
-      'https://images.unsplash.com/photo-1504917595217-d4dc5f649776?auto=format&fit=crop&q=80&w=2000'
+      '/assets/moda-kizilca-1.JPG',
+      '/assets/moda-kizilca-2.JPG',
+      '/assets/moda-kizilca-3.JPG',
+      '/assets/moda-kizilca-4.JPG'
     ]
   }
 ];
