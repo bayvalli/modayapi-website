@@ -191,22 +191,68 @@ const ProjectDetail: React.FC = () => {
               Mühendisliğin estetikle buluştuğu bu projede, modern dokuların gücünü olağanüstü dayanıklılık kriterleriyle birleştirdik. Statik hesaplamaların ötesinde, her santimetre karede güveni ve sakinliği hissettirmeyi amaçladık.
             </p>
             <div className="space-y-6">
-              <div className="flex items-center gap-4 text-secondary">
-                <CheckCircle2 size={18} className="text-primary" />
-                <span className="font-sans text-body-md uppercase font-medium">Betonarme Kalitesi Sınıfı: {project.id === 'proj-01' ? 'C30' : 'C40'}</span>
-              </div>
-              <div className="flex items-center gap-4 text-secondary">
-                <CheckCircle2 size={18} className="text-primary" />
-                <span className="font-sans text-body-md uppercase font-medium">{project.id === 'proj-01' ? 'Depreme Karşı Dayanıklı Güçlü Bloklar' : 'Uluslararası Deprem Standartları'}</span>
-              </div>
-              <div className="flex items-center gap-4 text-secondary">
-                <CheckCircle2 size={18} className="text-primary" />
-                <span className="font-sans text-body-md uppercase font-medium">{project.id === 'proj-01' ? 'Çelik Destekli Ahşap Çatı Sistemi' : 'Enerji Tasarruflu Yalıtım Sistemleri'}</span>
-              </div>
-              <div className="flex items-center gap-4 text-secondary">
-                <CheckCircle2 size={18} className="text-primary" />
-                <span className="font-sans text-body-md uppercase font-medium">{project.id === 'proj-01' ? 'Merkezi Uydu ve Görüntülü Diafon Altyapısı' : 'Akıllı Bina Otomasyon Altyapısı'}</span>
-              </div>
+              {project.id === 'proj-01' && (
+                <>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Betonarme Kalitesi Sınıfı: C30</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Depreme Karşı Dayanıklı Güçlü Bloklar</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Çelik Destekli Ahşap Çatı Sistemi</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Merkezi Uydu ve Görüntülü Diafon Altyapısı</span>
+                  </div>
+                </>
+              )}
+
+              {project.id === 'proj-02' && (
+                <>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Altyapı Standartı: Komple Yenilenen Sıfır Tesisat</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">A'dan Z'ye Anahtar Teslim İç Mekan Modernizasyonu</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Enerji Tasarruflu Homojen Yerden Isıtma Sistemi</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Entegre Akıllı Ev Otomasyonu & Otomatik Kontroller</span>
+                  </div>
+                </>
+              )}
+
+              {project.id !== 'proj-01' && project.id !== 'proj-02' && (
+                <>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Çelik Taşıyıcı Konstrüksiyon Mukavemeti</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Sürdürülebilirlik: LEED Altın Sertifikalı Yapı Standartları</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Gelişmiş Yağmur Suyu ve Enerji Geri Kazanım Sistemleri</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-secondary">
+                    <CheckCircle2 size={18} className="text-primary" />
+                    <span className="font-sans text-body-md uppercase font-medium">Yüksek Yoğunluklu Isı Köprüsü Engelli Kaplama</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
