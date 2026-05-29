@@ -10,5 +10,15 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  "routes": [
+    {
+      "pattern": "modayapi.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.modayapi.com",
+      "custom_domain": true
+    }
   ]
 }
