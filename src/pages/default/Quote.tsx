@@ -92,7 +92,7 @@ const Quote: React.FC = () => {
       payload['Ozel_Notlar'] = trimmedNotes;
       payload['_required'] = 'Ad_Soyad,Eposta,Telefon,Ozel_Notlar';
 
-      const response = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.email}`, {
+      const response = await fetch(COMPANY_INFO.formEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

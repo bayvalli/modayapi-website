@@ -89,7 +89,7 @@ export const Quote: React.FC = () => {
       payload['_required'] = 'Ad_Soyad,Eposta,Telefon,Ozel_Notlar';
 
       // Send payload via FormSubmit to {COMPANY_INFO.email}
-      const res = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.email}`, {
+      const res = await fetch(COMPANY_INFO.formEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

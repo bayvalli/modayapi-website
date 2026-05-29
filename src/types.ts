@@ -66,4 +66,5 @@ export interface CompanyInfo {
   workingDays: string;
   instagramUrl: string;
   gpsCoordinates: { lat: number; lng: number };
+  formEndpoint: string;
 }
