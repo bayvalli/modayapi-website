@@ -4,6 +4,7 @@
  */
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import Home from './pages/Home';
@@ -20,34 +21,38 @@ import NotFound from './pages/NotFound';
 import ProjectDetail from './pages/ProjectDetail';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTop from './components/BackToTop';
+import SEO from './components/SEO';
 
 export default function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <BackToTop />
-      <div className="min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
-        <Navbar />
-        
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projeler" element={<Projects />} />
-            <Route path="/projeler/:id" element={<ProjectDetail />} />
-            <Route path="/surec" element={<Process />} />
-            <Route path="/kurumsal" element={<Corporate />} />
-            <Route path="/iletisim" element={<Contact />} />
-            <Route path="/teklif-al" element={<Quote />} />
-            <Route path="/kvkk" element={<KVKK />} />
-            <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
-            <Route path="/cerez-tercihleri" element={<CookiePreferences />} />
-            <Route path="/sss" element={<FAQ />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
+    <HelmetProvider>
+      <Router>
+        <SEO />
+        <ScrollToTop />
+        <BackToTop />
+        <div className="min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+          <Navbar />
+          
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/projeler" element={<Projects />} />
+              <Route path="/projeler/:id" element={<ProjectDetail />} />
+              <Route path="/surec" element={<Process />} />
+              <Route path="/kurumsal" element={<Corporate />} />
+              <Route path="/iletisim" element={<Contact />} />
+              <Route path="/teklif-al" element={<Quote />} />
+              <Route path="/kvkk" element={<KVKK />} />
+              <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
+              <Route path="/cerez-tercihleri" element={<CookiePreferences />} />
+              <Route path="/sss" element={<FAQ />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
 
-        <Footer />
-      </div>
-    </Router>
+          <Footer />
+        </div>
+      </Router>
+    </HelmetProvider>
   );
 }
