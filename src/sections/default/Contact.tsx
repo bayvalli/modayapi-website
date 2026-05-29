@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { APIProvider, Map, AdvancedMarker, Pin } from '@vis.gl/react-google-maps';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 const API_KEY = process.env.GOOGLE_MAPS_PLATFORM_KEY || '';
@@ -8,6 +9,7 @@ const hasValidKey = Boolean(API_KEY) && API_KEY !== 'YOUR_API_KEY';
 
 export const Contact: React.FC = () => {
   const { theme } = useTheme();
+  const { language, t } = useLanguage();
   const isModern = theme === 'alternative';
   const borderClass = isModern ? 'border-4' : 'border-2';
   const borderLgClass = isModern ? 'border-4' : 'border-4';
@@ -22,7 +24,11 @@ export const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim()) {
-      alert('Lütfen Ad Soyad ve E-posta alanlarını doldurun.');
+      alert(
+        language === 'tr'
+          ? 'Lütfen Ad Soyad ve E-posta alanlarını doldurun.'
+          : 'Please fill in the Full Name and Email fields.'
+      );
       return;
     }
     setIsSubmitting(true);
@@ -36,10 +42,10 @@ export const Contact: React.FC = () => {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          'Katılımcı / Form': `${COMPANY_INFO.shortName} İletişim Formu`,
-          'Ad Soyad': formData.name,
-          'E-posta': formData.email,
-          Mesaj: formData.message || 'Mesaj belirtilmedi.',
+          'Source / Form': `${COMPANY_INFO.shortName} Contact Form`,
+          'Full Name': formData.name,
+          Email: formData.email,
+          Message: formData.message || 'None.',
         }),
       });
 
@@ -48,11 +54,20 @@ export const Contact: React.FC = () => {
         setTicketId(`MSG-${randNum}`);
         setSubmitted(true);
       } else {
-        throw new Error('Form sunucuya iletilemedi. Lütfen daha sonra tekrar deneyiniz.');
+        throw new Error(
+          language === 'tr'
+            ? 'Form sunucuya iletilemedi. Lütfen daha sonra tekrar deneyiniz.'
+            : 'Form could not be sent to server. Please try again later.'
+        );
       }
     } catch (err: unknown) {
       const error = err instanceof Error ? err : new Error(String(err));
-      setSubmitError(error.message || 'Lütfen internet bağlantınızı kontrol ediniz.');
+      setSubmitError(
+        error.message ||
+          (language === 'tr'
+            ? 'Lütfen internet bağlantınızı kontrol ediniz.'
+            : 'Please check your internet connection.')
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -69,7 +84,7 @@ export const Contact: React.FC = () => {
           <h1
             className={`font-serif text-headline-xl text-primary break-words ${isModern ? 'tracking-tighter' : ''}`}
           >
-            İLETİŞİM
+            {t('contact.title')}
           </h1>
         </div>
       </div>
@@ -83,16 +98,31 @@ export const Contact: React.FC = () => {
           {!hasValidKey ? (
             <div className="w-full h-full p-8 flex flex-col items-center justify-center text-center bg-surface-container font-sans">
               <h3 className="text-headline-sm text-primary mb-4">
-                Google Maps API Anahtarı Gerekli
+                {language === 'tr'
+                  ? 'Google Maps API Anahtarı Gerekli'
+                  : 'Google Maps API Key Required'}
               </h3>
               <p className="text-body-md text-secondary mb-6 max-w-xs">
-                Haritayı görüntülemek için lütfen GOOGLE_MAPS_PLATFORM_KEY anahtarını ayarlara
-                ekleyin.
+                {language === 'tr'
+                  ? 'Haritayı görüntülemek için lütfen GOOGLE_MAPS_PLATFORM_KEY anahtarını ayarlara ekleyin.'
+                  : 'To view the map, please add the GOOGLE_MAPS_PLATFORM_KEY secret in settings.'}
               </p>
               <div className="text-left text-sm space-y-2 opacity-70">
-                <p>1. Ayarlar (Gear simgesi) ve ardından Secrets panelini açın.</p>
-                <p>2. "GOOGLE_MAPS_PLATFORM_KEY" adında bir secret oluşturun.</p>
-                <p>3. API anahtarınızı yapıştırın ve kaydedin.</p>
+                <p>
+                  {language === 'tr'
+                    ? '1. Ayarlar (Gear simgesi) ve ardından Secrets panelini açın.'
+                    : '1. Open settings and select the Secrets panel.'}
+                </p>
+                <p>
+                  {language === 'tr'
+                    ? '2. "GOOGLE_MAPS_PLATFORM_KEY" adında bir secret oluşturun.'
+                    : '2. Create a secret named "GOOGLE_MAPS_PLATFORM_KEY".'}
+                </p>
+                <p>
+                  {language === 'tr'
+                    ? '3. API anahtarınızı yapıştırın ve kaydedin.'
+                    : '3. Paste your API key and save.'}
+                </p>
               </div>
             </div>
           ) : (
@@ -119,7 +149,7 @@ export const Contact: React.FC = () => {
         <div className="col-span-12 md:col-span-4 md:col-start-7 z-10 mt-asymmetric flex flex-col gap-12">
           <div className="border-t-4 border-primary pt-6">
             <h3 className="font-label-caps text-secondary mb-2 tracking-widest uppercase">
-              Merkez Ofis
+              {t('contact.infoTitle')}
             </h3>
             <p className="text-body-lg text-primary font-sans">
               {COMPANY_INFO.addressLine1}
@@ -132,7 +162,7 @@ export const Contact: React.FC = () => {
 
           <div className="border-t-4 border-primary pt-6">
             <h3 className="font-label-caps text-secondary mb-2 tracking-widest uppercase">
-              İrtibat
+              {language === 'tr' ? 'İrtibat' : 'Contact'}
             </h3>
             <p className="text-body-lg text-primary font-sans">
               <a href={`tel:${COMPANY_INFO.phoneCall}`} className="hover:underline">
@@ -146,7 +176,9 @@ export const Contact: React.FC = () => {
           </div>
 
           <div className="border-t-4 border-primary pt-6">
-            <h3 className="font-label-caps text-secondary mb-4 tracking-widest uppercase">Ağlar</h3>
+            <h3 className="font-label-caps text-secondary mb-4 tracking-widest uppercase">
+              {language === 'tr' ? 'Ağlar' : 'Networks'}
+            </h3>
             <div className="flex flex-col gap-2">
               <a
                 href={COMPANY_INFO.instagramUrl}
@@ -175,43 +207,50 @@ export const Contact: React.FC = () => {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-3 h-3 bg-emerald-600 animate-pulse rounded-full"></div>
                 <h3 className="font-mono text-xs uppercase tracking-widest text-emerald-600 font-bold">
-                  Transaksiyon Başarılı
+                  {language === 'tr' ? 'Transaksiyon Başarılı' : 'Transaction Success'}
                 </h3>
               </div>
               <h2 className="font-serif text-headline-md text-primary mb-8 uppercase leading-tight">
-                MESAJINIZ ALINDI.
+                {t('contact.successTitle')}
               </h2>
 
               <div className="bg-surface border-2 border-primary p-6 font-mono text-xs space-y-4 mb-8">
                 <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-secondary">TİKET NO //</span>
+                  <span className="text-secondary">{t('contact.ticketLabel')}</span>
                   <span className="font-bold text-primary">{ticketId}</span>
                 </div>
                 <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-secondary">GÖNDEREN //</span>
+                  <span className="text-secondary">
+                    {language === 'tr' ? 'GÖNDEREN //' : 'SENDER //'}
+                  </span>
                   <span className="font-bold text-primary uppercase">{formData.name}</span>
                 </div>
                 <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-secondary">ALICI //</span>
+                  <span className="text-secondary">
+                    {language === 'tr' ? 'ALICI //' : 'RECIPIENT //'}
+                  </span>
                   <span className="font-bold text-primary">{COMPANY_INFO.shortNameUpper} A.Ş.</span>
                 </div>
                 <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-secondary">TARIH //</span>
+                  <span className="text-secondary">
+                    {language === 'tr' ? 'TARIH //' : 'DATE //'}
+                  </span>
                   <span className="font-bold text-primary">
-                    {new Date().toLocaleString('tr-TR')}
+                    {new Date().toLocaleString(language === 'tr' ? 'tr-TR' : 'en-US')}
                   </span>
                 </div>
                 <div className="flex justify-between pb-1">
-                  <span className="text-secondary">DURUM //</span>
+                  <span className="text-secondary">
+                    {language === 'tr' ? 'DURUM //' : 'STATUS //'}
+                  </span>
                   <span className="font-bold px-2 py-[2px] bg-primary text-on-primary">
-                    MÜHENDİS_ONAYI_BEKLİYOR
+                    {language === 'tr' ? 'MÜHENDİS_ONAYI_BEKLİYOR' : 'AWAITING_ENGINEER_APPROVAL'}
                   </span>
                 </div>
               </div>
 
               <p className="text-body-md text-secondary mb-8 font-sans">
-                Mesajınız teknik veri tabanımıza kaydedildi. Mühendislerimiz projeyi inceledikten
-                sonra en kısa sürede sizinle iletişime geçecektir.
+                {t('contact.successDesc')}
               </p>
 
               <button
@@ -221,18 +260,18 @@ export const Contact: React.FC = () => {
                 }}
                 className="w-full border-4 border-primary bg-surface py-4 font-mono text-xs font-bold text-primary hover:bg-primary hover:text-on-primary transition-colors duration-200 uppercase tracking-widest"
               >
-                Yeni Mesaj Gönder
+                {t('contact.newMsgBtn')}
               </button>
             </div>
           ) : (
             <>
               <h2 className="font-serif text-headline-md text-primary mb-12 uppercase">
-                Mesaj Bırakın
+                {t('contact.formTitle')}
               </h2>
               <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
                 <div className="flex flex-col relative group">
                   <label className="font-label-caps text-secondary mb-2 uppercase tracking-widest text-xs">
-                    Ad Soyad
+                    {t('contact.fullName')}
                   </label>
                   <input
                     className="w-full bg-transparent border-0 border-b-2 border-primary px-0 py-2 text-body-lg text-primary focus:ring-0 focus:border-b-4 focus:border-primary transition-all outline-none"
@@ -240,12 +279,12 @@ export const Contact: React.FC = () => {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder=" "
+                    placeholder={t('contact.placeholderName')}
                   />
                 </div>
                 <div className="flex flex-col relative group">
                   <label className="font-label-caps text-secondary mb-2 uppercase tracking-widest text-xs">
-                    E-posta
+                    {t('contact.email')}
                   </label>
                   <input
                     className="w-full bg-transparent border-0 border-b-2 border-primary px-0 py-2 text-body-lg text-primary focus:ring-0 focus:border-b-4 focus:border-primary transition-all outline-none"
@@ -253,19 +292,19 @@ export const Contact: React.FC = () => {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder=" "
+                    placeholder={t('contact.placeholderEmail')}
                   />
                 </div>
                 <div className="flex flex-col relative group mb-8">
                   <label className="font-label-caps text-secondary mb-2 uppercase tracking-widest text-xs">
-                    Proje Detayı
+                    {t('contact.message')}
                   </label>
                   <textarea
                     className="w-full bg-transparent border-0 border-b-2 border-primary px-0 py-2 text-body-lg text-primary focus:ring-0 focus:border-b-4 focus:border-primary transition-all outline-none resize-none"
                     rows={3}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder=" "
+                    placeholder={t('contact.placeholderMessage')}
                   />
                 </div>
                 {submitError && (
@@ -282,7 +321,7 @@ export const Contact: React.FC = () => {
                   }`}
                   type="submit"
                 >
-                  {isSubmitting ? 'İletiliyor...' : 'GÖNDER'}
+                  {isSubmitting ? t('contact.submitting') : t('contact.submitBtn')}
                 </button>
               </form>
             </>

@@ -5,15 +5,40 @@ import { MapPin, ArrowRight, Grid, List } from 'lucide-react';
 import { PROJECTS, COMPANY_INFO } from '../../constants';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
 import { SEO } from '../../components/alternative/SEO';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 export const Projects: React.FC = () => {
   const [selectedLocation, setSelectedLocation] = useState<string>('ALL');
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
+  const { language, t } = useLanguage();
+
+  const localizedProjects = PROJECTS.map((proj) => {
+    const key = proj.id === 'proj-01' ? 'p01' : proj.id === 'proj-02' ? 'p02' : 'p03';
+    return {
+      ...proj,
+      title: t(`projects.${key}.title`),
+      description: t(`projects.${key}.description`),
+      category: t(`projects.${key}.category`),
+      location: t(`projects.${key}.location`),
+      features: t(`projects.${key}.features`),
+      units: proj.units ? t(`projects.${key}.units`) : undefined,
+    };
+  });
 
   const locations = ['ALL', 'Yalvaç, Isparta', 'Muratpaşa, Antalya'];
 
   const filteredProjects =
-    selectedLocation === 'ALL' ? PROJECTS : PROJECTS.filter((p) => p.location === selectedLocation);
+    selectedLocation === 'ALL'
+      ? localizedProjects
+      : localizedProjects.filter(
+          (p) =>
+            p.location ===
+            t(
+              selectedLocation === 'Yalvaç, Isparta'
+                ? 'projects.p01.location'
+                : 'projects.p02.location'
+            )
+        );
 
   return (
     <motion.div
@@ -23,8 +48,8 @@ export const Projects: React.FC = () => {
       className="pt-32 pb-block-gap"
     >
       <SEO
-        title="Mimari ve Mühendislik Projelerimiz"
-        description={`${COMPANY_INFO.legalNameShortUpper} tarafından titizlikle inşa edilen konut projeleri, daire tadilatları ve kat karşılığı yapı taahhütleri.`}
+        title={t('projects.title') + ' - ' + COMPANY_INFO.shortName}
+        description={t('projects.subtitle')}
       />
 
       <div className="max-w-[1440px] mx-auto px-margin">
@@ -32,10 +57,10 @@ export const Projects: React.FC = () => {
         <div className="border-b-4 border-primary pb-8 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div>
             <span className="font-mono text-xs tracking-[0.2em] text-secondary uppercase block mb-3">
-              // PORTFÖYÜMÜZ
+              // {language === 'tr' ? 'PORTFÖYÜMÜZ' : 'OUR PORTFOLIO'}
             </span>
             <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary leading-none">
-              İNŞA EDİLEN YAPILAR
+              {t('projects.title')}
             </h1>
           </div>
 
@@ -45,14 +70,14 @@ export const Projects: React.FC = () => {
               <button
                 onClick={() => setViewType('grid')}
                 className={`p-2 cursor-pointer transition-colors ${viewType === 'grid' ? 'bg-primary text-white' : 'hover:bg-black/5'}`}
-                title="Izgara Görünümü"
+                title={language === 'tr' ? 'Izgara Görünümü' : 'Grid View'}
               >
                 <Grid size={18} />
               </button>
               <button
                 onClick={() => setViewType('list')}
                 className={`p-2 cursor-pointer transition-colors ${viewType === 'list' ? 'bg-primary text-white' : 'hover:bg-black/5'}`}
-                title="Liste Görünümü"
+                title={language === 'tr' ? 'Liste Görünümü' : 'List View'}
               >
                 <List size={18} />
               </button>
@@ -60,15 +85,30 @@ export const Projects: React.FC = () => {
 
             {/* Filters */}
             <div className="flex flex-wrap gap-2">
-              {locations.map((loc) => (
-                <button
-                  key={loc}
-                  onClick={() => setSelectedLocation(loc)}
-                  className={`px-4 py-2 font-mono text-xs tracking-wider uppercase border-2 transition-all cursor-pointer ${selectedLocation === loc ? 'bg-primary text-on-primary border-primary' : 'bg-white border-primary hover:bg-neutral-50 text-primary'}`}
-                >
-                  {loc === 'ALL' ? 'TÜM BÖLGELER' : loc.toUpperCase()}
-                </button>
-              ))}
+              {locations.map((loc) => {
+                const isSelected = selectedLocation === loc;
+                const displayName =
+                  loc === 'ALL'
+                    ? language === 'tr'
+                      ? 'TÜM BÖLGELER'
+                      : 'ALL REGIONS'
+                    : loc === 'Yalvaç, Isparta'
+                      ? language === 'tr'
+                        ? 'YALVAÇ'
+                        : 'YALVAC'
+                      : language === 'tr'
+                        ? 'ANTALYA'
+                        : 'ANTALYA';
+                return (
+                  <button
+                    key={loc}
+                    onClick={() => setSelectedLocation(loc)}
+                    className={`px-4 py-2 font-mono text-xs tracking-wider uppercase border-2 transition-all cursor-pointer ${isSelected ? 'bg-primary text-on-primary border-primary' : 'bg-white border-primary hover:bg-neutral-50 text-primary'}`}
+                  >
+                    {displayName}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -109,13 +149,17 @@ export const Projects: React.FC = () => {
                       </h3>
                       <p className="text-sm text-secondary leading-relaxed line-clamp-3 mb-8">
                         {proj.description ||
-                          'Projelerimiz yüksek standartlara göre inşa edilmektedir.'}
+                          (language === 'tr'
+                            ? 'Projelerimiz yüksek standartlara göre inşa edilmektedir.'
+                            : 'Our projects are built with the highest standards.')}
                       </p>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 border-t border-dashed border-primary/25 pt-6 mt-auto">
                       <div>
-                        <span className="font-mono text-[9px] text-secondary/50 block">ALAN</span>
+                        <span className="font-mono text-[9px] text-secondary/50 block">
+                          {language === 'tr' ? 'ALAN' : 'AREA'}
+                        </span>
                         <span className="font-sans font-bold text-sm text-primary">
                           {proj.area}
                         </span>
@@ -123,7 +167,7 @@ export const Projects: React.FC = () => {
                       {proj.units && (
                         <div>
                           <span className="font-mono text-[9px] text-secondary/50 block">
-                            BİRİMLER
+                            {language === 'tr' ? 'BİRİMLER' : 'UNITS'}
                           </span>
                           <span className="font-sans font-bold text-sm text-primary">
                             {proj.units}
@@ -137,7 +181,9 @@ export const Projects: React.FC = () => {
                         variant="primary"
                         className="w-full flex justify-between items-center px-6"
                       >
-                        <span>DETAY & KAT PLANLARI</span>
+                        <span>
+                          {language === 'tr' ? 'DETAY & KAT PLANLARI' : 'DETAILS & FLOOR PLANS'}
+                        </span>
                         <ArrowRight size={16} />
                       </BrutalistButton>
                     </Link>
@@ -187,7 +233,9 @@ export const Projects: React.FC = () => {
 
                     <div className="flex flex-wrap gap-x-8 gap-y-4 border-t border-b border-dashed border-primary/25 py-4">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-[10px] text-secondary/60">ALAN:</span>
+                        <span className="font-mono text-[10px] text-secondary/60">
+                          {language === 'tr' ? 'ALAN:' : 'AREA:'}
+                        </span>
                         <span className="font-sans font-bold text-sm text-primary">
                           {proj.area}
                         </span>
@@ -195,7 +243,7 @@ export const Projects: React.FC = () => {
                       {proj.units && (
                         <div className="flex items-center gap-2">
                           <span className="font-mono text-[10px] text-secondary/60">
-                            BİRİM SAYISI:
+                            {language === 'tr' ? 'BİRİM SAYISI:' : 'UNITS:'}
                           </span>
                           <span className="font-sans font-bold text-sm text-primary">
                             {proj.units}
@@ -203,9 +251,11 @@ export const Projects: React.FC = () => {
                         </div>
                       )}
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-[10px] text-secondary/60">BETON:</span>
+                        <span className="font-mono text-[10px] text-secondary/60">
+                          {language === 'tr' ? 'BETON:' : 'CONCRETE:'}
+                        </span>
                         <span className="font-mono text-[10px] px-2 py-0.5 bg-primary/5 border border-primary/20">
-                          C30 HSR-HAZIR
+                          C30 {language === 'tr' ? 'HSR-HAZIR' : 'READY-MIX'}
                         </span>
                       </div>
                     </div>
@@ -217,7 +267,7 @@ export const Projects: React.FC = () => {
                         variant="primary"
                         className="w-full lg:w-auto px-8 py-4 flex gap-3 items-center"
                       >
-                        <span>İNCELE</span>
+                        <span>{language === 'tr' ? 'İNCELE' : 'VIEW DETAIL'}</span>
                         <ArrowRight size={16} />
                       </BrutalistButton>
                     </Link>

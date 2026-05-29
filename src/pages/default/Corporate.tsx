@@ -2,9 +2,11 @@ import React from 'react';
 import { Corporate as CorporateSection } from '../../sections/default/Corporate';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const Corporate: React.FC = () => {
   const { theme } = useTheme();
+  const { language } = useLanguage();
   const isModern = theme === 'alternative';
 
   return (
@@ -23,9 +25,19 @@ const Corporate: React.FC = () => {
             <h2
               className={`font-serif text-headline-xl text-primary uppercase ${isModern ? 'text-2xl' : ''}`}
             >
-              FAALİYET
-              <br />
-              KONULARI
+              {language === 'tr' ? (
+                <>
+                  FAALİYET
+                  <br />
+                  KONULARI
+                </>
+              ) : (
+                <>
+                  FIELDS OF
+                  <br />
+                  ACTIVITY
+                </>
+              )}
             </h2>
           </header>
 
@@ -34,23 +46,35 @@ const Corporate: React.FC = () => {
           >
             {[
               {
-                title: 'Müteahhitlik & İnşaat',
-                desc: 'Ana faaliyet alanımız olan taahhüt işlerinde, büyük ölçekli ve nitelikli projelere imza atıyoruz.',
+                title: language === 'tr' ? 'Müteahhitlik & İnşaat' : 'Contracting & Construction',
+                desc:
+                  language === 'tr'
+                    ? 'Ana faaliyet alanımız olan taahhüt işlerinde, büyük ölçekli ve nitelikli projelere imza atıyoruz.'
+                    : 'In contracting, which is our core field of activity, we sign large-scale and high-quality projects.',
                 img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC3oDj4ILIAfdGKtQB_o3-NGzsB_lLjZu02e7xtSOG2z9pUhkSK4PzIzDlMZ5ofLeneJxN_fb0Eu_sVAtHo4CweX1skkdsvq_473wK_oVj5-83bHRaFFJoUXdq4gB9vAYGgkHu41cNcUAAHLSj7OEux7_UgM5akJ-aAflhoIJ4crglFOy_8EC_R5Wf8I2fjgwRiiLMzYMIEQxjELwiqEUQBrA3jL6ykAmYatnMIOfTVHzQq4DrXnTRoG60ZN0wInGPk0L9mfBPJKAfK',
               },
               {
-                title: 'İnşaat Malzemeleri',
-                desc: 'Küresel tedarik ağımızla, projeler için yüksek standartlarda inşaat malzemeleri sağlıyoruz.',
+                title: language === 'tr' ? 'İnşaat Malzemeleri' : 'Building Materials',
+                desc:
+                  language === 'tr'
+                    ? 'Küresel tedarik ağımızla, projeler için yüksek standartlarda inşaat malzemeleri sağlıyoruz.'
+                    : 'With our global supply network, we provide building materials at high standards for projects.',
                 img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCaCW5RAbkUJeeWosciYb2Hu37mXAbTqoWMUExuGJ9OEGhDAFaEVqiTLGk_PhNbhO4ianrMMc983oohOHAb3kwE3o8vJVfdSr1iVGo4zRMJ74vlKoM0fQ2jusQlMoDW345f48mB7rc2P8GX7nW8sA_s3CX6T-NRMvjyyjVMC0tnuQRepITbZunBcHsySNpNESKJfdoZG9l78NuaDNAwEmhh4166cIxyvZNyxh2G99Hnn4y-PFdwPbcwqEEXXmECWyCBnvKVgb2cuepr',
               },
               {
-                title: 'Kömür Satışı',
-                desc: 'Enerji ve ticaret sektöründeki varlığımızı sürdürerek güvenilir kömür tedariği gerçekleştiriyoruz.',
+                title: language === 'tr' ? 'Kömür Satışı' : 'Coal Trading',
+                desc:
+                  language === 'tr'
+                    ? 'Enerji ve ticaret sektöründeki varlığımızı sürdürerek güvenilir kömür tedariği gerçekleştiriyoruz.'
+                    : 'Continuing our presence in energy and trade sector, we perform reliable coal supply.',
                 img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDe4XDekyfaQEDCNq-xwrSbmXQZAQJWQ9SvSWWqsjGH-M9HiCPnqxeDQ3yGYwgJN8jnxeaP8vLTSC8L8Y3JjucB2yiOLz5FGGOzk4MAQ3A79nr27sr6ulzHhiFiWJMxnxXBhuPgKwyXJHu3GfOptz7NVJtreZ8wWcwG9kaimhcK-MfOz_0l-wUFU7VW3iVwT7XvcH0PAoUJ-S-Xrs1gVfpddyLPul9vaCtPerrCxCuIrd6mLtxqXy7IElI6TKsGYB461uxFpqsRCj-z',
               },
               {
-                title: 'Yazılım Faaliyetleri',
-                desc: 'Tutar.io ve CloudBook gibi platformlarla sektörde dijital dönüşüme öncülük ediyoruz.',
+                title: language === 'tr' ? 'Yazılım Faaliyetleri' : 'Software Solutions',
+                desc:
+                  language === 'tr'
+                    ? 'Tutar.io ve CloudBook gibi platformlarla sektörde dijital dönüşüme öncülük ediyoruz.'
+                    : 'We pioneer digital transformation in the industry with platforms like Tutar.io and CloudBook.',
                 img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBFu06eygaogv98BVMwN5g14aoOCZjVnMs6J7G3YcFfUDNvO9lggEWRmJ9r4Qyoffy6BCgHHHV91X9usjX9624CTN15UNbzDIrzDSo9jRMaZxdi2vNIWdZWROl0xvuptDq0WQv4VInfRs3IvBhY5b0L3SwszZetpvw7tMxGWM0jOeH6sqWTuR5c4xlg1FZUgGBZbr1SJXZJt0hx0f1_SnaWqZW6beIKsEV4VEVptTjAxI1KnmeeTwsc3lhXAiX7oRm4DXo9kMwMSYSm',
               },
             ].map((item, i) => (
@@ -114,31 +138,41 @@ const Corporate: React.FC = () => {
               <h2
                 className={`font-serif text-headline-lg text-primary mb-8 leading-tight ${isModern ? 'text-xl mb-6' : ''}`}
               >
-                Mühendislik
-                <br />
-                Gücü.
+                {language === 'tr' ? (
+                  <>
+                    Mühendislik
+                    <br />
+                    Gücü.
+                  </>
+                ) : (
+                  <>
+                    Engineering
+                    <br />
+                    Power.
+                  </>
+                )}
               </h2>
               <p
                 className={`font-sans text-body-lg text-on-surface mb-8 ${isModern ? 'text-sm mb-6' : ''}`}
               >
-                Kaliteden ödün vermeden, yenilikçi ve sağlam mühendislik çözümleri üretiriz. Tüm
-                süreçlerimizde açık iletişim kurar, paydaşlarımızla güvene dayalı ilişkiler inşa
-                ederiz.
+                {language === 'tr'
+                  ? 'Kaliteden ödün vermeden, yenilikçi ve sağlam mühendislik çözümleri üretiriz. Tüm süreçlerimizde açık iletişim kurar, paydaşlarımızla güvene dayalı ilişkiler inşa ederiz.'
+                  : 'Without compromising on quality, we produce innovative and sound engineering solutions. We establish open communication in all our processes and build trust-based relationships with our stakeholders.'}
               </p>
               <ul
                 className={`space-y-4 font-serif text-headline-md ${isModern ? 'space-y-3 text-base' : ''}`}
               >
                 <li className={`flex items-center gap-4 ${isModern ? 'gap-3' : ''}`}>
                   <div className={`w-2 h-2 bg-primary ${isModern ? 'w-1.5 h-1.5' : ''}`}></div>{' '}
-                  Güvenilirlik
+                  {language === 'tr' ? 'Güvenilirlik' : 'Reliability'}
                 </li>
                 <li className={`flex items-center gap-4 ${isModern ? 'gap-3' : ''}`}>
                   <div className={`w-2 h-2 bg-primary ${isModern ? 'w-1.5 h-1.5' : ''}`}></div>{' '}
-                  Mükemmellik
+                  {language === 'tr' ? 'Mükemmellik' : 'Excellence'}
                 </li>
                 <li className={`flex items-center gap-4 ${isModern ? 'gap-3' : ''}`}>
                   <div className={`w-2 h-2 bg-primary ${isModern ? 'w-1.5 h-1.5' : ''}`}></div>{' '}
-                  Şeffaflık
+                  {language === 'tr' ? 'Şeffaflık' : 'Transparency'}
                 </li>
               </ul>
             </div>

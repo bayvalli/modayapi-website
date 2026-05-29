@@ -4,11 +4,13 @@ import { Menu, X, ArrowRight } from 'lucide-react';
 import { BrutalistButton } from './BrutalistButton';
 import { Logo } from './Logo';
 import { motion, AnimatePresence } from 'motion/react';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -30,10 +32,10 @@ export const Navbar: React.FC = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { to: '/projeler', label: 'PROJELER' },
-    { to: '/surec', label: 'SÜREÇ' },
-    { to: '/kurumsal', label: 'KURUMSAL' },
-    { to: '/iletisim', label: 'İLETİŞİM' },
+    { to: '/projeler', label: t('nav.projects') },
+    { to: '/surec', label: t('nav.process') },
+    { to: '/kurumsal', label: t('nav.corporate') },
+    { to: '/iletisim', label: t('nav.contact') },
   ];
 
   return (
@@ -65,7 +67,7 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-4">
             <Link to="/teklif-al">
               <BrutalistButton variant="primary" className="hidden md:block">
-                TEKLİF AL
+                {t('nav.quote')}
               </BrutalistButton>
             </Link>
             <button
@@ -93,7 +95,7 @@ export const Navbar: React.FC = () => {
           >
             <div className="flex flex-col gap-6 mt-8">
               <span className="font-mono text-[10px] text-secondary tracking-widest uppercase">
-                NAVİGASYON SİSTEMİ // MENÜ
+                {t('common.navigation')} // MENU
               </span>
               <ul className="flex flex-col gap-6 font-serif text-3xl uppercase tracking-tight text-primary">
                 {navLinks.map((link, idx) => (
@@ -134,12 +136,12 @@ export const Navbar: React.FC = () => {
                   variant="primary"
                   className="w-full text-center py-4 flex justify-between items-center px-6"
                 >
-                  <span>TEKLİF ALIN</span>
+                  <span>{t('nav.quote')}</span>
                   <ArrowRight size={20} />
                 </BrutalistButton>
               </Link>
               <div className="text-center font-mono text-[9px] text-secondary/50 uppercase tracking-widest pt-4 border-t border-black/5">
-                © 2026 {COMPANY_INFO.shortNameUpper} // TÜM HAKLARI SAKLIDIR
+                © 2026 {COMPANY_INFO.shortNameUpper} // {t('common.rightsReserved')}
               </div>
             </motion.div>
           </motion.div>

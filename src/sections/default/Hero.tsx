@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 export const Hero: React.FC = () => {
   const { theme } = useTheme();
+  const { language } = useLanguage();
 
   const isModern = theme === 'alternative';
   const animationDuration = isModern ? 0.4 : 0.8;
@@ -25,11 +27,23 @@ export const Hero: React.FC = () => {
           <h1
             className={`text-headline-xl text-primary mix-blend-multiply leading-[0.9] ${isModern ? 'tracking-tighter' : ''}`}
           >
-            YAPININ
-            <br />
-            İSKELETİNİ
-            <br />
-            ORTAYA ÇIKARIYORUZ.
+            {language === 'tr' ? (
+              <>
+                YAPININ
+                <br />
+                İSKELETİNİ
+                <br />
+                ORTAYA ÇIKARIYORUZ.
+              </>
+            ) : (
+              <>
+                WE EXPOSE
+                <br />
+                THE STRUCTURAL
+                <br />
+                SKELETON.
+              </>
+            )}
           </h1>
         </motion.div>
 
@@ -53,7 +67,9 @@ export const Hero: React.FC = () => {
               className={`absolute inset-x-0 bottom-0 py-4 px-8 ${isModern ? 'bg-primary/30 border-t-4' : 'bg-primary/20 border-t-2'} backdrop-blur-sm border-primary translate-y-full group-hover:translate-y-0 transition-transform ${isModern ? 'duration-300' : 'duration-500'}`}
             >
               <span className="font-label-caps text-on-primary text-xs">
-                {isModern ? '[ MÜHENDİSLİK ÜSTÜNLÜĞÜ / 2024 ]' : 'MÜHENDİSLİK ÜSTÜNLÜĞÜ / 2024'}
+                {isModern
+                  ? `[ ${language === 'tr' ? 'MÜHENDİSLİK ÜSTÜNLÜĞÜ' : 'ENGINEERING EXCELLENCE'} / 2024 ]`
+                  : `${language === 'tr' ? 'MÜHENDİSLİK ÜSTÜNLÜĞÜ' : 'ENGINEERING EXCELLENCE'} / 2024`}
               </span>
             </div>
           </div>

@@ -1,11 +1,13 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Clock, CheckSquare, Hammer, ShieldAlert, Award } from 'lucide-react';
-import { PROCESS_STEPS } from '../../constants';
 import { SEO } from '../../components/alternative/SEO';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 export const Process: React.FC = () => {
+  const { language, t } = useLanguage();
+
   const getStepIcon = (id: number) => {
     switch (id) {
       case 1:
@@ -19,6 +21,27 @@ export const Process: React.FC = () => {
     }
   };
 
+  const steps = [
+    {
+      id: 1,
+      title: t('process.step1.title'),
+      description: t('process.step1.description'),
+      items: t('process.step1.items').split(' // '),
+    },
+    {
+      id: 2,
+      title: t('process.step2.title'),
+      description: t('process.step2.description'),
+      items: t('process.step2.items').split(' // '),
+    },
+    {
+      id: 3,
+      title: t('process.step3.title'),
+      description: t('process.step3.description'),
+      items: t('process.step3.items').split(' // '),
+    },
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -27,24 +50,24 @@ export const Process: React.FC = () => {
       className="pt-32 pb-block-gap"
     >
       <SEO
-        title="Uygulama ve Hizmet Sürecimiz"
-        description="Planlamadan anahtar teslime, kaba inşaattan ince işçiliğe ve kalite kontrol denetimlerine kadar uzanan şeffaf iş süreçlerimiz."
+        title={t('process.title') + ' - ' + COMPANY_INFO.shortName}
+        description={t('process.subtitle')}
       />
 
       <div className="max-w-[1440px] mx-auto px-margin">
         {/* Title */}
         <div className="border-b-4 border-primary pb-8 mb-16">
           <span className="font-mono text-xs tracking-[0.2em] text-secondary uppercase block mb-3">
-            // RESMİ PROSES AKIŞI
+            // {language === 'tr' ? 'RESMİ PROSES AKIŞI' : 'OFFICIAL PROCESS BLUEPRINT'}
           </span>
           <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary leading-none">
-            İŞ SÜRECİMİZ
+            {t('process.title')}
           </h1>
         </div>
 
         {/* Process Roadmap */}
         <div className="relative border-l-4 border-primary ml-4 md:ml-12 pl-8 md:pl-16 space-y-20 py-8">
-          {PROCESS_STEPS.map((step, idx) => (
+          {steps.map((step, idx) => (
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -95,16 +118,15 @@ export const Process: React.FC = () => {
             <ShieldAlert size={36} className="mt-1 flex-shrink-0" />
             <div>
               <span className="font-mono text-xs tracking-widest text-on-primary/60 block mb-2">
-                GÜVEN DEKLARASYONU
+                {language === 'tr' ? 'GÜVEN DEKLARASYONU' : 'SAFETY DECLARATION'}
               </span>
               <h3 className="font-serif text-2xl uppercase font-bold mb-4">
-                DEPREM REZİLYANSI SÖZÜMÜZ
+                {language === 'tr' ? 'DEPREM REZİLYANSI SÖZÜMÜZ' : 'OUR SEISMIC RESILIENCE PROMISE'}
               </h3>
               <p className="opacity-80 text-sm leading-relaxed mb-4">
-                Uyguladığımız her kaba inşaatta Isparta - Antalya tektonik fay hatlarının
-                parametlerini esas alan statik simülasyonlar yürütülür. Kullandığımız betonlar tam
-                nemlendirme kürü geçirerek gerçek dayanıklılık limitlerine erişmeden hiçbir sonraki
-                adıma geçiş izni verilmez.
+                {language === 'tr'
+                  ? 'Uyguladığımız her kaba inşaatta Isparta - Antalya tektonik fay hatlarının parametlerini esas alan statik simülasyonlar yürütülür. Kullandığımız betonlar tam nemlendirme kürü geçirerek gerçek dayanıklılık limitlerine erişmeden hiçbir sonraki adıma geçiş izni verilmez.'
+                  : 'In every structural skeleton we construct, static simulations based on Isparta - Antalya tectonic fault line parameters are executed. No subsequent phase is authorized until the concrete passes structural hydration cycles and reaches its absolute durability limits.'}
               </p>
               <span className="font-mono text-[9px] opacity-40">
                 MÜHENDİSLİK KURULU // {COMPANY_INFO.legalNameShortUpper}

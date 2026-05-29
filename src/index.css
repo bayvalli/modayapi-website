@@ -46,7 +46,7 @@
   --text-headline-lg--line-height: 1.1;
   --text-headline-lg--font-weight: 700;
 
-  --text-headline-md: 2rem;
+  --text-headline-md: clamp(1.4rem, 4vw, 2rem);
   --text-headline-md--line-height: 1.2;
   --text-headline-md--font-weight: 700;
 

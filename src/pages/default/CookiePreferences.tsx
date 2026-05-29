@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
+import { COMPANY_INFO } from '../../constants';
 
 const CookiePreferences: React.FC = () => {
   const { theme } = useTheme();
+  const { t, language } = useLanguage();
   const isModern = theme === 'alternative';
 
   return (
@@ -20,65 +23,28 @@ const CookiePreferences: React.FC = () => {
           <h1
             className={`font-serif text-headline-lg text-primary uppercase ${isModern ? 'text-2xl' : ''}`}
           >
-            Çerez Tercihleri
+            {t('legal.cookiesTitle')}
           </h1>
           <p className={`text-secondary font-sans mt-4 ${isModern ? 'text-sm mt-3' : ''}`}>
-            Web sitemizdeki deneyiminizi optimize etmek için kullanılan teknolojiler.
+            {language === 'tr' ? 'Çerez Tercihleri ve Ayarları' : 'Cookie Preferences and Settings'}
           </p>
         </header>
 
-        <div className={`space-y-12 ${isModern ? 'space-y-8' : ''}`}>
-          <div
-            className={`border-4 border-primary p-8 bg-surface-container ${isModern ? 'border-[3px] p-6 shadow-sm' : 'shadow-lg'}`}
-          >
-            <h3
-              className={`font-serif text-headline-sm mb-4 uppercase ${isModern ? 'text-base mb-3' : ''}`}
-            >
-              Zorunlu Çerezler
-            </h3>
-            <p className={`text-body-md font-sans text-secondary ${isModern ? 'text-sm' : ''}`}>
-              Web sitesinin temel fonksiyonlarının çalışması için zorunludur. Kapatılamazlar.
-            </p>
-          </div>
+        <div
+          className={`space-y-8 font-sans text-body-md text-primary leading-relaxed ${isModern ? 'space-y-6 text-sm' : ''}`}
+        >
+          <p className="font-mono text-xs text-primary bg-primary/5 p-4 border border-dashed border-primary mb-6">
+            {t('legal.cookiesBrief')}
+          </p>
 
-          <div
-            className={`border-4 border-primary p-8 bg-surface-container flex flex-col md:flex-row justify-between items-start md:items-center gap-6 ${isModern ? 'border-[3px] p-6 gap-4 shadow-sm' : 'shadow-lg'}`}
-          >
-            <div>
-              <h3
-                className={`font-serif text-headline-sm mb-4 uppercase ${isModern ? 'text-base mb-3' : ''}`}
-              >
-                Analitik Çerezler
-              </h3>
-              <p className={`text-body-md font-sans text-secondary ${isModern ? 'text-sm' : ''}`}>
-                Ziyaretçi trafiğini ölçmek ve sitemizi geliştirmek için kullanılır.
-              </p>
-            </div>
-            <button
-              className={`bg-primary text-on-primary px-8 py-3 font-label-caps uppercase text-xs tracking-widest ${isModern ? 'px-6 py-2 text-[10px] tracking-[0.15em] shadow-sm' : ''}`}
-            >
-              AKTİF
-            </button>
-          </div>
+          <section className="space-y-6">
+            <p>{t('legal.cookiesParagraph1')}</p>
+            <p>{t('legal.cookiesParagraph2')}</p>
+          </section>
 
-          <div
-            className={`border-4 border-primary p-8 bg-surface-container flex flex-col md:flex-row justify-between items-start md:items-center gap-6 ${isModern ? 'border-[3px] p-6 gap-4 shadow-sm' : 'shadow-lg'}`}
-          >
-            <div>
-              <h3
-                className={`font-serif text-headline-sm mb-4 uppercase ${isModern ? 'text-base mb-3' : ''}`}
-              >
-                Pazarlama Çerezleri
-              </h3>
-              <p className={`text-body-md font-sans text-secondary ${isModern ? 'text-sm' : ''}`}>
-                İlgi alanlarınıza yönelik içerik sunmak için tercih edilir.
-              </p>
-            </div>
-            <button
-              className={`border-2 border-primary text-primary px-8 py-3 font-label-caps uppercase text-xs tracking-widest hover:bg-primary hover:text-on-primary ${isModern ? 'border-[1.5px] px-6 py-2 text-[10px] tracking-[0.15em] duration-200' : 'transition-colors'}`}
-            >
-              KAPALI
-            </button>
+          <div className="border-t border-dashed border-primary/25 pt-6 font-mono text-[10px] text-primary">
+            {language === 'tr' ? 'SİSTEM GÜVENLİ' : 'SYSTEM SECURED'} //{' '}
+            {COMPANY_INFO.legalNameShortUpper}
           </div>
         </div>
       </div>

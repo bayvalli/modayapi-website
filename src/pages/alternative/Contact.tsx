@@ -5,8 +5,10 @@ import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import { SEO } from '../../components/alternative/SEO';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
 import { COMPANY_INFO } from '../../constants';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 export const Contact: React.FC = () => {
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -81,18 +83,22 @@ export const Contact: React.FC = () => {
       className="pt-32 pb-block-gap"
     >
       <SEO
-        title="Bize Ulaşın - Yalvaç İrtibat Ofisimiz"
-        description={`${COMPANY_INFO.legalNameShortUpper} Yalvaç Genel Ofisimiz ile irtibata geçin. Adres, telefon numaraları, e-posta adresleri ve canlı harita konumu.`}
+        title={t('contact.title')}
+        description={
+          language === 'tr'
+            ? `${COMPANY_INFO.legalNameShortUpper} Yalvaç Genel Ofisimiz ile irtibata geçin. Adres, telefon numaraları, e-posta adresleri ve canlı harita konumu.`
+            : `Get in touch with ${COMPANY_INFO.legalNameShortUpper} Yalvac central office. Address, phone numbers, email channels, and coordinate radar.`
+        }
       />
 
       <div className="max-w-[1440px] mx-auto px-margin">
         {/* Title */}
         <div className="border-b-4 border-primary pb-8 mb-16">
           <span className="font-mono text-xs tracking-[0.2em] text-secondary uppercase block mb-3">
-            // 24/7 İLETİŞİM HATLARI
+            // {language === 'tr' ? '24/7 İLETİŞİM HATLARI' : '24/7 COMMUNICATION HELPDESK'}
           </span>
           <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary leading-none">
-            İRTİBAT KANALLARI
+            {language === 'tr' ? 'İRTİBAT KANALLARI' : 'CONTACT CHANNELS'}
           </h1>
         </div>
 
@@ -101,7 +107,7 @@ export const Contact: React.FC = () => {
           <div className="col-span-12 lg:col-span-7 border-4 border-primary p-8 md:p-12 bg-white flex flex-col justify-between">
             <div>
               <h2 className="font-serif text-3xl font-bold text-primary uppercase mb-8">
-                İLETİŞİM FORMU
+                {t('contact.formTitle')}
               </h2>
 
               <AnimatePresence mode="wait">
@@ -119,7 +125,7 @@ export const Contact: React.FC = () => {
                         htmlFor="name"
                         className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                       >
-                        Ad Soyad *
+                        {t('contact.fullName')} *
                       </label>
                       <input
                         type="text"
@@ -129,7 +135,7 @@ export const Contact: React.FC = () => {
                         value={formData.name}
                         onChange={handleChange}
                         className="w-full border-2 border-primary p-3 font-sans text-sm focus:bg-primary/5 focus:outline-none transition-colors"
-                        placeholder="Örn. Ahmet Yılmaz"
+                        placeholder={t('contact.placeholderName')}
                       />
                     </div>
 
@@ -139,7 +145,7 @@ export const Contact: React.FC = () => {
                           htmlFor="email"
                           className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                         >
-                          E-Posta Adresi *
+                          {t('contact.email')} *
                         </label>
                         <input
                           type="email"
@@ -149,7 +155,7 @@ export const Contact: React.FC = () => {
                           value={formData.email}
                           onChange={handleChange}
                           className="w-full border-2 border-primary p-3 font-sans text-sm focus:bg-primary/5 focus:outline-none transition-colors"
-                          placeholder="ahmet@example.com"
+                          placeholder={t('contact.placeholderEmail')}
                         />
                       </div>
                       <div>
@@ -157,7 +163,7 @@ export const Contact: React.FC = () => {
                           htmlFor="phone"
                           className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                         >
-                          Telefon *
+                          {t('contact.phone')} *
                         </label>
                         <input
                           type="tel"
@@ -167,7 +173,7 @@ export const Contact: React.FC = () => {
                           value={formData.phone}
                           onChange={handleChange}
                           className="w-full border-2 border-primary p-3 font-sans text-sm focus:bg-primary/5 focus:outline-none transition-colors"
-                          placeholder="+90 5XX XXX XX XX"
+                          placeholder={t('contact.placeholderPhone')}
                         />
                       </div>
                     </div>
@@ -177,7 +183,7 @@ export const Contact: React.FC = () => {
                         htmlFor="message"
                         className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                       >
-                        Mesajınız *
+                        {t('contact.message')} *
                       </label>
                       <textarea
                         id="message"
@@ -187,7 +193,7 @@ export const Contact: React.FC = () => {
                         value={formData.message}
                         onChange={handleChange}
                         className="w-full border-2 border-primary p-3 font-sans text-sm focus:bg-primary/5 focus:outline-none transition-colors resize-none"
-                        placeholder="İnşaat, tadilat veya diğer taleplerinizi buraya yazabilirsiniz..."
+                        placeholder={t('contact.placeholderMessage')}
                       ></textarea>
                     </div>
 
@@ -195,8 +201,7 @@ export const Contact: React.FC = () => {
                       <div className="border-4 border-red-600 bg-red-50 text-red-900 p-4 font-mono text-xs flex gap-3 items-center">
                         <AlertTriangle size={18} className="text-red-700" />
                         <span>
-                          Bağlantı hatası: Mesaj iletilemedi, lütfen {COMPANY_INFO.email} adresini
-                          deneyin.
+                          {t('contact.errorMsg')} ({COMPANY_INFO.email})
                         </span>
                       </div>
                     )}
@@ -208,7 +213,7 @@ export const Contact: React.FC = () => {
                       disabled={isSubmitting}
                       className="w-full flex justify-between items-center py-4"
                     >
-                      <span>{isSubmitting ? 'MESAJ GÖNDERİLİYOR...' : 'MESAJI İLETİN'}</span>
+                      <span>{isSubmitting ? t('contact.submitting') : t('contact.submitBtn')}</span>
                       <Send size={16} />
                     </BrutalistButton>
                   </motion.form>
@@ -223,15 +228,14 @@ export const Contact: React.FC = () => {
                       <CheckCircle2 size={48} />
                     </div>
                     <h3 className="font-serif text-2xl font-bold uppercase text-green-900 mb-2">
-                      İLETİNİZ ALINDI!
+                      {t('contact.successTitle')}
                     </h3>
                     <p className="text-sm font-sans mb-6">
-                      Mesajınız doğrudan {COMPANY_INFO.email} ekibimize başarıyla ulaştırılmıştır.
-                      Kısa süre içinde dönüş sağlanacaktır.
+                      {t('contact.successDesc').replace('{email}', COMPANY_INFO.email)}
                     </p>
 
                     <div className="border-t border-dashed border-green-200 pt-6 mt-6 max-w-sm mx-auto font-mono text-xs">
-                      <span className="opacity-60 block">İŞLEM NUMARASI // TICKET:</span>
+                      <span className="opacity-60 block">{t('contact.ticketLabel')}</span>
                       <span className="font-bold text-lg text-primary">{ticketId}</span>
                     </div>
 
@@ -239,7 +243,7 @@ export const Contact: React.FC = () => {
                       onClick={() => setSubmitSuccess(false)}
                       className="mt-8 text-xs font-mono font-bold uppercase underline hover:no-underline text-primary cursor-pointer"
                     >
-                      YENİ MESAJ GÖNDER
+                      {t('contact.newMsgBtn')}
                     </button>
                   </motion.div>
                 )}
@@ -251,10 +255,10 @@ export const Contact: React.FC = () => {
           <div className="col-span-12 lg:col-span-5 bg-primary text-on-primary p-8 md:p-12 flex flex-col justify-between border-4 border-primary">
             <div>
               <span className="font-mono text-xs text-on-primary/60 block mb-2">
-                // GENEL MERKEZ
+                // {language === 'tr' ? 'GENEL MERKEZ' : 'HEADQUARTERS'}
               </span>
               <h2 className="font-serif text-3xl font-bold text-white uppercase mb-8">
-                İRTİBAT MERKEZİ
+                {t('contact.infoTitle')}
               </h2>
 
               <div className="space-y-8 font-sans">
@@ -264,7 +268,7 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-white/50 mb-1">
-                      Adres Bilgisi
+                      {language === 'tr' ? 'Adres Bilgisi' : 'Office Address'}
                     </h4>
                     <p className="text-sm leading-relaxed">
                       {COMPANY_INFO.addressLine1}
@@ -280,7 +284,7 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-white/50 mb-1">
-                      Telefon Numarası
+                      {language === 'tr' ? 'Telefon Numarası' : 'Phone Line'}
                     </h4>
                     <p className="text-sm leading-relaxed">
                       <a href={`tel:${COMPANY_INFO.phoneCall}`} className="hover:underline">
@@ -296,7 +300,7 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-white/50 mb-1">
-                      E-Posta Kanalları
+                      {language === 'tr' ? 'E-Posta Kanalları' : 'Corporate Email'}
                     </h4>
                     <p className="text-sm leading-relaxed">
                       <a href={`mailto:${COMPANY_INFO.email}`} className="hover:underline">
@@ -310,10 +314,13 @@ export const Contact: React.FC = () => {
 
             <div className="border-t border-on-primary/10 pt-8 mt-12">
               <span className="font-mono text-[10px] tracking-widest text-on-primary/40 uppercase block mb-3">
-                ÇALIŞMA SAATLERİ
+                {t('contact.hoursTitle')}
               </span>
               <div className="flex justify-between font-mono text-xs opacity-75">
-                <span>{COMPANY_INFO.workingDays.toUpperCase()}:</span>
+                <span>
+                  {language === 'tr' ? COMPANY_INFO.workingDays.toUpperCase() : 'MONDAY - SATURDAY'}
+                  :
+                </span>
                 <span>{COMPANY_INFO.workingHours}</span>
               </div>
             </div>
@@ -325,10 +332,10 @@ export const Contact: React.FC = () => {
           <div className="border-b-4 border-primary p-6 bg-surface-container flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <span className="font-mono text-xs text-secondary mb-1 block">
-                // HARİTA RESMİ KOORDİNATLARI
+                // {language === 'tr' ? 'HARİTA RESMİ KOORDİNATLARI' : 'COORDINATE RADAR MAPPING'}
               </span>
               <h3 className="font-serif text-2xl font-bold uppercase text-primary">
-                YALVAÇ MERKEZ OFİS KONUMUMUZ
+                {t('contact.blueprintTitle')}
               </h3>
             </div>
 
@@ -338,7 +345,9 @@ export const Contact: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex gap-2 items-center px-4 py-2 bg-primary text-on-primary font-mono text-xs uppercase hover:bg-neutral-800 transition-all font-bold"
             >
-              <span>HARİTADA AÇ (DIŞ LİNK)</span>
+              <span>
+                {language === 'tr' ? 'HARİTADA AÇ (DIŞ LİNK)' : 'OPEN IN MAPS (EXTERNAL)'}
+              </span>
               <ExternalLink size={12} />
             </a>
           </div>
@@ -368,19 +377,17 @@ export const Contact: React.FC = () => {
 
                 <div className="z-10 max-w-md bg-[#1a1a1a]/95 border-2 border-white/20 p-8 shadow-2xl relative">
                   <div className="absolute top-0 left-4 bg-white text-black font-mono text-[9px] uppercase tracking-widest px-2 py-0.5 -translate-y-1/2">
-                    COORDINATE RADAR
+                    {language === 'tr' ? 'KOORDİNAT RADARI' : 'COORDINATE RADAR'}
                   </div>
 
                   <span className="font-mono text-xs text-white/50 block mb-2">
                     GPS: 38.2938° N, 31.1856° E
                   </span>
                   <h4 className="font-serif text-white text-2xl uppercase mb-4 font-bold tracking-tight">
-                    BRÜTALİST HARİTA DEKLARESİ
+                    {t('contact.blueprintTitle')}
                   </h4>
                   <p className="text-xs text-white/70 font-sans leading-relaxed mb-6">
-                    Mülkiyet sınır hassasiyetleri gereği ve statik Google Haritalar API
-                    kısıtlamalarını aşmak adına, ofis adresimizi doğrudan gerçek uydu konumlarıyla
-                    dış harita sistemleri üzerinden ziyaret edebilirsiniz.
+                    {t('contact.blueprintDesc')}
                   </p>
 
                   <a
@@ -389,7 +396,11 @@ export const Contact: React.FC = () => {
                     rel="noopener noreferrer"
                   >
                     <BrutalistButton variant="secondary" className="w-full text-xs font-mono py-3">
-                      <span>GERÇEK COĞRAFİ KONUMA GİT</span>
+                      <span>
+                        {language === 'tr'
+                          ? 'GERÇEK COĞRAFİ KONUMA GİT'
+                          : 'GO TO PHYSICAL LOCATION'}
+                      </span>
                       <ExternalLink size={14} />
                     </BrutalistButton>
                   </a>

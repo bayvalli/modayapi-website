@@ -5,8 +5,10 @@ import { ArrowRight, Flame, Shield, Terminal, HardHat, Layers, Award } from 'luc
 import { PROJECTS, SERVICES, COMPANY_INFO } from '../../constants';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
 import { SEO } from '../../components/alternative/SEO';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 export const Home: React.FC = () => {
+  const { t, language } = useLanguage();
   const featuredProjects = PROJECTS.slice(0, 3);
 
   const getServiceIcon = (iconName: string) => {
@@ -32,8 +34,16 @@ export const Home: React.FC = () => {
       className="pt-24"
     >
       <SEO
-        title="Güvene Atılan Sarsılmaz Temeller"
-        description={`Mühendisliğin estetikle buluştuğu ${COMPANY_INFO.legalNameShortUpper} projeleri. Depreme dayanıklı, C30 beton standartlarında modern ve minimalist yarınlar inşa ediyoruz.`}
+        title={
+          language === 'tr'
+            ? 'Güvene Atılan Sarsılmaz Temeller'
+            : 'Unshakeable Foundations Built On Trust'
+        }
+        description={
+          language === 'tr'
+            ? `Mühendislik estetiğinin sismik standartlarla buluştuğu ${COMPANY_INFO.legalNameShortUpper} projeleri. Depreme dayanıklı, C30 beton standartlarında modern ve minimalist yarınlar inşa ediyoruz.`
+            : `Engineering excellence meets dynamic architectural standards by ${COMPANY_INFO.legalNameShortUpper}. We build modern, seismic-safe living spaces with C30 ready-mix concrete.`
+        }
       />
 
       {/* Hero Section */}
@@ -47,23 +57,29 @@ export const Home: React.FC = () => {
               transition={{ duration: 0.7 }}
             >
               <span className="font-mono text-xs md:text-sm tracking-[0.25em] text-secondary uppercase mb-6 block">
-                {COMPANY_INFO.shortNameUpper} // GÜVEN VE İHTİŞAM BİR ARADA
+                {COMPANY_INFO.shortNameUpper} //{' '}
+                {language === 'tr' ? 'GÜVEN VE İHTİŞAM BİR ARADA' : 'TRUST AND GRANDEUR COMBINED'}
               </span>
               <h1 className="text-[11vw] lg:text-[7.5rem] font-bold text-primary leading-[0.85] uppercase tracking-tighter mb-8 font-sans">
-                SARSILMAZ
+                {language === 'tr' ? 'SARSILMAZ' : 'UNSHAKEABLE'}
                 <br />
-                TEMELLER.
+                {language === 'tr' ? 'TEMELLER.' : 'FOUNDATIONS.'}
               </h1>
               <p className="text-body-lg text-secondary max-w-xl mb-10 leading-relaxed border-l-4 border-primary pl-6 font-sans">
-                Yüksek dayanıklılık normları ve brütalist yapı estetiğini harmanlayarak, depreme tam
-                dayanıklı, güvenli ve lüks yaşam merkezleri üretiyoruz.
+                {language === 'tr'
+                  ? 'Yüksek dayanıklılık normları ve brütalist yapı estetiğini harmanlayarak, depreme tam dayanıklı, güvenli ve lüks yaşam merkezleri üretiyoruz.'
+                  : 'Blending high durability standards with brutalist architecture, we construct premium, seismic-safe living spaces.'}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link to="/projeler">
-                  <BrutalistButton variant="primary">PROJELERİ İNCELE</BrutalistButton>
+                  <BrutalistButton variant="primary">
+                    {language === 'tr' ? 'PROJELERİ İNCELE' : 'EXPLORE PROJECTS'}
+                  </BrutalistButton>
                 </Link>
                 <Link to="/teklif-al">
-                  <BrutalistButton variant="secondary">HIZLI TEKLİF AL</BrutalistButton>
+                  <BrutalistButton variant="secondary">
+                    {language === 'tr' ? 'HIZLI TEKLİF AL' : 'GET A QUICK QUOTE'}
+                  </BrutalistButton>
                 </Link>
               </div>
             </motion.div>
@@ -97,21 +113,21 @@ export const Home: React.FC = () => {
           <div className="grid grid-cols-12 gap-gutter items-center">
             <div className="col-span-12 lg:col-span-5 mb-10 lg:mb-0">
               <span className="font-mono text-xs tracking-widest text-secondary block mb-4">
-                // MANİFESTO
+                // {t('hero.manifestoTitle').toUpperCase()}
               </span>
               <h2 className="font-serif text-[3.5rem] leading-[1] text-primary uppercase font-bold tracking-tight mb-8">
-                Mühendislik
+                {language === 'tr' ? 'Mühendislik' : 'Engineering'}
                 <br />
-                Dürüstlüktür.
+                {language === 'tr' ? 'Dürüstlüktür.' : 'is Integrity.'}
               </h2>
               <div className="w-20 h-2 bg-primary"></div>
             </div>
 
             <div className="col-span-12 lg:col-span-7 space-y-6">
               <p className="text-xl text-primary leading-relaxed font-sans">
-                {COMPANY_INFO.shortName} olarak her beton dökümünde, her demir bağında ve her mimari
-                kararda yalnızca bina değil; güven ve gelecek dokuyoruz. Estetik çizgilerimizin
-                arkasında, en zorlu zeminlerde dahi sarsılmaz kalacak matematik yatıyor.
+                {language === 'tr'
+                  ? `${COMPANY_INFO.shortName} olarak her beton dökümünde, her demir bağında ve her mimari kararda yalnızca bina değil; güven ve gelecek dokuyoruz. Estetik çizgilerimizin arkasında, en zorlu zeminlerde dahi sarsılmaz kalacak matematik yatıyor.`
+                  : `At ${COMPANY_INFO.shortName}, with every concrete pour, every rebar tie, and every architectural draft, we build trust and the future. Behind our design lines lies the mathematics that remains unshakeable on even the toughest grounds.`}
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                 <div className="flex items-start gap-4">
@@ -120,10 +136,12 @@ export const Home: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-2">
-                      Maksimum Deprem Güvenliği
+                      {language === 'tr' ? 'Maksimum Deprem Güvenliği' : 'Maximum Seismic Safety'}
                     </h4>
                     <p className="text-sm text-secondary">
-                      C30+ beton standartları, asmolen döşeme ve zemin mekaniği hassasiyeti.
+                      {language === 'tr'
+                        ? 'C30+ beton standartları, asmolen döşeme ve zemin mekaniği hassasiyeti.'
+                        : 'C30+ ready-mix concrete standards, hollow tile flooring, and soil mechanics precision.'}
                     </p>
                   </div>
                 </div>
@@ -133,11 +151,12 @@ export const Home: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-2">
-                      Mimari Disiplin
+                      {language === 'tr' ? 'Mimari Disiplin' : 'Architectural Discipline'}
                     </h4>
                     <p className="text-sm text-secondary">
-                      Monolitik dış cephe bütünlüğü ve modern brutalist minimalist fonksiyonel
-                      tasarımlar.
+                      {language === 'tr'
+                        ? 'Monolitik dış cephe bütünlüğü and modern brutalist minimalist fonksiyonel tasarımlar.'
+                        : 'Monolithic exterior integration and modern brutalist minimalist functional layouts.'}
                     </p>
                   </div>
                 </div>
@@ -153,17 +172,17 @@ export const Home: React.FC = () => {
           <div className="mb-16 flex justify-between items-end border-b-4 border-primary pb-8">
             <div>
               <span className="font-mono text-xs tracking-widest text-secondary uppercase block mb-2">
-                // KABİLİYETLERİMİZ
+                // {language === 'tr' ? 'KABİLİYETLERİMİZ' : 'OUR CAPABILITIES'}
               </span>
               <h2 className="font-serif text-4xl md:text-5xl font-bold uppercase text-primary">
-                İŞ KARTELİMİZ
+                {language === 'tr' ? 'İŞ KARTELİMİZ' : 'AREAS OF ACTIVITY'}
               </h2>
             </div>
             <Link
               to="/kurumsal"
               className="text-xs md:text-sm font-mono text-secondary hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-wider"
             >
-              BİZİ TANIYIN <ArrowRight size={16} />
+              {language === 'tr' ? 'BİZİ TANIYIN' : 'MEET US'} <ArrowRight size={16} />
             </Link>
           </div>
 
@@ -181,19 +200,19 @@ export const Home: React.FC = () => {
                     <span className="font-mono text-xs text-secondary/40 font-bold">#{srv.id}</span>
                   </div>
                   <span className="font-mono text-[10px] bg-primary text-on-primary px-2.5 py-1 tracking-widest uppercase mb-4 inline-block">
-                    {srv.category}
+                    {t(`services.s${srv.id}.category`)}
                   </span>
                   <h3 className="font-serif text-2xl font-bold uppercase text-primary mb-4 leading-tight">
-                    {srv.title}
+                    {t(`services.s${srv.id}.title`)}
                   </h3>
                   <p className="text-sm text-secondary leading-relaxed font-sans mb-8">
-                    {srv.description}
+                    {t(`services.s${srv.id}.description`)}
                   </p>
                 </div>
                 {srv.id === '04' && (
                   <div className="border-t border-dashed border-primary/25 pt-4 mt-auto">
                     <span className="font-mono text-[9px] text-secondary tracking-wider block">
-                      ENTEGRE ARAÇLAR:
+                      {language === 'tr' ? 'ENTEGRE ARAÇLAR:' : 'INTEGRATED TOOLS:'}
                     </span>
                     <span className="font-mono text-xs font-bold text-primary">
                       Tutar.io & CloudBook
@@ -212,62 +231,64 @@ export const Home: React.FC = () => {
           <div className="mb-16 flex justify-between items-end border-b-4 border-primary pb-8">
             <div>
               <span className="font-mono text-xs tracking-widest text-secondary uppercase block mb-2">
-                // DETAYLI PORTFÖY
+                // {language === 'tr' ? 'DETAYLI PORTFÖY' : 'DETAILED PORTFOLIO'}
               </span>
               <h2 className="font-serif text-4xl md:text-5xl font-bold uppercase text-primary">
-                ÖNE ÇIKAN PROJELERİMİZ
+                {language === 'tr' ? 'ÖNE ÇIKAN PROJELERİMİZ' : 'FEATURED PROJECTS'}
               </h2>
             </div>
             <Link
               to="/projeler"
               className="text-xs md:text-sm font-mono text-secondary hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-wider"
             >
-              TÜM PROJELER <ArrowRight size={16} />
+              {language === 'tr' ? 'TÜM PROJELER' : 'ALL PROJECTS'} <ArrowRight size={16} />
             </Link>
           </div>
 
           <div className="grid grid-cols-12 gap-gutter">
-            {featuredProjects.map((proj) => (
-              <div
-                key={proj.id}
-                className="col-span-12 lg:col-span-4 border-4 border-primary overflow-hidden bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,0.15)] flex flex-col justify-between"
-              >
-                <div className="aspect-[16/10] overflow-hidden border-b-4 border-primary relative group">
-                  <img
-                    src={proj.imageUrl}
-                    alt={proj.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 contrast-105"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute top-4 left-4 bg-primary text-on-primary font-mono text-[10px] uppercase tracking-widest px-3 py-1 border border-on-primary/10">
-                    {proj.location}
+            {featuredProjects.map((proj) => {
+              const projKey = proj.id === 'proj-01' ? 'p01' : proj.id === 'proj-02' ? 'p02' : 'p03';
+              return (
+                <div
+                  key={proj.id}
+                  className="col-span-12 lg:col-span-4 border-4 border-primary overflow-hidden bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,0.15)] flex flex-col justify-between"
+                >
+                  <div className="aspect-[16/10] overflow-hidden border-b-4 border-primary relative group">
+                    <img
+                      src={proj.imageUrl}
+                      alt={t(`projects.${projKey}.title`)}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 contrast-105"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute top-4 left-4 bg-primary text-on-primary font-mono text-[10px] uppercase tracking-widest px-3 py-1 border border-on-primary/10">
+                      {t(`projects.${projKey}.location`)}
+                    </div>
+                  </div>
+                  <div className="p-8 flex flex-col flex-grow justify-between">
+                    <div>
+                      <span className="font-mono text-[10px] text-secondary tracking-widest uppercase mb-2 block">
+                        {t(`projects.${projKey}.category`)}
+                      </span>
+                      <h3 className="font-serif text-2xl font-bold text-primary uppercase mb-4 leading-tight">
+                        {t(`projects.${projKey}.title`)}
+                      </h3>
+                      <p className="text-sm text-secondary leading-relaxed line-clamp-3 mb-8 font-sans">
+                        {t(`projects.${projKey}.description`)}
+                      </p>
+                    </div>
+                    <Link to={`/projeler/${proj.id}`} className="mt-auto">
+                      <BrutalistButton
+                        variant="primary"
+                        className="w-full flex justify-between items-center px-6"
+                      >
+                        <span>{language === 'tr' ? 'DETAYLARI İNCELE' : 'EXAMINE DETAILS'}</span>
+                        <ArrowRight size={16} />
+                      </BrutalistButton>
+                    </Link>
                   </div>
                 </div>
-                <div className="p-8 flex flex-col flex-grow justify-between">
-                  <div>
-                    <span className="font-mono text-[10px] text-secondary tracking-widest uppercase mb-2 block">
-                      {proj.category}
-                    </span>
-                    <h3 className="font-serif text-2xl font-bold text-primary uppercase mb-4 leading-tight">
-                      {proj.title}
-                    </h3>
-                    <p className="text-sm text-secondary leading-relaxed line-clamp-3 mb-8">
-                      {proj.description ||
-                        `${proj.title} projesi yüksek kalite standartlarımızla hayata geçirilmektedir.`}
-                    </p>
-                  </div>
-                  <Link to={`/projeler/${proj.id}`} className="mt-auto">
-                    <BrutalistButton
-                      variant="primary"
-                      className="w-full flex justify-between items-center px-6"
-                    >
-                      <span>DETAYLARI İNCELE</span>
-                      <ArrowRight size={16} />
-                    </BrutalistButton>
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

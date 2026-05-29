@@ -3,10 +3,12 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 const NotFound: React.FC = () => {
   const { theme } = useTheme();
+  const { language } = useLanguage();
   const isModern = theme === 'alternative';
 
   return (
@@ -21,7 +23,9 @@ const NotFound: React.FC = () => {
           <span
             className={`font-label-caps text-secondary text-sm tracking-[0.3em] mb-4 block ${isModern ? 'text-xs tracking-[0.2em] mb-3' : ''}`}
           >
-            HATALI KOORDİNAT / ERROR 404
+            {language === 'tr'
+              ? 'HATALI KOORDİNAT // ERROR 404'
+              : 'INVALID COORDINATE // ERROR 404'}
           </span>
           <h1
             className={`font-serif text-[12vw] lg:text-headline-xl text-primary leading-none uppercase select-none ${isModern ? 'lg:text-4xl' : ''}`}
@@ -37,8 +41,9 @@ const NotFound: React.FC = () => {
           <p
             className={`font-sans text-body-lg text-secondary max-w-md mx-auto leading-relaxed ${isModern ? 'text-sm' : ''}`}
           >
-            Aradığınız yapı veya sayfa mevcut planlarımızda bulunamadı. Lütfen adresi kontrol edin
-            veya ana sayfaya dönün.
+            {language === 'tr'
+              ? 'Aradığınız yapı veya sayfa mevcut planlarımızda bulunamadı. Lütfen adresi kontrol edin veya ana sayfaya dönün.'
+              : 'The requested structure or page could not be found in our current plans. Please check the address or return to the home page.'}
           </p>
 
           <Link
@@ -49,7 +54,7 @@ const NotFound: React.FC = () => {
               size={16}
               className={`group-hover:-translate-x-2 transition-transform ${isModern ? 'size-4' : ''}`}
             />
-            ANA SAYFAYA DÖN
+            {language === 'tr' ? 'ANA SAYFAYA DÖN' : 'RETURN TO HOME'}
           </Link>
         </div>
 
@@ -57,7 +62,8 @@ const NotFound: React.FC = () => {
           <p
             className={`font-mono text-[10px] text-secondary/30 uppercase tracking-[0.2em] ${isModern ? 'text-[8px] tracking-[0.15em]' : ''}`}
           >
-            {COMPANY_INFO.legalNameShortUpper} / STRUCTURAL INTEGRITY VERIFIED
+            {COMPANY_INFO.legalNameShortUpper} /{' '}
+            {language === 'tr' ? 'YAPISAL BÜTÜNLÜK ONAYLANDI' : 'STRUCTURAL INTEGRITY VERIFIED'}
           </p>
         </div>
       </div>

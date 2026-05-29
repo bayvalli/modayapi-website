@@ -3,6 +3,7 @@ import { HardHat, Package, Flame, Terminal, LucideIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { SERVICES } from '../../constants';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const icons: Record<string, LucideIcon> = {
   Engineering: HardHat,
@@ -13,6 +14,7 @@ const icons: Record<string, LucideIcon> = {
 
 export const Services: React.FC = () => {
   const { theme } = useTheme();
+  const { t, language } = useLanguage();
   const isModern = theme === 'alternative';
   const borderClass = isModern ? 'border-4' : 'border-heavy';
   const animationDuration = isModern ? 0.3 : 0.4;
@@ -27,12 +29,12 @@ export const Services: React.FC = () => {
           <h2
             className={`font-label-caps text-primary border-b-2 border-primary pb-2 inline-block ${isModern ? 'text-xs tracking-[0.2em]' : ''}`}
           >
-            HİZMETLERİMİZ
+            {language === 'tr' ? 'HİZMETLERİMİZ' : 'OUR SERVICES'}
           </h2>
         </div>
 
         <div
-          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ${isModern ? 'gap-6' : 'gap-gutter'}`}
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 ${isModern ? 'gap-6' : 'gap-gutter'}`}
         >
           {SERVICES.map((service, index) => {
             const Icon = icons[service.icon];
@@ -43,7 +45,7 @@ export const Services: React.FC = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: animationDuration, delay: index * (isModern ? 0.05 : 0.1) }}
-                className={`${borderClass} p-8 flex flex-col justify-between min-h-[400px] ${service.colorClass} ${isModern ? 'shadow-sm hover:shadow-md transition-all duration-300' : 'hover:shadow-lg'}`}
+                className={`${borderClass} p-6 sm:p-8 flex flex-col justify-between min-h-[380px] sm:min-h-[400px] ${service.colorClass} ${isModern ? 'shadow-sm hover:shadow-md transition-all duration-300' : 'hover:shadow-lg'}`}
               >
                 <div>
                   {Icon && (
@@ -53,14 +55,14 @@ export const Services: React.FC = () => {
                     />
                   )}
                   <h3
-                    className={`text-headline-md text-primary mb-4 ${isModern ? 'tracking-tight' : ''}`}
+                    className={`text-headline-md text-primary mb-4 break-words [word-break:break-word] hyphens-auto ${isModern ? 'tracking-tight' : ''}`}
                   >
-                    {service.title}
+                    {t(`services.s${service.id}.title`)}
                   </h3>
                   <p
                     className={`text-body-md text-on-surface-variant font-sans ${isModern ? 'text-sm' : ''}`}
                   >
-                    {service.description}
+                    {t(`services.s${service.id}.description`)}
                   </p>
                 </div>
 
@@ -70,7 +72,7 @@ export const Services: React.FC = () => {
                   <span
                     className={`font-label-caps text-secondary ${isModern ? 'text-[9px]' : ''}`}
                   >
-                    {service.id} / {service.category}
+                    {service.id} / {t(`services.s${service.id}.category`)}
                   </span>
                 </div>
               </motion.div>

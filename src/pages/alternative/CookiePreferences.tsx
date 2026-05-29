@@ -2,9 +2,11 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Settings } from 'lucide-react';
 import { SEO } from '../../components/alternative/SEO';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 export const CookiePreferences: React.FC = () => {
+  const { t, language } = useLanguage();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -12,50 +14,34 @@ export const CookiePreferences: React.FC = () => {
       exit={{ opacity: 0 }}
       className="pt-32 pb-block-gap"
     >
-      <SEO
-        title="Çerez Tercihleri Yönetimi"
-        description="Web sitemizin performans ve kullanım çerezlerini dilediğiniz gibi düzenleyin."
-      />
+      <SEO title={t('legal.cookiesTitle')} description={t('legal.cookiesBrief')} />
 
       <div className="max-w-[1440px] mx-auto px-margin">
         <div className="border-b-4 border-primary pb-8 mb-16 flex items-center justify-between">
           <div>
             <span className="font-mono text-xs tracking-[0.2em] text-secondary uppercase block mb-3">
-              // WEB SEANS AYARLARI
+              // {t('common.legalLinks')}
             </span>
             <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary leading-none">
-              ÇEREZ TERCİHLERİ
+              {t('legal.cookiesTitle')}
             </h1>
           </div>
           <Settings size={48} className="text-primary hidden md:block" />
         </div>
 
         <div className="max-w-4xl bg-white border-4 border-primary p-8 md:p-12 space-y-8 font-sans text-sm text-secondary leading-relaxed shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-          <section>
-            <h2 className="font-serif text-xl font-bold uppercase text-primary mb-4">
-              MİNİMAL ÇEREZ SEÇENEKLERİ
-            </h2>
-            <p>
-              {COMPANY_INFO.shortName} portalını ziyaret ettiğinizde yasal mevzuat sınırlarında
-              teknik çerezler kullanılmaktadır. Üçüncü taraf reklam ağları veya davranış takip
-              pikselleri sitemizde aktif değildir. Sadece sayfa hızı ve temel stabilite optimizasyon
-              çerezleri barındırılır.
-            </p>
-          </section>
+          <p className="font-mono text-xs text-primary bg-primary/5 p-4 border border-dashed border-primary mb-6">
+            {t('legal.cookiesBrief')}
+          </p>
 
-          <section className="bg-surface-container p-6 border-2 border-primary border-dashed">
-            <span className="font-mono text-[10px] text-primary block mb-2 font-bold">
-              TERCİH STATÜSÜ:
-            </span>
-            <p className="text-xs text-secondary">
-              Gizliliğinize saygı duyduğumuz için tüm davranış takipçi botları ve harici pikseller
-              varsayılan olarak **%100 KALICI BLOKE** edilmiştir. Hiçbir ayar yapmanıza gerek
-              yoktur.
-            </p>
+          <section className="space-y-6">
+            <p>{t('legal.cookiesParagraph1')}</p>
+            <p>{t('legal.cookiesParagraph2')}</p>
           </section>
 
           <div className="border-t border-dashed border-primary/25 pt-6 font-mono text-[10px] text-primary">
-            SİSTEM GÜVENLİ // {COMPANY_INFO.legalNameShortUpper}
+            {language === 'tr' ? 'SİSTEM GÜVENLİ' : 'SYSTEM SECURED'} //{' '}
+            {COMPANY_INFO.legalNameShortUpper}
           </div>
         </div>
       </div>

@@ -4,9 +4,11 @@ import { Manifesto } from '../../sections/default/Manifesto';
 import { Services } from '../../sections/default/Services';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const Home: React.FC = () => {
   const { theme, mode } = useTheme();
+  const { language } = useLanguage();
   const isModern = theme === 'alternative';
 
   return (
@@ -38,10 +40,12 @@ const Home: React.FC = () => {
             <h4
               className={`font-serif text-headline-md text-primary mb-2 ${isModern ? 'tracking-tighter' : ''}`}
             >
-              HAM MADDE
+              {language === 'tr' ? 'HAM MADDE' : 'RAW MATERIAL'}
             </h4>
             <p className={`font-sans text-body-md text-on-surface ${isModern ? 'text-sm' : ''}`}>
-              Bir binanın güzelliği, bileşenleri gizlenmeden önceki dürüstlüğünde yatar.
+              {language === 'tr'
+                ? 'Bir binanın güzelliği, bileşenleri gizlenmeden önceki dürüstlüğünde yatar.'
+                : 'The beauty of a building lies in its honesty before its components are concealed.'}
             </p>
           </div>
         </div>

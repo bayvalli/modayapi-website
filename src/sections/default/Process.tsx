@@ -1,13 +1,35 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { PROCESS_STEPS } from '../../constants';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 export const Process: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   const isModern = theme === 'alternative';
   const borderClass = isModern ? 'border-4' : 'border-heavy';
   const animationDuration = isModern ? 0.4 : 0.6;
+
+  const steps = [
+    {
+      id: 1,
+      title: t('process.step1.title'),
+      description: t('process.step1.description'),
+      items: (t('process.step1.items') as string).split('//').map((i) => i.trim()),
+    },
+    {
+      id: 2,
+      title: t('process.step2.title'),
+      description: t('process.step2.description'),
+      items: (t('process.step2.items') as string).split('//').map((i) => i.trim()),
+    },
+    {
+      id: 3,
+      title: t('process.step3.title'),
+      description: t('process.step3.description'),
+      items: (t('process.step3.items') as string).split('//').map((i) => i.trim()),
+    },
+  ];
 
   return (
     <section
@@ -21,18 +43,15 @@ export const Process: React.FC = () => {
           <h2
             className={`text-headline-xl text-primary lowercase mb-6 ${isModern ? 'tracking-tighter' : ''}`}
           >
-            Anıtsal
-            <br />
-            Adımlar.
+            {t('process.title')}
           </h2>
           <p className={`text-body-lg text-secondary ${isModern ? 'text-sm' : ''}`}>
-            Projelerimizi hayata geçirirken izlediğimiz şeffaf, kararlı ve tavizsiz süreç. Her
-            aşama, kalıcı eserler bırakma vizyonumuzun bir parçasıdır.
+            {t('process.subtitle')}
           </p>
         </div>
 
         <div className={`flex flex-col ${isModern ? 'gap-6' : 'gap-12'}`}>
-          {PROCESS_STEPS.map((step, index) => (
+          {steps.map((step, index) => (
             <motion.div
               key={step.id}
               initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}

@@ -4,8 +4,10 @@ import { CheckCircle2, ChevronRight, Hash, ShieldAlert } from 'lucide-react';
 import { SEO } from '../../components/alternative/SEO';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
 import { COMPANY_INFO } from '../../constants';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 export const Quote: React.FC = () => {
+  const { t, language } = useLanguage();
   const [sector, setSector] = useState<'construction' | 'materials' | 'coal' | 'software'>(
     'construction'
   );
@@ -93,18 +95,22 @@ export const Quote: React.FC = () => {
       className="pt-32 pb-block-gap"
     >
       <SEO
-        title="Dinamik Teklif ve Keşif Yönetimi"
-        description="Müteahhitlik, hazır inşaat malzemesi tedariki, toptan kömür tedariki ve Tutar.io / CloudBook lisansları için anlık teklif talep formu."
+        title={t('quote.title')}
+        description={
+          language === 'tr'
+            ? 'Müteahhitlik, hazır inşaat malzemesi tedariki, toptan kömür tedariki ve Tutar.io / CloudBook lisansları için anlık teklif talep formu.'
+            : 'Dynamic budgeting and price specifications for contracting, raw building supply, high-calorie coal, and digital licenses.'
+        }
       />
 
       <div className="max-w-[1440px] mx-auto px-margin">
         {/* Header */}
         <div className="border-b-4 border-primary pb-8 mb-12">
           <span className="font-mono text-xs tracking-[0.2em] text-secondary uppercase block mb-3">
-            // OTOMATİK MALİYETE ANALİZİ
+            // {language === 'tr' ? 'OTOMATİK MALİYET ANALİZİ' : 'AUTOMATED STATIC BUDGETING'}
           </span>
-          <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary leading-none">
-            TEKLİF KEŞİF TALEBİ
+          <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary leading-none font-sans">
+            {t('quote.title')}
           </h1>
         </div>
 
@@ -117,7 +123,7 @@ export const Quote: React.FC = () => {
                   {/* Selector Tabs */}
                   <div className="mb-10">
                     <span className="font-mono text-xs text-secondary font-bold uppercase mb-3 block">
-                      HİZMET ALANINI SEÇİNİZ:
+                      {t('quote.sectorTitle')}:
                     </span>
                     <div className="grid grid-cols-2 sm:grid-cols-4 border-4 border-primary bg-primary gap-1">
                       <button
@@ -125,28 +131,28 @@ export const Quote: React.FC = () => {
                         onClick={() => setSector('construction')}
                         className={`p-4 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${sector === 'construction' ? 'bg-white text-primary' : 'bg-primary text-white hover:bg-neutral-800'}`}
                       >
-                        Taahhüt
+                        {t('quote.construction')}
                       </button>
                       <button
                         type="button"
                         onClick={() => setSector('materials')}
                         className={`p-4 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${sector === 'materials' ? 'bg-white text-primary' : 'bg-primary text-white hover:bg-neutral-800'}`}
                       >
-                        Malzeme
+                        {t('quote.materials')}
                       </button>
                       <button
                         type="button"
                         onClick={() => setSector('coal')}
                         className={`p-4 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${sector === 'coal' ? 'bg-white text-primary' : 'bg-primary text-white hover:bg-neutral-800'}`}
                       >
-                        Kömür Tedarik
+                        {t('quote.coal')}
                       </button>
                       <button
                         type="button"
                         onClick={() => setSector('software')}
                         className={`p-4 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${sector === 'software' ? 'bg-white text-primary' : 'bg-primary text-white hover:bg-neutral-800'}`}
                       >
-                        Dijital / Yazılım
+                        {t('quote.software')}
                       </button>
                     </div>
                   </div>
@@ -159,14 +165,14 @@ export const Quote: React.FC = () => {
                           htmlFor="name"
                           className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                         >
-                          Ad Soyad *
+                          {t('contact.fullName')} *
                         </label>
                         <input
                           type="text"
                           id="name"
                           name="name"
                           required
-                          placeholder="Adınız Soyadınız"
+                          placeholder={t('contact.placeholderName')}
                           value={formData.name}
                           onChange={handleChange}
                           className="w-full border-2 border-primary p-3 focus:bg-primary/5 focus:outline-none transition-colors font-sans text-sm"
@@ -177,13 +183,13 @@ export const Quote: React.FC = () => {
                           htmlFor="company"
                           className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                         >
-                          Şirket / Kurum Adı
+                          {t('quote.fields.companyName')}
                         </label>
                         <input
                           type="text"
                           id="company"
                           name="company"
-                          placeholder="Opsiyonel (Örn. Yapı Ltd.)"
+                          placeholder={t('quote.fields.companyPlaceholder')}
                           value={formData.company}
                           onChange={handleChange}
                           className="w-full border-2 border-primary p-3 focus:bg-primary/5 focus:outline-none transition-colors font-sans text-sm"
@@ -197,14 +203,14 @@ export const Quote: React.FC = () => {
                           htmlFor="email"
                           className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                         >
-                          E-Posta Adresi *
+                          {t('contact.email')} *
                         </label>
                         <input
                           type="email"
                           id="email"
                           name="email"
                           required
-                          placeholder="ornek@alanadi.com"
+                          placeholder={t('contact.placeholderEmail')}
                           value={formData.email}
                           onChange={handleChange}
                           className="w-full border-2 border-primary p-3 focus:bg-primary/5 focus:outline-none transition-colors font-sans text-sm"
@@ -215,14 +221,14 @@ export const Quote: React.FC = () => {
                           htmlFor="phone"
                           className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                         >
-                          Telefon Numarası *
+                          {t('contact.phone')} *
                         </label>
                         <input
                           type="tel"
                           id="phone"
                           name="phone"
                           required
-                          placeholder="+90 5XX XXX XX XX"
+                          placeholder={t('contact.placeholderPhone')}
                           value={formData.phone}
                           onChange={handleChange}
                           className="w-full border-2 border-primary p-3 focus:bg-primary/5 focus:outline-none transition-colors font-sans text-sm"
@@ -239,7 +245,7 @@ export const Quote: React.FC = () => {
                               htmlFor="constructionType"
                               className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                             >
-                              YAPI TAAHHÜT MODELİ
+                              {t('quote.fields.taahhutModel')}
                             </label>
                             <select
                               id="constructionType"
@@ -248,11 +254,19 @@ export const Quote: React.FC = () => {
                               onChange={handleChange}
                               className="w-full border-2 border-primary p-3 bg-white focus:outline-none font-sans text-sm"
                             >
-                              <option value="Kat Karşılığı Taahhüt">Kat Karşılığı Taahhüt</option>
-                              <option value="Anahtar Teslim İnşaat">Anahtar Teslim İnşaat</option>
-                              <option value="Kentsel Dönüşüm">Kentsel Dönüşüm</option>
+                              <option value="Kat Karşılığı Taahhüt">
+                                {t('quote.models.katKarsiligi')}
+                              </option>
+                              <option value="Anahtar Teslim İnşaat">
+                                {t('quote.models.anahtarTeslim')}
+                              </option>
+                              <option value="Kentsel Dönüşüm">
+                                {language === 'tr' ? 'Kentsel Dönüşüm' : 'Urban Renewal'}
+                              </option>
                               <option value="Komple Daire / Bina Tadilatı">
-                                Komple Daire / Bina Tadilatı
+                                {language === 'tr'
+                                  ? 'Komple Daire / Bina Tadilatı'
+                                  : 'Full Apartment / Building Renovation'}
                               </option>
                             </select>
                           </div>
@@ -261,13 +275,13 @@ export const Quote: React.FC = () => {
                               htmlFor="areaSize"
                               className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                             >
-                              PROJE ALANI (m²)
+                              {t('quote.fields.projectArea')}
                             </label>
                             <input
                               type="number"
                               id="areaSize"
                               name="areaSize"
-                              placeholder="Örn: 450"
+                              placeholder={t('quote.fields.projectAreaPlaceholder')}
                               value={formData.areaSize}
                               onChange={handleChange}
                               className="w-full border-2 border-primary p-3 focus:bg-primary/5 focus:outline-none transition-colors font-sans text-sm"
@@ -282,13 +296,17 @@ export const Quote: React.FC = () => {
                             htmlFor="materialRequest"
                             className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                           >
-                            İSTEDİĞİNİZ MALZEME DETAYI
+                            {t('quote.fields.materialType')}
                           </label>
                           <textarea
                             id="materialRequest"
                             name="materialRequest"
                             rows={3}
-                            placeholder="Kaba İnşaat Malzemeleri, Demir, C30 Hazır Beton numuneleri vb..."
+                            placeholder={
+                              language === 'tr'
+                                ? 'Kaba İnşaat Malzemeleri, Demir, C30 Hazır Beton numuneleri vb...'
+                                : 'Raw Concrete, Corrugated Steel, C30 Ready-mix specimens...'
+                            }
                             value={formData.materialRequest}
                             onChange={handleChange}
                             className="w-full border-2 border-primary p-3 focus:bg-primary/5 focus:outline-none transition-colors font-sans text-sm resize-none"
@@ -302,13 +320,13 @@ export const Quote: React.FC = () => {
                             htmlFor="coalAmount"
                             className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                           >
-                            TALEP EDİLEN REZERV (TON)
+                            {t('quote.fields.quantity')}
                           </label>
                           <input
                             type="number"
                             id="coalAmount"
                             name="coalAmount"
-                            placeholder="Toptan alım tonaj miktarını belirtiniz (Örn. 24)"
+                            placeholder={t('quote.fields.quantityPlaceholder')}
                             value={formData.coalAmount}
                             onChange={handleChange}
                             className="w-full border-2 border-primary p-3 focus:bg-primary/5 focus:outline-none transition-colors font-sans text-sm"
@@ -322,7 +340,7 @@ export const Quote: React.FC = () => {
                             htmlFor="softwarePackage"
                             className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                           >
-                            DİJİTAL SÜRÜM / LİSANS
+                            {t('quote.fields.softwareApp')}
                           </label>
                           <select
                             id="softwarePackage"
@@ -332,16 +350,20 @@ export const Quote: React.FC = () => {
                             className="w-full border-2 border-primary p-3 bg-white focus:outline-none font-sans text-sm"
                           >
                             <option value="Tutar.io Muhasebe Standard">
-                              Tutar.io Muhasebe - Solo Lisans
+                              {t('quote.softwaresList.tutario')}
                             </option>
                             <option value="Tutar.io Pro Multi-Company">
-                              Tutar.io Pro - Çoklu Şirket Yönetimi
+                              {language === 'tr'
+                                ? 'Tutar.io Pro - Çoklu Şirket Yönetimi'
+                                : 'Tutar.io Pro - Multi-Company Management'}
                             </option>
                             <option value="CloudBook Enterprise">
-                              CloudBook - Çok Katmanlı Enterprise Bulut Sistemi
+                              {t('quote.softwaresList.cloudbook')}
                             </option>
                             <option value="Tutar + Cloudbook Premium Kombin">
-                              Tutar & CloudBook - Tam Dijital Çözüm Paketi
+                              {language === 'tr'
+                                ? 'Tutar & CloudBook - Tam Dijital Çözüm Paketi'
+                                : 'Tutar & CloudBook - Complete Digital Suite'}
                             </option>
                           </select>
                         </div>
@@ -353,13 +375,13 @@ export const Quote: React.FC = () => {
                         htmlFor="notes"
                         className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                       >
-                        Özel Notlar / Ek Şartnameler
+                        {t('quote.fields.notes')}
                       </label>
                       <textarea
                         id="notes"
                         name="notes"
                         rows={4}
-                        placeholder="Örn: Zemin etüdü yapıldı, imar izinleri alındı..."
+                        placeholder={t('quote.fields.notesPlaceholder')}
                         value={formData.notes}
                         onChange={handleChange}
                         className="w-full border-2 border-primary p-3 focus:bg-primary/5 focus:outline-none transition-colors font-sans text-sm resize-none"
@@ -373,9 +395,7 @@ export const Quote: React.FC = () => {
                       disabled={isSubmitting}
                       className="w-full flex justify-between items-center py-4"
                     >
-                      <span>
-                        {isSubmitting ? 'TEKLİF ŞABLONU ÜRETİLİYOR...' : 'TEKLİF TALEBİNİ GÖNDER'}
-                      </span>
+                      <span>{isSubmitting ? t('quote.submitting') : t('quote.submitBtn')}</span>
                       <ChevronRight size={16} />
                     </BrutalistButton>
                   </form>
@@ -392,18 +412,16 @@ export const Quote: React.FC = () => {
                   </div>
 
                   <h3 className="font-serif text-3xl font-bold uppercase mb-2 text-green-900">
-                    SİSTEM KEŞFİ YAPILDI
+                    {t('quote.successTitle')}
                   </h3>
                   <p className="text-sm font-sans mb-8">
-                    Teklif ve şartname ön-talebiniz {COMPANY_INFO.email} idaresine başarıyla
-                    iletilmiştir. Yapı mühendislerimiz detayları en kısa sürede analiz ederek size
-                    e-posta ve telefon üzerinden bir teklif tablosu gönderecektir.
+                    {t('quote.successDesc').replace('{email}', COMPANY_INFO.email)}
                   </p>
 
                   <div className="border-4 border-green-200 bg-white p-6 max-w-sm mx-auto shadow-sm">
                     <div className="flex items-center gap-2 justify-center text-secondary font-mono text-xs mb-1">
                       <Hash size={14} className="opacity-40" />
-                      <span>TEKLİF PROTOKOL NO:</span>
+                      <span>{t('quote.ticketLabel')}</span>
                     </div>
                     <span className="font-mono font-bold text-2xl text-primary">{ticketId}</span>
                   </div>
@@ -412,7 +430,7 @@ export const Quote: React.FC = () => {
                     onClick={() => setSubmitSuccess(false)}
                     className="mt-8 text-xs font-mono font-bold uppercase underline hover:no-underline text-primary cursor-pointer"
                   >
-                    YENİ BİR TEKLİF TALEBİ GÖNDER
+                    {t('quote.newBtn')}
                   </button>
                 </motion.div>
               )}
@@ -423,28 +441,27 @@ export const Quote: React.FC = () => {
           <div className="col-span-12 lg:col-span-4 flex flex-col gap-8">
             <div className="bg-primary text-on-primary p-8 md:p-10 border-4 border-primary pb-block-gap">
               <span className="font-mono text-xs text-on-primary/50 block mb-2">
-                // TEKLİF REHBERİ
+                // {language === 'tr' ? 'TEKLİF REHBERİ' : 'PROPOSAL GUIDELINE'}
               </span>
-              <h4 className="font-serif text-2xl uppercase font-bold text-white mb-6">
-                MÜHENDİSLİK KEŞİFLERİ
+              <h4 className="font-serif text-2xl uppercase font-bold text-white mb-6 font-sans">
+                {t('quote.infoTitle')}
               </h4>
               <p className="text-sm opacity-80 leading-relaxed mb-6 font-sans">
-                Tüm tekliflerimiz yerinde teknik analiz yapıldıktan sonra kesinlik kazanır. Form
-                üzerinden gönderilen veriler bir ön-şablon oluşturmak için kullanılır.
+                {t('quote.infoDesc')}
               </p>
 
               <ul className="space-y-4 text-xs font-mono opacity-90">
                 <li className="flex gap-2">
                   <span className="font-bold text-white">[01]</span>
-                  <span>Şeffaf maliyet hesaplamaları.</span>
+                  <span>{t('quote.feature1').replace('[01] ', '')}</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold text-white">[02]</span>
-                  <span>Zemin koşullarına uygun statik bütçeleme.</span>
+                  <span>{t('quote.feature2').replace('[02] ', '')}</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold text-white">[03]</span>
-                  <span>Yazılım lisansları anında teslim edilir.</span>
+                  <span>{t('quote.feature3').replace('[03] ', '')}</span>
                 </li>
               </ul>
             </div>
@@ -454,13 +471,13 @@ export const Quote: React.FC = () => {
                 <ShieldAlert size={24} className="flex-shrink-0 mt-0.5" />
                 <div>
                   <span className="font-mono text-[9px] text-secondary tracking-widest block mb-1 uppercase">
-                    ÖNEMLİ BİLGİLENDİRME
+                    {t('quote.safetyTitle')}
                   </span>
-                  <h5 className="font-mono text-xs font-bold uppercase mb-2">FORM GÜVENLİĞİ</h5>
-                  <p className="text-xs text-secondary leading-relaxed">
-                    Bizimle paylaştığınız tüm kişisel ve kurumsal bilgiler Kişisel Verileri Koruma
-                    Kanunu (KVKK) uyarınca kesinlikle gizli tutulur ve şifrelenmiş sunucularımızda
-                    saklanır.
+                  <h5 className="font-mono text-xs font-bold uppercase mb-2">
+                    {language === 'tr' ? 'FORM GÜVENLİĞİ' : 'DATA PROTECTION'}
+                  </h5>
+                  <p className="text-xs text-secondary leading-relaxed font-sans">
+                    {t('quote.safetyDesc')}
                   </p>
                 </div>
               </div>

@@ -16,9 +16,11 @@ import { Project, FloorPlan, FloorPlanRoom } from '../../types';
 import { ZoomLightbox } from '../../components/ZoomLightbox';
 import SEO from '../../components/SEO';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const ProjectDetail: React.FC = () => {
   const { theme } = useTheme();
+  const { t, language } = useLanguage();
   const isModern = theme === 'alternative';
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -38,8 +40,15 @@ const ProjectDetail: React.FC = () => {
 
   if (!project) return null;
 
+  const projKey = project.id === 'proj-01' ? 'p01' : project.id === 'proj-02' ? 'p02' : 'p03';
+  const translatedTitle = t(`projects.${projKey}.title`) as string;
+  const translatedCategory = t(`projects.${projKey}.category`) as string;
+  const translatedDesc = t(`projects.${projKey}.description`) as string;
+
   const galleryImages = project.images || [project.imageUrl];
   const nextProject = PROJECTS[(PROJECTS.findIndex((p) => p.id === id) + 1) % PROJECTS.length];
+  const nextKey =
+    nextProject.id === 'proj-01' ? 'p01' : nextProject.id === 'proj-02' ? 'p02' : 'p03';
 
   return (
     <motion.div
@@ -49,10 +58,12 @@ const ProjectDetail: React.FC = () => {
       className={`pt-32 pb-block-gap ${isModern ? 'pt-24' : ''}`}
     >
       <SEO
-        title={project.title}
+        title={translatedTitle}
         description={
-          project.description ||
-          `Bu proje ${COMPANY_INFO.legalNameShortUpper}'nın yüksek mühendislik standartları ve yenilikçi tasarım anlayışıyla hayata geçirilmiştir.`
+          translatedDesc ||
+          (language === 'tr'
+            ? `Bu proje ${COMPANY_INFO.legalNameShortUpper}'nın yüksek mühendislik standartları ve yenilikçi tasarım anlayışıyla hayata geçirilmiştir.`
+            : `This project was brought to life under ${COMPANY_INFO.legalNameShortUpper}'s high engineering standards and innovative design philosophy.`)
         }
         ogImage={project.imageUrl}
       />
@@ -68,7 +79,7 @@ const ProjectDetail: React.FC = () => {
             >
               <ArrowLeft size={16} />
             </div>
-            PROJELERE DÖN
+            {language === 'tr' ? 'PROJELERE DÖN' : 'BACK TO PROJECTS'}
           </Link>
           <span
             className={`font-mono text-[10px] text-secondary/40 uppercase tracking-widest ${isModern ? 'text-[8px] tracking-[0.15em]' : ''}`}
@@ -85,12 +96,12 @@ const ProjectDetail: React.FC = () => {
             <span
               className={`font-label-caps text-secondary text-sm tracking-[0.2em] mb-4 block uppercase ${isModern ? 'text-xs tracking-[0.15em] mb-3' : ''}`}
             >
-              {project.category}
+              {translatedCategory}
             </span>
             <h1
               className={`text-[10vw] lg:text-headline-xl text-primary leading-[0.9] uppercase mb-8 ${isModern ? 'lg:text-2xl mb-6' : ''}`}
             >
-              {project.title.split(' ').map((word, i) => (
+              {translatedTitle.split(' ').map((word, i) => (
                 <React.Fragment key={i}>
                   {word}
                   <br className={i === 0 ? 'hidden lg:block' : ''} />
@@ -102,10 +113,12 @@ const ProjectDetail: React.FC = () => {
             className={`col-span-12 lg:col-span-4 border-l-4 border-primary pl-8 pb-4 ${isModern ? 'border-l-[3px] pl-6 pb-3' : ''}`}
           >
             <p
-              className={`text-body-lg text-secondary leading-relaxed ${isModern ? 'text-sm' : ''}`}
+              className={`text-body-lg text-secondary leading-relaxed ${isModern ? 'text-sm' : ''} font-sans`}
             >
-              {project.description ||
-                `Bu proje ${COMPANY_INFO.legalNameShortUpper}'nın yüksek mühendislik standartları ve yenilikçi tasarım anlayışıyla hayata geçirilmiştir.`}
+              {translatedDesc ||
+                (language === 'tr'
+                  ? `Bu proje ${COMPANY_INFO.legalNameShortUpper}'nın yüksek mühendislik standartları ve yenilikçi tasarım anlayışıyla hayata geçirilmiştir.`
+                  : `This project was brought to life under ${COMPANY_INFO.legalNameShortUpper}'s high engineering standards and innovative design philosophy.`)}
             </p>
           </div>
         </div>
@@ -120,14 +133,18 @@ const ProjectDetail: React.FC = () => {
             <div
               onClick={() => setIsGalleryLightboxOpen(true)}
               className={`aspect-[16/9] border-heavy bg-surface-container overflow-hidden group relative cursor-zoom-in ${isModern ? 'border-4' : ''}`}
-              title="Tam Ekran ve Zoom için tıklayın"
+              title={
+                language === 'tr'
+                  ? 'Tam Ekran ve Zoom için tıklayın'
+                  : 'Click for Fullscreen and Zoom'
+              }
             >
               {/* Floating Hover Zoom Pill */}
               <div
                 className={`absolute top-6 left-6 z-10 opacity-0 group-hover:opacity-100 transition-all ${isModern ? 'duration-200' : 'duration-300'} bg-primary/90 text-on-primary text-[10px] font-mono uppercase tracking-widest px-3 py-1.5 flex items-center gap-2 border border-on-primary/10 select-none`}
               >
                 <ZoomIn size={12} />
-                BÜYÜT / ZOOM
+                {language === 'tr' ? 'BÜYÜT / ZOOM' : 'EXPAND / ZOOM'}
               </div>
 
               <AnimatePresence mode="wait">
@@ -138,7 +155,7 @@ const ProjectDetail: React.FC = () => {
                   exit={{ opacity: 0 }}
                   transition={{ duration: isModern ? 0.4 : 0.6 }}
                   src={galleryImages[activeImage]}
-                  alt={`${project.title} - ${activeImage + 1}`}
+                  alt={`${translatedTitle} - ${activeImage + 1}`}
                   className={`w-full h-full object-cover contrast-110 group-hover:scale-[1.03] transition-transform ${isModern ? 'duration-200' : 'duration-500'}`}
                   referrerPolicy="no-referrer"
                 />
@@ -184,7 +201,7 @@ const ProjectDetail: React.FC = () => {
               <h3
                 className={`font-serif text-headline-sm uppercase mb-10 border-b border-on-primary/20 pb-4 ${isModern ? 'text-base mb-6 pb-3' : ''}`}
               >
-                Teknik Detaylar
+                {language === 'tr' ? 'Teknik Detaylar' : 'Technical Details'}
               </h3>
 
               <div className={`space-y-8 ${isModern ? 'space-y-5' : ''}`}>
@@ -197,12 +214,12 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-label-caps text-[10px] tracking-widest opacity-60 block mb-1 ${isModern ? 'text-[8px] tracking-[0.1em]' : ''}`}
                     >
-                      LOKASYON
+                      {language === 'tr' ? 'LOKASYON' : 'LOCATION'}
                     </span>
                     <p
                       className={`font-sans font-bold text-lg leading-tight ${isModern ? 'text-sm' : ''}`}
                     >
-                      {project.location}
+                      {t(`projects.${projKey}.location`)}
                     </p>
                   </div>
                 </div>
@@ -216,12 +233,12 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-label-caps text-[10px] tracking-widest opacity-60 block mb-1 ${isModern ? 'text-[8px] tracking-[0.1em]' : ''}`}
                     >
-                      TOPLAM ALAN
+                      {language === 'tr' ? 'TOPLAM ALAN' : 'GROSS AREA'}
                     </span>
                     <p
                       className={`font-sans font-bold text-lg leading-tight ${isModern ? 'text-sm' : ''}`}
                     >
-                      {project.area}
+                      {t(`projects.${projKey}.area`) || project.area}
                     </p>
                   </div>
                 </div>
@@ -236,12 +253,12 @@ const ProjectDetail: React.FC = () => {
                       <span
                         className={`font-label-caps text-[10px] tracking-widest opacity-60 block mb-1 ${isModern ? 'text-[8px] tracking-[0.1em]' : ''}`}
                       >
-                        BİRİM SAYISI
+                        {language === 'tr' ? 'BİRİM SAYISI' : 'NUMBER OF UNITS'}
                       </span>
                       <p
                         className={`font-sans font-bold text-lg leading-tight ${isModern ? 'text-sm' : ''}`}
                       >
-                        {project.units}
+                        {t(`projects.${projKey}.units`) || project.units}
                       </p>
                     </div>
                   </div>
@@ -256,17 +273,19 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-label-caps text-[10px] tracking-widest opacity-60 block mb-1 ${isModern ? 'text-[8px] tracking-[0.1em]' : ''}`}
                     >
-                      ÖZELLİKLER
+                      {language === 'tr' ? 'ÖZELLİKLER' : 'FEATURES'}
                     </span>
                     <div className={`flex flex-wrap gap-2 mt-2 ${isModern ? 'gap-1 mt-1' : ''}`}>
-                      {project.features.split(',').map((feature, i) => (
-                        <span
-                          key={i}
-                          className={`bg-on-primary/10 text-[10px] font-mono px-2 py-1 uppercase ${isModern ? 'text-[8px] px-1 py-0.5' : ''}`}
-                        >
-                          {feature.trim()}
-                        </span>
-                      ))}
+                      {((t(`projects.${projKey}.features`) || project.features) as string)
+                        .split(',')
+                        .map((feature, i) => (
+                          <span
+                            key={i}
+                            className={`bg-on-primary/10 text-[10px] font-mono px-2 py-1 uppercase ${isModern ? 'text-[8px] px-1 py-0.5' : ''}`}
+                          >
+                            {feature.trim()}
+                          </span>
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -289,16 +308,16 @@ const ProjectDetail: React.FC = () => {
             <div
               className={`flex-shrink-0 font-label-caps text-sm tracking-widest uppercase ${isModern ? 'text-xs tracking-[0.15em]' : ''}`}
             >
-              Mimari Yaklaşım
+              {language === 'tr' ? 'Mimari Yaklaşım' : 'Architectural Approach'}
             </div>
           </div>
           <div className={`grid md:grid-cols-2 gap-12 ${isModern ? 'gap-8' : ''}`}>
             <p
-              className={`text-body-lg text-primary first-letter:text-5xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:mt-1 leading-relaxed ${isModern ? 'text-sm first-letter:text-3xl' : ''}`}
+              className={`text-body-lg text-primary first-letter:text-5xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:mt-1 leading-relaxed ${isModern ? 'text-sm first-letter:text-3xl' : ''} font-sans`}
             >
-              Mühendisliğin estetikle buluştuğu bu projede, modern dokuların gücünü olağanüstü
-              dayanıklılık kriterleriyle birleştirdik. Statik hesaplamaların ötesinde, her
-              santimetre karede güveni ve sakinliği hissettirmeyi amaçladık.
+              {language === 'tr'
+                ? 'Mühendisliğin estetikle buluştuğu bu projede, modern dokuların gücünü olağanüstü dayanıklılık kriterleriyle birleştirdik. Statik hesaplamaların ötesinde, her santimetre karede güveni ve sakinliği hissettirmeyi amaçladık.'
+                : 'In this project where engineering meets aesthetics, we combined the power of modern textures with extraordinary durability criteria. Beyond static calculations, we aimed to evoke trust and serenity in every square centimeter.'}
             </p>
             <div className={`space-y-6 ${isModern ? 'space-y-4' : ''}`}>
               {project.id === 'proj-01' && (
@@ -313,7 +332,9 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-sans text-body-md uppercase font-medium ${isModern ? 'text-sm' : ''}`}
                     >
-                      Betonarme Kalitesi Sınıfı: C30
+                      {language === 'tr'
+                        ? 'Betonarme Kalitesi Sınıfı: C30'
+                        : 'Reinforced Concrete Quality Class: C30'}
                     </span>
                   </div>
                   <div
@@ -326,7 +347,9 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-sans text-body-md uppercase font-medium ${isModern ? 'text-sm' : ''}`}
                     >
-                      Depreme Karşı Dayanıklı Güçlü Bloklar
+                      {language === 'tr'
+                        ? 'Depreme Karşı Dayanıklı Güçlü Bloklar'
+                        : 'Earthquake Resistant Strong Blocks'}
                     </span>
                   </div>
                   <div
@@ -339,7 +362,9 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-sans text-body-md uppercase font-medium ${isModern ? 'text-sm' : ''}`}
                     >
-                      Çelik Destekli Ahşap Çatı Sistemi
+                      {language === 'tr'
+                        ? 'Çelik Destekli Ahşap Çatı Sistemi'
+                        : 'Steel-Supported Timber Roof System'}
                     </span>
                   </div>
                   <div
@@ -352,7 +377,9 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-sans text-body-md uppercase font-medium ${isModern ? 'text-sm' : ''}`}
                     >
-                      Merkezi Uydu ve Görüntülü Diafon Altyapısı
+                      {language === 'tr'
+                        ? 'Merkezi Uydu ve Görüntülü Diafon Altyapısı'
+                        : 'Central Satellite and Video Intercom Infrastructure'}
                     </span>
                   </div>
                 </>
@@ -370,7 +397,9 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-sans text-body-md uppercase font-medium ${isModern ? 'text-sm' : ''}`}
                     >
-                      Altyapı Standartı: Komple Yenilenen Sıfır Tesisat
+                      {language === 'tr'
+                        ? 'Altyapı Standartı: Komple Yenilenen Sıfır Tesisat'
+                        : 'Infrastructure Standard: Completely Renewed Brand-New Plumbing'}
                     </span>
                   </div>
                   <div
@@ -383,7 +412,9 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-sans text-body-md uppercase font-medium ${isModern ? 'text-sm' : ''}`}
                     >
-                      A'dan Z'ye Anahtar Teslim İç Mekan Modernizasyonu
+                      {language === 'tr'
+                        ? "A'dan Z'ye Anahtar Teslim İç Mekan Modernizasyonu"
+                        : 'Turnkey Interior Modernization from A to Z'}
                     </span>
                   </div>
                   <div
@@ -396,7 +427,9 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-sans text-body-md uppercase font-medium ${isModern ? 'text-sm' : ''}`}
                     >
-                      Enerji Tasarruflu Homojen Yerden Isıtma Sistemi
+                      {language === 'tr'
+                        ? 'Enerji Tasarruflu Homojen Yerden Isıtma Sistemi'
+                        : 'Energy-Efficient Homogeneous Underfloor Heating System'}
                     </span>
                   </div>
                   <div
@@ -409,7 +442,9 @@ const ProjectDetail: React.FC = () => {
                     <span
                       className={`font-sans text-body-md uppercase font-medium ${isModern ? 'text-sm' : ''}`}
                     >
-                      Entegre Akıllı Ev Otomasyonu & Otomatik Kontroller
+                      {language === 'tr'
+                        ? 'Entegre Akıllı Ev Otomasyonu & Otomatik Kontroller'
+                        : 'Integrated Smart Home Automation & Automated Controls'}
                     </span>
                   </div>
                 </>
@@ -417,33 +452,28 @@ const ProjectDetail: React.FC = () => {
 
               {project.id !== 'proj-01' && project.id !== 'proj-02' && (
                 <>
-                  <div
-                    className={`flex items-center gap-4 text-secondary ${isModern ? 'gap-3' : ''}`}
-                  >
-                    <CheckCircle2
-                      size={18}
-                      className={`text-primary ${isModern ? 'size-4' : ''}`}
-                    />
-                    <span
-                      className={`font-sans text-body-md uppercase font-medium ${isModern ? 'text-sm' : ''}`}
-                    ></span>
-                  </div>
                   <div className="flex items-center gap-4 text-secondary">
                     <CheckCircle2 size={18} className="text-primary" />
                     <span className="font-sans text-body-md uppercase font-medium">
-                      Sürdürülebilirlik: LEED Altın Sertifikalı Yapı Standartları
+                      {language === 'tr'
+                        ? 'Sürdürülebilirlik: LEED Altın Sertifikalı Yapı Standartları'
+                        : 'Sustainability: LEED Gold Certified Building Standards'}
                     </span>
                   </div>
                   <div className="flex items-center gap-4 text-secondary">
                     <CheckCircle2 size={18} className="text-primary" />
                     <span className="font-sans text-body-md uppercase font-medium">
-                      Gelişmiş Yağmur Suyu ve Enerji Geri Kazanım Sistemleri
+                      {language === 'tr'
+                        ? 'Gelişmiş Yağmur Suyu ve Enerji Geri Kazanım Sistemleri'
+                        : 'Advanced Rainwater and Energy Recovery Systems'}
                     </span>
                   </div>
                   <div className="flex items-center gap-4 text-secondary">
                     <CheckCircle2 size={18} className="text-primary" />
                     <span className="font-sans text-body-md uppercase font-medium">
-                      Yüksek Yoğunluklu Isı Köprüsü Engelli Kaplama
+                      {language === 'tr'
+                        ? 'Yüksek Yoğunluklu Isı Köprüsü Engelli Kaplama'
+                        : 'High-Density Thermal Bridge Preventative Cladding'}
                     </span>
                   </div>
                 </>
@@ -456,14 +486,16 @@ const ProjectDetail: React.FC = () => {
         <div className="border-t-4 border-primary pt-20 mt-20">
           <Link to={`/projeler/${nextProject.id}`} className="group block">
             <span className="font-label-caps text-secondary text-sm tracking-widest mb-4 block uppercase">
-              Sonraki Proje
+              {language === 'tr' ? 'Sonraki Proje' : 'Next Project'}
             </span>
             <div className="flex flex-col md:flex-row justify-between items-end gap-8">
               <h2 className="text-headline-lg md:text-headline-xl text-primary uppercase leading-none group-hover:text-secondary transition-colors">
-                {nextProject.title}
+                {t(`projects.${nextKey}.title`) as string}
               </h2>
               <div className="flex items-center gap-6 text-primary mb-2">
-                <span className="font-label-caps text-sm tracking-widest uppercase">Görüntüle</span>
+                <span className="font-label-caps text-sm tracking-widest uppercase">
+                  {language === 'tr' ? 'Görüntüle' : 'View'}
+                </span>
                 <div className="w-16 h-16 border-2 border-primary flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-all">
                   <ArrowRight size={24} />
                 </div>
@@ -486,13 +518,43 @@ const ProjectDetail: React.FC = () => {
   );
 };
 
-// Sub-component for interactive floor plan viewing
 const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans }) => {
   const [activePlanIdx, setActivePlanIdx] = useState<number>(0);
   const [activeFloor, setActiveFloor] = useState<'down' | 'up'>('down');
   const [hoveredRoom, setHoveredRoom] = useState<string | null>(null);
   const [viewerMode, setViewerMode] = useState<'cad' | 'image'>('cad');
   const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
+  const { language, t } = useLanguage();
+
+  const getRoomName = (name: string) => {
+    const normalized = name.toLowerCase().trim();
+    if (normalized.includes('salon') && normalized.includes('üst'))
+      return t('projects.p01.roomNames.ustSalon');
+    if (normalized.includes('salon')) return t('projects.p01.roomNames.salon');
+    if (normalized.includes('yatak') && normalized.includes('ebeveyn'))
+      return t('projects.p01.roomNames.yatak') + ' (Master)';
+    if (normalized.includes('yatak')) return t('projects.p01.roomNames.yatak');
+    if (normalized.includes('oturma')) return t('projects.p01.roomNames.oturma');
+    if (normalized.includes('antre')) return t('projects.p01.roomNames.antre');
+    if (normalized.includes('mutfak')) return t('projects.p01.roomNames.mutfak');
+    if (normalized.includes('çocuk') || normalized.includes('cocuk'))
+      return t('projects.p01.roomNames.cocuk');
+    if (normalized.includes('balkon 1') || normalized.includes('balkon1'))
+      return t('projects.p01.roomNames.balkon1');
+    if (normalized.includes('balkon 2') || normalized.includes('balkon2'))
+      return t('projects.p01.roomNames.balkon2');
+    if (normalized.includes('balkon')) return 'Balcony';
+    if (normalized.includes('banyo')) return t('projects.p01.roomNames.banyo');
+    if (normalized.includes('duş') || normalized.includes('dus'))
+      return t('projects.p01.roomNames.dus');
+    if (normalized.includes('lavabo') || normalized.includes('toilet') || normalized.includes('wc'))
+      return t('projects.p01.roomNames.lavabo');
+    if (normalized.includes('oda')) return t('projects.p01.roomNames.ustOda');
+    if (normalized.includes('hol') || normalized.includes('koridor'))
+      return t('projects.p01.roomNames.hol');
+    if (normalized.includes('teras')) return t('projects.p01.roomNames.teras');
+    return name;
+  };
 
   const activePlan = floorPlans[activePlanIdx];
 
@@ -1125,10 +1187,10 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
           <span className="font-label-caps text-secondary text-sm tracking-[0.25em] mb-2 block uppercase">
-            Örnek Kat Planları
+            {language === 'tr' ? 'Örnek Kat Planları' : 'Sample Floor Plans'}
           </span>
           <h2 className="font-serif text-headline-md text-primary uppercase leading-tight">
-            Mekansal Dağılım & Ölçüler
+            {language === 'tr' ? 'Mekansal Dağılım & Ölçüler' : 'Spatial Layout & Dimensions'}
           </h2>
         </div>
 
@@ -1144,7 +1206,8 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
               }}
               className={`px-8 py-3 font-label-caps text-xs tracking-widest transition-all ${activePlanIdx === idx ? 'bg-primary text-on-primary' : 'hover:bg-primary/5 text-primary'}`}
             >
-              {plan.name} ({plan.totalArea})
+              {plan.name.replace('Daire', language === 'tr' ? 'Daire' : 'Apartment')} (
+              {plan.totalArea})
             </button>
           ))}
         </div>
@@ -1157,15 +1220,24 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
             <div className="flex items-center justify-between border-b-2 border-primary pb-3 mb-6 bg-primary/5 p-4">
               <div>
                 <span className="font-serif text-headline-sm text-primary uppercase block">
-                  {activePlan.name}
+                  {activePlan.name.replace('Daire', language === 'tr' ? 'Daire' : 'Apartment')}
                 </span>
                 <span className="font-sans text-xs text-secondary/70 uppercase block tracking-wider">
-                  {activePlan.type}
+                  {activePlan.type
+                    .replace('Örnek Daire', language === 'tr' ? 'Örnek Daire' : 'Sample Apartment')
+                    .replace(
+                      'Örnek Daire Dubleks Tipi',
+                      language === 'tr' ? 'Örnek Daire Dubleks Tipi' : 'Sample Duplex Apartment'
+                    )
+                    .replace(
+                      '3+1 Örnek Daire',
+                      language === 'tr' ? '3+1 Örnek Daire' : '3+1 Sample Apartment'
+                    )}
                 </span>
               </div>
               <div className="text-right">
                 <span className="font-mono text-xs uppercase block opacity-60">
-                  Toplam Brüt Alan
+                  {language === 'tr' ? 'Toplam Brüt Alan' : 'Total Gross Area'}
                 </span>
                 <span className="font-sans font-black text-2xl text-primary">
                   {activePlan.totalArea}
@@ -1183,7 +1255,8 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                   }}
                   className={`flex-1 py-3 text-center font-label-caps text-xs tracking-widest transition-all ${activeFloor === 'down' ? 'bg-primary text-on-primary' : 'hover:bg-primary/10 text-primary'}`}
                 >
-                  Alt Kat Planı ({activePlan.downstairsArea})
+                  {language === 'tr' ? 'Alt Kat Planı' : 'Downstairs Plan'} (
+                  {activePlan.downstairsArea})
                 </button>
                 <button
                   onClick={() => {
@@ -1192,7 +1265,8 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                   }}
                   className={`flex-1 py-3 text-center font-label-caps text-xs tracking-widest transition-all ${activeFloor === 'up' ? 'bg-primary text-on-primary' : 'hover:bg-primary/10 text-primary'}`}
                 >
-                  Üst Kat Planı ({activePlan.upstairsArea})
+                  {language === 'tr' ? 'Üst Kat Planı' : 'Upstairs Plan'} ({activePlan.upstairsArea}
+                  )
                 </button>
               </div>
             )}
@@ -1212,7 +1286,7 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                         className={`w-2 h-2 rounded-full ${isHovered ? 'bg-on-primary' : 'bg-primary'}`}
                       ></div>
                       <span className="font-sans font-semibold text-body-md uppercase tracking-wide">
-                        {room.name}
+                        {getRoomName(room.name)}
                       </span>
                     </div>
                     <span
@@ -1228,8 +1302,9 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
 
           <div className="mt-8 border-l-4 border-primary pl-6 py-2">
             <p className="font-mono text-[10px] text-secondary/40 leading-relaxed uppercase tracking-wider">
-              * ÖLÇEKSİZ MİMARİ ETÜT ÇALISMASI / DETAY SÜSLEMELER, MOBİLYALAR, DUVAR VE DOSEME
-              KAPLAMALARI GÖRSELLEŞTİRME AMAÇLI OLUP SATIS KAPSAMINDA DEĞİLDİR.
+              {language === 'tr'
+                ? '* ÖLÇEKSİZ MİMARİ ETÜT ÇALISMASI / DETAY SÜSLEMELER, MOBİLYALAR, DUVAR VE DOSEME KAPLAMALARI GÖRSELLEŞTİRME AMAÇLI OLUP SATIS KAPSAMINDA DEĞİLDİR.'
+                : '* UN-SCALED ARCHITECTURAL CONCEPT STUDY / FURNITURE, FINISHES, WALL AND FLOOR COVERINGS ARE FOR VISUALIZATION PURPOSES ONLY AND NOT INCLUDED IN SALES.'}
             </p>
           </div>
         </div>
@@ -1266,7 +1341,7 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                         : 'text-primary hover:bg-primary/5'
                     }`}
                   >
-                    Orijinal Plan (PNG)
+                    {language === 'tr' ? 'Orijinal Plan (PNG)' : 'Original Plan (PNG)'}
                   </button>
                   <button
                     onClick={() => setViewerMode('cad')}
@@ -1276,29 +1351,33 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                         : 'text-primary hover:bg-primary/5'
                     }`}
                   >
-                    CAD Çizimi
+                    {language === 'tr' ? 'CAD Çizimi' : 'CAD Drawing'}
                   </button>
                 </div>
               )}
               <button
                 onClick={() => setIsLightboxOpen(true)}
                 className="bg-primary hover:bg-secondary text-on-primary hover:text-on-secondary px-3 py-1.5 border-2 border-primary font-mono text-[9px] font-bold uppercase tracking-widest transition-colors duration-200 flex items-center gap-1.5 cursor-pointer shadow-md select-none"
-                title="Büyük Ekran Sürümü"
+                title={language === 'tr' ? 'Büyük Ekran Sürümü' : 'Large Screen Edition'}
               >
                 <Maximize2 size={10} />
-                ZOOM
+                {language === 'tr' ? 'ZOOM' : 'ZOOM'}
               </button>
             </div>
 
             <div
               onClick={() => setIsLightboxOpen(true)}
               className="relative border-2 border-dashed border-primary/20 aspect-[500/400] w-full flex items-center justify-center overflow-hidden cursor-zoom-in group/plan"
-              title="Kat planını büyük ekranda görmek için tıklayın"
+              title={
+                language === 'tr'
+                  ? 'Kat planını büyük ekranda görmek için tıklayın'
+                  : 'Click to view floor plan in large screen'
+              }
             >
               {/* Hover Fullscreen Overlay */}
               <div className="absolute top-4 left-4 z-10 opacity-0 group-hover/plan:opacity-100 transition-opacity duration-200 bg-primary/95 text-on-primary text-[9px] font-mono px-3 py-1.5 uppercase tracking-widest flex items-center gap-2 border border-on-primary/10 select-none">
                 <Maximize2 size={10} />
-                TAM EKRAN / ZOOM
+                {language === 'tr' ? 'TAM EKRAN / ZOOM' : 'FULL SCREEN / ZOOM'}
               </div>
 
               <AnimatePresence mode="wait">
@@ -1318,7 +1397,7 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                       referrerPolicy="no-referrer"
                     />
                     <div className="absolute bottom-4 right-4 bg-primary text-on-primary text-[9px] font-mono px-2 py-1 uppercase tracking-widest pointer-events-none opacity-60">
-                      DETAYLI_GÖRSEL_MODU
+                      {language === 'tr' ? 'DETAYLI_GÖRSEL_MODU' : 'DETAILED_PLAN_MODE'}
                     </div>
                   </motion.div>
                 ) : (
@@ -1359,10 +1438,12 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                       letterSpacing="0.1em"
                     >
                       <text x="0" y="0">
-                        ALAN ANALİZ TABLOSU // VERIFIED M2
+                        {language === 'tr' ? 'ALAN ANALİZ TABLOSU' : 'SPACE ANALYSIS CHART'} //
+                        VERIFIED M2
                       </text>
                       <text x="0" y="10">
-                        {COMPANY_INFO.legalNameShortUpper} AR-GE YAPISAL STATİKLİK
+                        {COMPANY_INFO.legalNameShortUpper}{' '}
+                        {language === 'tr' ? 'AR-GE YAPISAL STATİKLİK' : 'R&D STRUCTURAL ANALYSIS'}
                       </text>
                     </g>
 
@@ -1414,7 +1495,7 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                             fontSize={room.w < 100 ? '9' : '11'}
                             className={`font-sans select-none tracking-tight transition-all duration-200 uppercase ${isHovered ? 'font-black scale-105 fill-current' : 'font-semibold fill-current/80'}`}
                           >
-                            {room.name}
+                            {getRoomName(room.name)}
                           </text>
 
                           {/* Area value label */}
@@ -1438,8 +1519,10 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
             {/* HUD Status label */}
             <div className="absolute top-4 left-4 bg-primary text-on-primary text-[9px] font-mono px-3 py-1 uppercase tracking-widest pointer-events-none">
               {viewerMode === 'image'
-                ? 'HUD_STATUS: DETAILED_PLAN_JPEG'
-                : `CAD_VIEWER_LOG: ${hoveredRoom ? `HOVERED_${hoveredRoom.toUpperCase().replace(/ /g, '_')}` : 'ACTIVE_LIVE'}`}
+                ? language === 'tr'
+                  ? 'HUD_STATUS: DETAYLI_PLAN_GÖRSELİ'
+                  : 'HUD_STATUS: DETAILED_PLAN_IMAGE'
+                : `CAD_VIEWER_LOG: ${hoveredRoom ? `HOVERED_${getRoomName(hoveredRoom).toUpperCase().replace(/ /g, '_')}` : 'ACTIVE_LIVE'}`}
             </div>
           </div>
         </div>
@@ -1449,8 +1532,17 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
       <ZoomLightbox
         isOpen={isLightboxOpen}
         onClose={() => setIsLightboxOpen(false)}
-        title={activePlan.name}
-        subtitle={`${activePlan.type} // ${viewerMode === 'image' ? 'DETAYLI ORİJİNAL PLAN' : 'İNTERAKTİF CAD MODELİ'}`}
+        title={activePlan.name.replace('Daire', language === 'tr' ? 'Daire' : 'Apartment')}
+        subtitle={`${activePlan.type
+          .replace('Örnek Daire', language === 'tr' ? 'Örnek Daire' : 'Sample Apartment')
+          .replace(
+            'Örnek Daire Dubleks Tipi',
+            language === 'tr' ? 'Örnek Daire Dubleks Tipi' : 'Sample Duplex Apartment'
+          )
+          .replace(
+            '3+1 Örnek Daire',
+            language === 'tr' ? '3+1 Örnek Daire' : '3+1 Sample Apartment'
+          )} // ${viewerMode === 'image' ? (language === 'tr' ? 'DETAYLI ORİJİNAL PLAN' : 'DETAILED ORIGINAL PLAN') : language === 'tr' ? 'İNTERAKTİF CAD MODELİ' : 'INTERACTIVE CAD MODEL'}`}
         images={viewerMode === 'image' && activePlan.imageUrl ? [activePlan.imageUrl] : undefined}
         activeIndex={viewerMode === 'image' ? 0 : undefined}
       >
@@ -1492,10 +1584,12 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                 letterSpacing="0.1em"
               >
                 <text x="0" y="0">
-                  ALAN ANALİZ TABLOSU // VERIFIED M2
+                  {language === 'tr' ? 'ALAN ANALİZ TABLOSU' : 'SPACE ANALYSIS CHART'} // VERIFIED
+                  M2
                 </text>
                 <text x="0" y="10">
-                  {COMPANY_INFO.legalNameShortUpper} AR-GE YAPISAL STATİKLİK
+                  {COMPANY_INFO.legalNameShortUpper}{' '}
+                  {language === 'tr' ? 'AR-GE YAPISAL STATİKLİK' : 'R&D STRUCTURAL ANALYSIS'}
                 </text>
               </g>
 
@@ -1549,7 +1643,7 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                       fontSize={room.w < 100 ? '9' : '11'}
                       className={`font-sans select-none tracking-tight transition-all duration-200 uppercase ${isHovered ? 'font-black scale-105 fill-current text-white' : 'font-semibold fill-white/80'}`}
                     >
-                      {room.name}
+                      {getRoomName(room.name)}
                     </text>
 
                     {/* Area value label */}

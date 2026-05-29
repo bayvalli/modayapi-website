@@ -1,10 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 const PrivacyPolicy: React.FC = () => {
   const { theme } = useTheme();
+  const { t, language } = useLanguage();
   const isModern = theme === 'alternative';
 
   return (
@@ -21,52 +23,31 @@ const PrivacyPolicy: React.FC = () => {
           <h1
             className={`font-serif text-headline-lg text-primary uppercase ${isModern ? 'text-2xl' : ''}`}
           >
-            Gizlilik Politikası
+            {t('legal.privacyTitle')}
           </h1>
           <p className={`text-secondary font-sans mt-4 ${isModern ? 'text-sm mt-3' : ''}`}>
-            Son Güncelleme: Mayıs 2024
+            {language === 'tr' ? 'Son Güncelleme: 29.05.2026' : 'Last Update: 29.05.2026'}
           </p>
         </header>
 
         <div
           className={`space-y-8 font-sans text-body-md text-primary leading-relaxed ${isModern ? 'space-y-6 text-sm' : ''}`}
         >
-          <section>
-            <h2
-              className={`font-serif text-headline-sm mb-4 uppercase ${isModern ? 'text-base mb-3' : ''}`}
-            >
-              Genel Bilgilendirme
-            </h2>
-            <p>
-              {COMPANY_INFO.shortName} İnşaat A.Ş. olarak, ziyaretçilerimizin gizliliğine önem
-              veriyoruz. Bu metin, verilerinizin nasıl toplandığını ve korunduğunu açıklamaktadır.
-            </p>
+          <p className="font-mono text-xs text-primary bg-primary/5 p-4 border border-dashed border-primary mb-6">
+            {t('legal.privacyBrief')}
+          </p>
+
+          <section className="space-y-6">
+            <p>{t('legal.privacyParagraph1')}</p>
+            <p>{t('legal.privacyParagraph2')}</p>
           </section>
 
-          <section>
-            <h2
-              className={`font-serif text-headline-sm mb-4 uppercase ${isModern ? 'text-base mb-3' : ''}`}
-            >
-              Veri Güvenliği
-            </h2>
-            <p>
-              Toplanan tüm veriler, endüstri standardı güvenlik protokolleri ile korunmaktadır.
-              Teknik ofisimiz ve yazılım altyapımız, verilerinizin yetkisiz erişime karşı
-              güvenliğini sağlamak için sürekli güncellenmektedir.
-            </p>
-          </section>
-
-          <section>
-            <h2
-              className={`font-serif text-headline-sm mb-4 uppercase ${isModern ? 'text-base mb-3' : ''}`}
-            >
-              Üçüncü Taraf Paylaşımı
-            </h2>
-            <p>
-              Verileriniz, yasal zorunluluklar haricinde hiçbir şekilde üçüncü taraflar ile
-              pazarlama amacıyla paylaşılmaz.
-            </p>
-          </section>
+          <div className="border-t border-dashed border-primary/25 pt-6 font-mono text-[10px] text-primary">
+            {language === 'tr'
+              ? 'SON GÜNCELLEME: 29.05.2026 // BİLGİ İŞLEM MÜDÜRLÜĞÜ'
+              : 'LAST UPDATE: 29.05.2026 // IT DEPARTMENT'}{' '}
+            // {COMPANY_INFO.shortNameUpper}
+          </div>
         </div>
       </div>
     </motion.div>

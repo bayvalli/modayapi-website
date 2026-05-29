@@ -1,8 +1,10 @@
 import React from 'react';
 import { Projects as ProjectsSection } from '../../sections/default/Projects';
 import { motion } from 'motion/react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const Projects: React.FC = () => {
+  const { language } = useLanguage();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -19,7 +21,7 @@ const Projects: React.FC = () => {
             <span className="border-2 border-current p-2 rounded-full group-hover:bg-primary group-hover:text-surface transition-colors">
               ←
             </span>
-            ÖNCEKİ PROJELER
+            {language === 'tr' ? 'ÖNCEKİ PROJELER' : 'PREVIOUS PROJECTS'}
           </button>
           <div className="flex gap-4 font-label-caps text-lg">
             <span className="w-10 h-10 flex items-center justify-center border-2 border-primary bg-primary text-on-primary">
@@ -27,7 +29,7 @@ const Projects: React.FC = () => {
             </span>
           </div>
           <button className="group flex items-center gap-4 text-primary hover:text-secondary transition-colors font-label-caps uppercase">
-            SONRAKİ PROJELER
+            {language === 'tr' ? 'SONRAKİ PROJELER' : 'NEXT PROJECTS'}
             <span className="border-2 border-current p-2 rounded-full group-hover:bg-primary group-hover:text-surface transition-colors">
               →
             </span>

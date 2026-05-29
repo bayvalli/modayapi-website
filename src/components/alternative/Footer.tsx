@@ -1,27 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Palette, Sun, Moon } from 'lucide-react';
+import { Mail, Phone, MapPin, Palette, Sun, Moon, Globe } from 'lucide-react';
 import { Logo } from './Logo';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 export const Footer: React.FC = () => {
   const currentYear = 2026;
   const { theme, mode, toggleTheme, toggleMode } = useTheme();
+  const { language, toggleLanguage, t } = useLanguage();
 
   const quickLinks = [
-    { to: '/projeler', label: 'PROJELERİMİZ' },
-    { to: '/surec', label: 'İŞ SÜRECİ' },
-    { to: '/kurumsal', label: 'KURUMSAL' },
-    { to: '/iletisim', label: 'İLETİŞİM' },
-    { to: '/teklif-al', label: 'TEKLİF AL' },
+    { to: '/projeler', label: t('nav.projects') },
+    { to: '/surec', label: t('nav.process') },
+    { to: '/kurumsal', label: t('nav.corporate') },
+    { to: '/iletisim', label: t('nav.contact') },
+    { to: '/teklif-al', label: t('nav.quote') },
   ];
 
   const policyLinks = [
-    { to: '/kvkk', label: 'KVKK AYDINLATMA METNİ' },
-    { to: '/gizlilik-politikasi', label: 'GİZLİLİK POLİTİKASI' },
-    { to: '/cerez-tercihleri', label: 'ÇEREZ TERCİHLERİ' },
-    { to: '/sss', label: 'S.S.S.' },
+    { to: '/kvkk', label: t('legal.kvkkTitle') },
+    { to: '/gizlilik-politikasi', label: t('legal.privacyTitle') },
+    { to: '/cerez-tercihleri', label: t('legal.cookiesTitle') },
+    { to: '/sss', label: language === 'tr' ? 'S.S.S.' : 'F.A.Q.' },
   ];
 
   return (
@@ -33,20 +35,17 @@ export const Footer: React.FC = () => {
             <div className="mb-4">
               <Logo variant="light" />
             </div>
-            <p className="opacity-70 text-sm max-w-sm leading-relaxed mb-6">
-              Mühendisliğin estetikle buluştuğu yüksek standartlarda yapılar. Depreme dayanıklı,
-              monolitik, dayanıklı tasarımlarla yarınların sarsılmaz temellerini inşa ediyoruz.
-            </p>
+            <p className="opacity-70 text-sm max-w-sm leading-relaxed mb-6">{t('hero.subtitle')}</p>
           </div>
           <div className="font-mono text-xs opacity-40">
-            © {currentYear} {COMPANY_INFO.shortNameUpper} // SİSTEM AKTİF
+            © {currentYear} {COMPANY_INFO.shortNameUpper} // {t('common.systemActive')}
           </div>
         </div>
 
         {/* Links Col */}
         <div className="col-span-12 md:col-span-4 lg:col-span-3 flex flex-col gap-6 mb-8 md:mb-0">
           <span className="font-mono text-[10px] tracking-widest opacity-40 uppercase">
-            NAVİGASYON
+            {t('common.navigation')}
           </span>
           <ul className="space-y-3 font-label-caps text-xs">
             {quickLinks.map((link) => (
@@ -63,7 +62,7 @@ export const Footer: React.FC = () => {
         <div className="col-span-12 md:col-span-4 lg:col-span-4 flex flex-col justify-between gap-8">
           <div>
             <span className="font-mono text-[10px] tracking-widest opacity-40 uppercase mb-4 block">
-              İLETİŞİM KANALLARI
+              {t('common.contactChannels')}
             </span>
             <div className="space-y-4 text-sm opacity-80 font-mono">
               <a
@@ -89,7 +88,7 @@ export const Footer: React.FC = () => {
 
           <div className="border-t border-on-primary/10 pt-6">
             <span className="font-mono text-[10px] tracking-widest opacity-40 uppercase mb-3 block">
-              YASAL KANUNLAR
+              {t('common.legalLinks')}
             </span>
             <div className="flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] opacity-60">
               {policyLinks.map((link) => (
@@ -102,22 +101,34 @@ export const Footer: React.FC = () => {
             <div className="flex flex-wrap gap-3 mt-6">
               <button
                 onClick={toggleTheme}
-                className="inline-flex items-center gap-2 px-4 py-3 bg-on-primary/10 hover:bg-on-primary/20 text-on-primary transition-all border border-on-primary/30 hover:border-on-primary/50 font-mono text-[10px] uppercase font-bold"
+                className="inline-flex items-center gap-2 px-4 py-3 bg-on-primary/10 hover:bg-on-primary/20 text-on-primary transition-all border border-on-primary/30 hover:border-on-primary/50 font-mono text-[10px] uppercase font-bold cursor-pointer"
                 aria-label="Tema değiştir"
                 title={`${theme === 'default' ? 'Alternatif' : 'Varsayılan'} temaya geç`}
               >
                 <Palette size={12} />
-                <span>{theme === 'default' ? 'ALTERNATİF' : 'VARSAYILAN'}</span>
+                <span>
+                  {theme === 'default' ? t('common.alternativeTheme') : t('common.defaultTheme')}
+                </span>
               </button>
 
               <button
                 onClick={toggleMode}
-                className="inline-flex items-center gap-2 px-4 py-3 bg-on-primary/10 hover:bg-on-primary/20 text-on-primary transition-all border border-on-primary/30 hover:border-on-primary/50 font-mono text-[10px] uppercase font-bold"
+                className="inline-flex items-center gap-2 px-4 py-3 bg-on-primary/10 hover:bg-on-primary/20 text-on-primary transition-all border border-on-primary/30 hover:border-on-primary/50 font-mono text-[10px] uppercase font-bold cursor-pointer"
                 aria-label="Koyu/Açık tema değiştir"
                 title={`${mode === 'light' ? 'Koyu' : 'Açık'} temaya geç`}
               >
                 {mode === 'light' ? <Moon size={12} /> : <Sun size={12} />}
-                <span>{mode === 'light' ? 'KOYU' : 'AÇIK'}</span>
+                <span>{mode === 'light' ? t('common.darkMode') : t('common.lightMode')}</span>
+              </button>
+
+              <button
+                onClick={toggleLanguage}
+                className="inline-flex items-center gap-2 px-4 py-3 bg-on-primary/10 hover:bg-on-primary/20 text-on-primary transition-all border border-on-primary/30 hover:border-on-primary/50 font-mono text-[10px] uppercase font-bold cursor-pointer"
+                aria-label="Dil değiştir"
+                title="Change Language / Dil Değiştir"
+              >
+                <Globe size={12} />
+                <span>{language === 'tr' ? 'EN' : 'TR'}</span>
               </button>
             </div>
           </div>

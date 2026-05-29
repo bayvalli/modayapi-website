@@ -1,10 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 const KVKK: React.FC = () => {
   const { theme } = useTheme();
+  const { t, language } = useLanguage();
   const isModern = theme === 'alternative';
 
   return (
@@ -21,64 +23,35 @@ const KVKK: React.FC = () => {
           <h1
             className={`font-serif text-headline-lg text-primary uppercase ${isModern ? 'text-2xl' : ''}`}
           >
-            Kişisel Verilerin Korunması Kanunu (KVKK)
+            {t('legal.kvkkTitle')}
           </h1>
           <p className={`text-secondary font-sans mt-4 ${isModern ? 'text-sm mt-3' : ''}`}>
-            {COMPANY_INFO.shortName} İnşaat A.Ş. Aydınlatma Metni
+            {COMPANY_INFO.shortName}{' '}
+            {language === 'tr'
+              ? 'İnşaat A.Ş. Aydınlatma Metni'
+              : 'Construction Corp. Disclosure Text'}
           </p>
         </header>
 
         <div
           className={`space-y-8 font-sans text-body-md text-primary leading-relaxed ${isModern ? 'space-y-6 text-sm' : ''}`}
         >
-          <section>
-            <h2
-              className={`font-serif text-headline-sm mb-4 uppercase ${isModern ? 'text-base mb-3' : ''}`}
-            >
-              1. Veri Sorumlusu
-            </h2>
-            <p>
-              6698 sayılı Kişisel Verilerin Korunması Kanunu uyarınca, {COMPANY_INFO.legalName}{' '}
-              olarak kişisel verilerinizi veri sorumlusu sıfatıyla işliyoruz.
-            </p>
+          <p className="font-mono text-xs text-primary bg-primary/5 p-4 border border-dashed border-primary mb-6">
+            {t('legal.kvkkBrief')}
+          </p>
+
+          <section className="space-y-6">
+            <p>{t('legal.kvkkParagraph1')}</p>
+            <p>{t('legal.kvkkParagraph2')}</p>
+            <p>{t('legal.kvkkParagraph3')}</p>
           </section>
 
-          <section>
-            <h2
-              className={`font-serif text-headline-sm mb-4 uppercase ${isModern ? 'text-base mb-3' : ''}`}
-            >
-              2. Kişisel Verilerin İşlenme Amacı
-            </h2>
-            <p>Kişisel verileriniz, aşağıdaki amaçlarla sınırlı olarak işlenmektedir:</p>
-            <ul
-              className={`list-disc pl-6 mt-2 space-y-2 ${isModern ? 'pl-4 mt-1 space-y-1' : ''}`}
-            >
-              <li>Faaliyetlerin mevzuata uygun yürütülmesi</li>
-              <li>Sözleşme süreçlerinin takibi</li>
-              <li>Müşteri ilişkileri yönetimi süreçlerinin planlanması</li>
-              <li>Hukuk işlerinin takibi ve yürütülmesi</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2
-              className={`font-serif text-headline-sm mb-4 uppercase ${isModern ? 'text-base mb-3' : ''}`}
-            >
-              3. Kişisel Veri Toplamanın Yöntemi
-            </h2>
-            <p>
-              Kişisel verileriniz; web sitemiz, teklif formlarımız ve kurumsal iletişim kanallarımız
-              aracılığıyla fiziksel veya dijital ortamlarda toplanmaktadır.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="font-serif text-headline-sm mb-4 uppercase">4. İletişim</h2>
-            <p>
-              KVKK kapsamındaki haklarınız için kvkk@modayapi.com adresi üzerinden bizimle iletişime
-              geçebilirsiniz.
-            </p>
-          </section>
+          <div className="border-t border-dashed border-primary/25 pt-6 font-mono text-[10px] text-primary">
+            {language === 'tr'
+              ? 'SON GÜNCELLEME: 29.05.2026 // HUKUK DEPARTMANI'
+              : 'LAST UPDATE: 29.05.2026 // LEGAL DEPARTMENT'}{' '}
+            // {COMPANY_INFO.shortNameUpper}
+          </div>
         </div>
       </div>
     </motion.div>

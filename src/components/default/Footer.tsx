@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Palette, Sun, Moon } from 'lucide-react';
+import { Palette, Sun, Moon, Globe } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 export const Footer: React.FC = () => {
   const { theme, mode, toggleTheme, toggleMode } = useTheme();
+  const { language, toggleLanguage, t } = useLanguage();
+
   return (
     <motion.footer
       initial={{ opacity: 0, y: 20 }}
@@ -25,14 +28,13 @@ export const Footer: React.FC = () => {
               </h2>
               <div className="h-2 w-32 bg-surface-bright mb-8"></div>
               <p className="text-surface-variant opacity-80 max-w-sm font-sans text-body-md leading-relaxed">
-                Mühendislik mükemmelliği ve sarsılmaz temeller üzerine inşa edilen bir gelecek.
-                Yapısal bütünlükte tavizsiz yaklaşım.
+                {t('hero.subtitle')}
               </p>
             </div>
 
             <div className="space-y-4 border-l-2 border-surface-bright/20 pl-6">
               <p className="text-surface-bright font-label-caps text-xs tracking-[0.2em]">
-                KAYITLI TİCARİ UNVAN:
+                {t('common.legalTitle')}
               </p>
               <p className="text-surface-variant font-sans text-body-sm uppercase">
                 {COMPANY_INFO.legalName}
@@ -40,7 +42,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-surface-variant/40 font-label-caps text-[10px] tracking-widest pt-8 uppercase">
-              © Tüm hakları saklıdır.
+              {t('common.rightsReserved')}
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -53,7 +55,9 @@ export const Footer: React.FC = () => {
                 title={`${theme === 'default' ? 'Alternatif' : 'Varsayılan'} temaya geç`}
               >
                 <Palette size={16} />
-                <span>{theme === 'default' ? 'MODERN' : 'ORGANIK'}</span>
+                <span>
+                  {theme === 'default' ? t('common.alternativeTheme') : t('common.defaultTheme')}
+                </span>
               </motion.button>
 
               <motion.button
@@ -65,7 +69,19 @@ export const Footer: React.FC = () => {
                 title={`${mode === 'light' ? 'Koyu' : 'Açık'} temaya geç`}
               >
                 {mode === 'light' ? <Moon size={16} /> : <Sun size={16} />}
-                <span>{mode === 'light' ? 'KOYU' : 'AÇIK'}</span>
+                <span>{mode === 'light' ? t('common.darkMode') : t('common.lightMode')}</span>
+              </motion.button>
+
+              <motion.button
+                onClick={toggleLanguage}
+                className="inline-flex items-center gap-2 px-4 py-3 bg-surface-bright/10 hover:bg-surface-bright/20 text-surface-bright transition-all border-2 border-surface-bright/30 hover:border-surface-bright/50 font-mono text-xs uppercase font-bold"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Dil değiştir"
+                title="Change Language / Dil Değiştir"
+              >
+                <Globe size={16} />
+                <span>{language === 'tr' ? 'EN' : 'TR'}</span>
               </motion.button>
             </div>
           </div>
@@ -73,7 +89,7 @@ export const Footer: React.FC = () => {
           {/* Legal Links */}
           <div className="lg:col-span-3 lg:col-start-8 space-y-8">
             <h3 className="font-label-caps text-surface-bright/60 text-xs tracking-widest uppercase">
-              Kurumsal Hukuk
+              {t('common.legalLinks')}
             </h3>
             <ul className="flex flex-col gap-6 font-label-caps text-sm">
               <li>
@@ -81,7 +97,7 @@ export const Footer: React.FC = () => {
                   to="/kvkk"
                   className="text-surface-variant hover:text-surface-bright transition-all inline-block hover:translate-x-2"
                 >
-                  KVKK AYDINLATMA METNİ
+                  {t('legal.kvkkTitle')}
                 </Link>
               </li>
               <li>
@@ -89,7 +105,7 @@ export const Footer: React.FC = () => {
                   to="/gizlilik-politikasi"
                   className="text-surface-variant hover:text-surface-bright transition-all inline-block hover:translate-x-2"
                 >
-                  GİZLİLİK POLİTİKASI
+                  {t('legal.privacyTitle')}
                 </Link>
               </li>
               <li>
@@ -97,7 +113,7 @@ export const Footer: React.FC = () => {
                   to="/cerez-tercihleri"
                   className="text-surface-variant hover:text-surface-bright transition-all inline-block hover:translate-x-2"
                 >
-                  ÇEREZ TERCİHLERİ
+                  {t('legal.cookiesTitle')}
                 </Link>
               </li>
             </ul>
@@ -106,7 +122,7 @@ export const Footer: React.FC = () => {
           {/* Support Links */}
           <div className="lg:col-span-2 lg:col-start-11 space-y-8">
             <h3 className="font-label-caps text-surface-bright/60 text-xs tracking-widest uppercase">
-              Bilgi Merkezi
+              {t('common.navigation')}
             </h3>
             <ul className="flex flex-col gap-6 font-label-caps text-sm">
               <li>
@@ -114,7 +130,7 @@ export const Footer: React.FC = () => {
                   to="/sss"
                   className="text-surface-variant hover:text-surface-bright transition-all inline-block hover:translate-x-2"
                 >
-                  SSS
+                  {language === 'tr' ? 'S.S.S.' : 'F.A.Q.'}
                 </Link>
               </li>
               <li>
@@ -122,7 +138,7 @@ export const Footer: React.FC = () => {
                   to="/iletisim"
                   className="text-surface-variant hover:text-surface-bright transition-all inline-block hover:translate-x-2"
                 >
-                  İLETİŞİM OFİSİ
+                  {t('nav.contact')}
                 </Link>
               </li>
             </ul>

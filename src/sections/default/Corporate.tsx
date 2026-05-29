@@ -1,13 +1,18 @@
 import React from 'react';
 import { COMPANY_INFO } from '../../constants';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 export const Corporate: React.FC = () => {
+  const { language, t } = useLanguage();
+
   return (
     <section id="corporate" className="py-block-gap">
       <div className="max-w-[1440px] mx-auto px-margin">
         <div className="grid grid-cols-12 gap-gutter items-center">
           <div className="col-span-12 md:col-span-10 md:col-start-2 z-20">
-            <h1 className="text-headline-xl text-on-primary mb-12 uppercase">KURUMSAL</h1>
+            <h1 className="text-headline-xl text-on-primary mb-12 uppercase">
+              {t('corporate.title')}
+            </h1>
           </div>
 
           <div className="col-span-12 md:col-span-11 md:col-start-2 -mt-24 md:-mt-48 z-10">
@@ -25,46 +30,59 @@ export const Corporate: React.FC = () => {
           <div className="col-span-12 md:col-span-6 md:col-start-2">
             <div className="bg-surface border-heavy p-12 -mt-32 md:-mt-64 relative z-30">
               <h3 className="text-headline-lg mb-8 leading-tight">
-                Köklü Geçmiş, <br />
-                Yenilikçi Gelecek.
+                {language === 'tr' ? (
+                  <>
+                    Köklü Geçmiş, <br />
+                    Yenilikçi Gelecek.
+                  </>
+                ) : (
+                  <>
+                    Deep-Rooted Past, <br />
+                    Innovative Future.
+                  </>
+                )}
               </h3>
-              <p className="text-body-lg text-on-surface mb-8">
-                {COMPANY_INFO.shortName} İnşaat, mühendislik köklerinden filizlenerek bugün çok
-                çeşitli sektörlerde faaliyet gösteren köklü bir yapıya dönüşmüştür. Sağlam temeller
-                üzerine inşa ettiğimiz vizyonumuzla, sadece binalar değil, geleceğin yaşam
-                alanlarını ve dijital altyapılarını tasarlıyoruz.
-              </p>
+              <p className="text-body-lg text-on-surface mb-8">{t('corporate.historyDesc')}</p>
 
               <div className="space-y-6">
                 <div className="border-b-2 border-primary pb-4">
                   <h4 className="text-headline-md leading-none mb-2">1960</h4>
                   <span className="font-label-caps text-secondary text-xs uppercase">
-                    Kiremit üretimi ve inşaat malzemesi Satışı
+                    {language === 'tr'
+                      ? 'Kiremit üretimi ve inşaat malzemesi Satışı'
+                      : 'Roof Tile Production & Building Materials Sales'}
                   </span>
                 </div>
                 <div className="border-b-2 border-primary pb-4">
                   <h4 className="text-headline-md leading-none mb-2">1980</h4>
                   <span className="font-label-caps text-secondary text-xs uppercase">
-                    Aile Şirketi olan Ayvallı İnşaat Ltd. Şti.'nin kuruluşu
+                    {language === 'tr'
+                      ? "Aile Şirketi olan Ayvallı İnşaat Ltd. Şti.'nin kuruluşu"
+                      : 'Establishment of family business Ayvalli Construction Ltd.'}
                   </span>
                 </div>
                 <div className="border-b-2 border-primary pb-4">
                   <h4 className="text-headline-md leading-none mb-2">1999</h4>
                   <span className="font-label-caps text-secondary text-xs uppercase">
-                    Perakende kömür satışı faliyetinin eklenmesi
+                    {language === 'tr'
+                      ? 'Perakende kömür satışı faaliyetinin eklenmesi'
+                      : 'Addition of retail coal distribution operations'}
                   </span>
                 </div>
                 <div className="border-b-2 border-primary pb-4">
                   <h4 className="text-headline-md leading-none mb-2">2017</h4>
                   <span className="font-label-caps text-secondary text-xs uppercase">
-                    Yeni bir kimlik ile inşaat sektörüne adım atılması ve {COMPANY_INFO.shortName}
-                    'nın kuruluşu
+                    {language === 'tr'
+                      ? `Yeni bir kimlik ile inşaat sektörüne adım atılması ve ${COMPANY_INFO.shortName}'nın kuruluşu`
+                      : `Stepping into construction under a new identity and founding of ${COMPANY_INFO.shortName}`}
                   </span>
                 </div>
                 <div className="border-b-2 border-primary pb-4">
                   <h4 className="text-headline-md leading-none mb-2">2025</h4>
                   <span className="font-label-caps text-secondary text-xs uppercase">
-                    Dijital dönüşüm ve yazılım
+                    {language === 'tr'
+                      ? 'Dijital dönüşüm ve yazılım'
+                      : 'Digital transformation and software'}
                   </span>
                 </div>
               </div>

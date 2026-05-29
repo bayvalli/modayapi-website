@@ -2,9 +2,11 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Shield, Hammer, Cpu, ChevronRight } from 'lucide-react';
 import { SEO } from '../../components/alternative/SEO';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
 
 export const Corporate: React.FC = () => {
+  const { language, t } = useLanguage();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -13,8 +15,8 @@ export const Corporate: React.FC = () => {
       className="pt-32 pb-block-gap"
     >
       <SEO
-        title="Kurumsal Kimliğimiz ve Şartnamelerimiz"
-        description="Biz kimiz? MODA YAPI'nın tarihçesi, mühendislik değerleri ve entegre Tutar.io & CloudBook dijital faaliyetleri."
+        title={t('corporate.title') + ' - ' + COMPANY_INFO.shortName}
+        description={t('corporate.manifesto')}
       />
 
       <div className="max-w-[1440px] mx-auto px-margin">
@@ -24,7 +26,7 @@ export const Corporate: React.FC = () => {
             // {COMPANY_INFO.legalNameUpper}
           </span>
           <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary leading-none">
-            KURUMSAL PORTAL
+            {t('corporate.title')}
           </h1>
         </div>
 
@@ -33,38 +35,35 @@ export const Corporate: React.FC = () => {
           <div className="col-span-12 lg:col-span-6 border-4 border-primary p-8 md:p-12 bg-white flex flex-col justify-between">
             <div>
               <span className="font-mono text-xs text-secondary/50 block mb-2">
-                // KİLOMETRE TAŞLARI
+                // {t('corporate.historyTitle')}
               </span>
               <h2 className="font-serif text-3xl font-bold text-primary uppercase mb-6">
-                MİSYON & ŞAFFFAFLIK
+                {language === 'tr' ? 'MİSYON & ŞEFFAFLIK' : 'MISSION & TRANSPARENCY'}
               </h2>
               <p className="text-body-lg text-primary leading-relaxed mb-6">
-                Yalvaç merkezli kurulan şirketimiz, taahhüt, inşaat malzemeleri temini ve kömür
-                tedariki alanlarında bölgenin köklü markası haline gelmiştir. İnşa ettiğimiz
-                binalarda estetik detayları yüksek mukavemetli kaba yapı mühendislikleriyle
-                sabitleyerek geleceğe kalıcı yuvalar bırakıyoruz.
+                {t('corporate.historyDesc')}
               </p>
               <p className="text-sm text-secondary leading-relaxed">
-                Her projede zemin analizlerinden malzeme alımlarına kadar tüm dokümantasyonu iş
-                ortaklarımızla şeffaf bir biçimde paylaşmak kurumsal anayasamızın birinci
-                maddesidir.
+                {language === 'tr'
+                  ? 'Her projede zemin analizlerinden malzeme alımlarına kadar tüm dokümantasyonu iş ortaklarımızla şeffaf bir biçimde paylaşmak kurumsal anayasamızın birinci maddesidir.'
+                  : 'Sharing all documentations from ground tests to material procurement transparently with our partners is the absolute first article of our corporate charter.'}
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 border-t border-dashed border-primary/25 pt-8 mt-12">
               <div>
                 <span className="font-mono text-[9px] text-secondary/40 block">
-                  DEPREM KATEGORİSİ
+                  {language === 'tr' ? 'DEPREM KATEGORİSİ' : 'SEISMIC CATEGORY'}
                 </span>
                 <span className="font-sans font-bold text-sm text-primary">
-                  EN ÜST DAYANIKLILIK
+                  {language === 'tr' ? 'EN ÜST DAYANIKLILIK' : 'HIGHEST RESISTANCE'}
                 </span>
               </div>
               <div>
                 <span className="font-mono text-[9px] text-secondary/40 block">
-                  BETONARME KALİTESİ
+                  {language === 'tr' ? 'BETONARME KALİTESİ' : 'CONCRETE QUALITY'}
                 </span>
-                <span className="font-sans font-bold text-sm text-primary">C30 ve ÜZERİ</span>
+                <span className="font-sans font-bold text-sm text-primary">C30+</span>
               </div>
             </div>
           </div>
@@ -72,10 +71,10 @@ export const Corporate: React.FC = () => {
           <div className="col-span-12 lg:col-span-6 bg-primary text-on-primary p-8 md:p-12 flex flex-col justify-between border-4 border-primary">
             <div>
               <span className="font-mono text-xs text-on-primary/60 block mb-2">
-                // TEKNİK ŞARTNAMELER
+                // {language === 'tr' ? 'TEKNİK ŞARTNAMELER' : 'TECHNICAL BLUEPRINTS'}
               </span>
               <h2 className="font-serif text-3xl font-bold text-white uppercase mb-6">
-                BRÜTALİST PRENSİPLERİMİZ
+                {language === 'tr' ? 'BRÜTALİST PRENSİPLERİMİZ' : 'OUR BRUTALIST PRINCIPLES'}
               </h2>
 
               <ul className="space-y-6">
@@ -83,34 +82,31 @@ export const Corporate: React.FC = () => {
                   <Shield size={24} className="mt-1 flex-shrink-0 opacity-80" />
                   <div>
                     <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-1">
-                      Mühendislik Dominansı
+                      {t('corporate.value1Title')}
                     </h4>
-                    <p className="text-xs opacity-70">
-                      Mimariyi lüks gösteren süsler değil, onu ayakta tutan statik elemanların
-                      dürüstlüğüdür.
-                    </p>
+                    <p className="text-xs opacity-70">{t('corporate.value1Desc')}</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">
                   <Hammer size={24} className="mt-1 flex-shrink-0 opacity-80" />
                   <div>
                     <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-1">
-                      Hatasız İşçilik Garantisi
+                      {t('corporate.value2Title')}
                     </h4>
-                    <p className="text-xs opacity-70">
-                      Milimetrik derzler, hatasız dökümler, pürüzsüz beton formlar ve kaliteli
-                      malzeme seçimi.
-                    </p>
+                    <p className="text-xs opacity-70">{t('corporate.value2Desc')}</p>
                   </div>
                 </li>
               </ul>
             </div>
 
             <div className="p-6 border-2 border-on-primary/25 bg-white/5 mt-12">
-              <span className="font-mono text-[9px] opacity-60">C30 YAPISAL STANDART</span>
+              <span className="font-mono text-[9px] opacity-60">
+                {language === 'tr' ? 'C30 YAPISAL STANDART' : 'C30 STRUCTURAL STANDARD'}
+              </span>
               <p className="text-xs opacity-80 mt-2">
-                Beton dökümleri sırasında sahada bağımsız yapı denetim kuruluşları gözetiminde
-                numuneler alınarak laboratuvar kırım testlerine tabi tutulur.
+                {language === 'tr'
+                  ? 'Beton dökümleri sırasında sahada bağımsız yapı denetim kuruluşları gözetiminde numuneler alınarak laboratuvar kırım testlerine tabi tutulur.'
+                  : 'During concrete pouring, structural samples are collected under independent building inspection audits and tested in compression testing labs.'}
               </p>
             </div>
           </div>
@@ -123,19 +119,16 @@ export const Corporate: React.FC = () => {
             <div className="col-span-12 lg:col-span-7">
               <div className="flex items-center gap-3 mb-4">
                 <span className="font-mono text-xs bg-primary text-on-primary px-3 py-1 font-bold tracking-widest uppercase">
-                  DİJİTAL SİSTEMLER
+                  {language === 'tr' ? 'DİJİTAL SİSTEMLER' : 'DIGITAL SYSTEMS'}
                 </span>
                 <span className="text-secondary/40 text-xs font-mono">//</span>
                 <Cpu size={20} className="text-primary" />
               </div>
               <h3 className="font-serif text-3xl md:text-4xl font-bold uppercase text-primary mb-6">
-                YAZILIM FAALİYETLERİMİZ
+                {language === 'tr' ? 'YAZILIM FAALİYETLERİMİZ' : 'OUR SOFTWARE ENTERPRISE'}
               </h3>
               <p className="text-body-lg text-secondary leading-relaxed mb-6 font-sans">
-                Diğer inşaat taahhüt ofislerinden farklı olarak, teknolojik vizyona sahip dinamik
-                yazılım geliştiricilerle iş ortaklığı kuruyoruz. İşletmelerin dijital dönüşümlerini
-                hızlandıran ve operasyonel verimliliği maksimize eden öncü finansal yönetim araçları
-                geliştiriyoruz:
+                {t('corporate.value3Desc')}
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 mb-4">
@@ -145,9 +138,9 @@ export const Corporate: React.FC = () => {
                     <ChevronRight size={14} />
                   </h5>
                   <p className="text-xs text-secondary leading-relaxed">
-                    Bulut tabanlı modern ön muhasebe ve finansal yönetim yazılımı. Nakit
-                    akışlarınızı, faturalandırma süreçlerinizi ve gelir-gider dengenizi tek bir
-                    brutalist arayüzden yönetmenizi sağlar.
+                    {language === 'tr'
+                      ? 'Bulut tabanlı modern ön muhasebe ve finansal yönetim yazılımı. Nakit akışlarınızı, faturalandırma süreçlerinizi ve gelir-gider dengenizi tek bir brutalist arayüzden yönetmenizi sağlar.'
+                      : 'Bespoke cloud-based pre-accounting and financial ledger dashboard. Lets you manage corporate transactions, invoices, and expense sheets from a secure layout.'}
                   </p>
                 </div>
 
@@ -157,9 +150,9 @@ export const Corporate: React.FC = () => {
                     <ChevronRight size={14} />
                   </h5>
                   <p className="text-xs text-secondary leading-relaxed">
-                    Kurumsal evrak arşivleme, döküman yönetimi ve şirketler arası bulut veri tabanı
-                    senkronizasyon aracı. Tüm muhasebe ve inşaat hak ediş dosyalarınızı güven
-                    altında tutar.
+                    {language === 'tr'
+                      ? 'Kurumsal evrak arşivleme, döküman yönetimi ve şirketler arası bulut veri tabanı senkronizasyon aracı. Tüm muhasebe ve inşaat hak ediş dosyalarınızı güven altında tutar.'
+                      : 'Enterprise records archiving, ledger folder management, and cloud secure database sync framework. Holds all tax papers and blueprint sheets under high encryption.'}
                   </p>
                 </div>
               </div>
@@ -183,7 +176,11 @@ export const Corporate: React.FC = () => {
                     <p className="font-bold">Sync speed: 12GB/s [secure-tls]</p>
                   </div>
                   <div className="border-t border-dashed border-primary/25 pt-4">
-                    <span className="opacity-40">MÜTEAHHİTLİK + MODERN BİLİŞİM ENTEGRASYONU</span>
+                    <span className="opacity-40">
+                      {language === 'tr'
+                        ? 'MÜTEAHHİTLİK + MODERN BİLİŞİM ENTEGRASYONU'
+                        : 'CONTRACTING + TECH INTEGRATION'}
+                    </span>
                   </div>
                 </div>
               </div>
