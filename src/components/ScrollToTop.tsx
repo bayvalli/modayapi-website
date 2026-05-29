@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
+import { useTheme } from '../contexts/ThemeContext';
+import DefaultScrollToTop from './default/ScrollToTop';
+import AlternativeScrollToTop from './alternative/ScrollToTop';
 
-export default function ScrollToTop() {
-  const { pathname } = useLocation();
+export const ScrollToTop: React.FC = () => {
+  const { theme } = useTheme();
+  return theme === 'alternative' ? <AlternativeScrollToTop /> : <DefaultScrollToTop />;
+};
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
-}
+export default ScrollToTop;

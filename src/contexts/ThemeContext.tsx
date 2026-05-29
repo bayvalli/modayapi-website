@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type Theme = 'default' | 'alternative';
 
@@ -20,12 +20,21 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return 'default';
   };
 
-  const [theme] = useState<Theme>(getSavedTheme);
+  const [theme, setTheme] = useState<Theme>(getSavedTheme);
+
+  // Apply theme to HTML element
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  }, [theme]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'default' ? 'alternative' : 'default';
     localStorage.setItem('modayapi-theme', newTheme);
-    window.location.href = `/?theme=${newTheme}`;
+    setTheme(newTheme);
+    // Optional: Also update URL for shareable links
+    window.history.replaceState({}, '', `/?theme=${newTheme}`);
   };
 
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;

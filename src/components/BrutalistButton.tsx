@@ -1,34 +1,28 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { useTheme } from '../contexts/ThemeContext';
+import { BrutalistButton as DefaultButton } from './default/BrutalistButton';
+import { BrutalistButton as AlternativeButton } from './alternative/BrutalistButton';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'outline';
-  children: React.ReactNode;
+interface BrutalistButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outline';
+  id?: string;
+  className?: string;
+  children?: React.ReactNode;
 }
 
-export const BrutalistButton: React.FC<ButtonProps> = ({
-  variant = 'outline',
-  children,
-  className,
-  ...props
-}) => {
-  const baseStyles =
-    'px-6 py-3 font-label-caps uppercase tracking-widest transition-all duration-300 active:translate-y-1 block w-fit';
-  const variants = {
-    primary:
-      'bg-primary text-on-primary border-2 border-primary hover:bg-surface hover:text-primary',
-    outline:
-      'bg-transparent text-primary border-2 border-primary hover:bg-primary hover:text-on-primary',
-  };
-
+export const BrutalistButton: React.FC<BrutalistButtonProps> = (props) => {
+  const { theme } = useTheme();
+  if (theme === 'alternative') {
+    return <AlternativeButton {...props} />;
+  }
+  // Default button only supports 'primary' and 'outline'
+  const defaultProps = { ...props };
+  if (defaultProps.variant === 'secondary') {
+    defaultProps.variant = 'primary'; // fallback secondary to primary for default theme
+  }
   return (
-    <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={`${baseStyles} ${variants[variant]} ${className}`}
-      {...props}
-    >
-      {children}
-    </motion.button>
+    <DefaultButton {...(defaultProps as unknown as React.ComponentProps<typeof DefaultButton>)} />
   );
 };
+
+export default BrutalistButton;

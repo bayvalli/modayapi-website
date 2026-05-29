@@ -1,9 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import 'tailwindcss';
 
-@theme {
+/* ===== ROOT DEFAULTS (Organic Brutalist) ===== */
+:root {
   --font-serif: 'Playfair Display', serif;
   --font-sans: 'Work Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Organic Brutalist Palette */
   --color-surface: #fcf9f6;
@@ -34,26 +36,93 @@
   --spacing-asymmetric: 64px;
 
   /* Typography Scale */
-  --text-headline-xl: 5.25rem; /* 84px */
+  --text-headline-xl: 5.25rem;
   --text-headline-xl--line-height: 1;
   --text-headline-xl--letter-spacing: -0.04em;
   --text-headline-xl--font-weight: 900;
 
-  --text-headline-lg: 3rem; /* 48px */
+  --text-headline-lg: 3rem;
   --text-headline-lg--line-height: 1.1;
   --text-headline-lg--font-weight: 700;
 
-  --text-headline-md: 2rem; /* 32px */
+  --text-headline-md: 2rem;
   --text-headline-md--line-height: 1.2;
   --text-headline-md--font-weight: 700;
 
-  --text-body-lg: 1.25rem; /* 20px */
+  --text-headline-sm: clamp(1.25rem, 2vw, 1.75rem);
+  --text-headline-sm--font-weight: 600;
+
+  --text-body-lg: 1.25rem;
   --text-body-lg--line-height: 1.6;
 
-  --text-label-caps: 0.75rem; /* 12px */
+  --text-label-caps: 0.75rem;
   --text-label-caps--line-height: 1;
   --text-label-caps--letter-spacing: 0.1em;
   --text-label-caps--font-weight: 600;
+}
+
+@theme {
+  --color-surface: #fcf9f6;
+  --color-surface-dim: #dcd9d7;
+  --color-surface-bright: #fcf9f6;
+  --color-surface-container: #f0edea;
+  --color-surface-container-low: #f6f3f0;
+  --color-surface-container-high: #eae8e5;
+  --color-surface-variant: #e5e2df;
+
+  --color-on-surface: #1c1c1a;
+  --color-on-surface-variant: #434847;
+
+  --color-primary: #333736;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #4a4e4d;
+
+  --color-secondary: #625e57;
+  --color-secondary-container: #e6ded6;
+
+  --color-tertiary: #40352a;
+  --color-tertiary-fixed: #f2dfd0;
+
+  --spacing-gutter: 24px;
+  --spacing-margin: 40px;
+  --spacing-block-gap: 120px;
+  --spacing-asymmetric: 64px;
+}
+
+/* ===== ALTERNATIVE THEME (Modern Brutalist) ===== */
+:root[data-theme='alternative'] {
+  --font-serif: 'Playfair Display', ui-serif, serif;
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Modern Brutalist Palette (Monochrome) */
+  --color-surface: #fafafa;
+  --color-surface-dim: #e5e5e5;
+  --color-surface-bright: #ffffff;
+  --color-surface-container: #f9f9f9;
+  --color-surface-container-low: #f5f5f5;
+  --color-surface-container-high: #f1f1f1;
+  --color-surface-variant: #e5e5e5;
+
+  --color-on-surface: #111111;
+  --color-on-surface-variant: #555555;
+
+  --color-primary: #111111;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #222222;
+
+  --color-secondary: #555555;
+  --color-secondary-container: #dddddd;
+
+  --color-tertiary: #333333;
+  --color-tertiary-fixed: #c9c9c9;
+
+  --text-headline-xl: clamp(2.25rem, 6vw, 6rem);
+  --text-headline-lg: clamp(1.75rem, 4vw, 3rem);
+  --text-headline-md: clamp(1.25rem, 2.5vw, 2rem);
+  --text-headline-sm: clamp(1.25rem, 2vw, 1.75rem);
+  --text-body-lg: clamp(1rem, 1.1vw, 1.15rem);
+  --text-label-caps--letter-spacing: 0.15em;
 }
 
 @layer base {
@@ -79,7 +148,79 @@
     @apply border-4 border-primary;
   }
 
+  .border-heavy-2 {
+    border: 2px solid var(--color-primary);
+  }
+
   .asymmetric-offset {
     margin-left: var(--spacing-asymmetric);
   }
+
+  .px-margin {
+    padding-left: clamp(1.5rem, 5vw, 6rem);
+    padding-right: clamp(1.5rem, 5vw, 6rem);
+  }
+
+  .pb-block-gap {
+    padding-bottom: clamp(3rem, 8vw, 8rem);
+  }
+
+  .pt-block-gap {
+    padding-top: clamp(3rem, 8vw, 8rem);
+  }
+
+  .gap-gutter {
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .text-headline-xl {
+    font-size: var(--text-headline-xl);
+    line-height: var(--text-headline-xl--line-height, 1);
+    letter-spacing: var(--text-headline-xl--letter-spacing, 0);
+    font-weight: var(--text-headline-xl--font-weight, 700);
+  }
+
+  .text-headline-lg {
+    font-size: var(--text-headline-lg);
+    line-height: var(--text-headline-lg--line-height, 1.1);
+    font-weight: var(--text-headline-lg--font-weight, 700);
+  }
+
+  .text-headline-md {
+    font-size: var(--text-headline-md);
+    line-height: var(--text-headline-md--line-height, 1.2);
+    font-weight: var(--text-headline-md--font-weight, 700);
+  }
+
+  .text-headline-sm {
+    font-size: var(--text-headline-sm);
+    font-weight: var(--text-headline-sm--font-weight, 600);
+  }
+
+  .text-body-lg {
+    font-size: var(--text-body-lg);
+    line-height: var(--text-body-lg--line-height);
+  }
+
+  .font-label-caps {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--text-label-caps--letter-spacing);
+    font-weight: var(--text-label-caps--font-weight);
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Brutalist Button Utility Hover Focus */
+button,
+a {
+  outline-color: var(--color-primary);
 }

@@ -12,6 +12,8 @@ export interface FloorPlanRoom {
   area: string;
 }
 
+export type Room = FloorPlanRoom;
+
 export interface FloorPlan {
   name: string;
   type: string;

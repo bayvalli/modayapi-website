@@ -1,18 +1,11 @@
 import React from 'react';
-import { Contact as ContactSection } from '../sections/Contact';
-import { motion } from 'motion/react';
+import { useTheme } from '../contexts/ThemeContext';
+import DefaultContact from './default/Contact';
+import AlternativeContact from './alternative/Contact';
 
 const Contact: React.FC = () => {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="pt-32"
-    >
-      <ContactSection />
-    </motion.div>
-  );
+  const { theme } = useTheme();
+  return theme === 'alternative' ? <AlternativeContact /> : <DefaultContact />;
 };
 
 export default Contact;
