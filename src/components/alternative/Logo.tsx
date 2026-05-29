@@ -7,8 +7,8 @@ interface LogoProps {
 }
 
 export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) => {
-  const fillColor = variant === 'dark' ? '#111111' : '#ffffff';
-  const strokeColor = variant === 'dark' ? '#111111' : '#ffffff';
+  const fillColor = variant === 'dark' ? 'var(--color-primary)' : '#ffffff';
+  const strokeColor = variant === 'dark' ? 'var(--color-primary)' : '#ffffff';
 
   return (
     <div className={`flex items-center gap-3 select-none ${className}`}>

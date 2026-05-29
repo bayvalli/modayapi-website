@@ -18,10 +18,11 @@ export const BrutalistButton: React.FC<BrutalistButtonProps> = ({
 
   const variants = {
     primary:
-      'bg-primary text-on-primary border-4 border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] active:shadow-[0px_0px_0px_0px_rgba(0,0,0,0.25)] hover:bg-neutral-800 transition-colors',
+      'bg-primary text-on-primary border-4 border-primary shadow-[4px_4px_0px_0px_var(--color-secondary)] hover:shadow-[2px_2px_0px_0px_var(--color-secondary)] active:shadow-[0px_0px_0px_0px_var(--color-secondary)] hover:bg-on-primary hover:text-primary transition-all duration-200',
     secondary:
-      'bg-white text-primary border-4 border-primary shadow-[4px_4px_0px_0px_#111111] hover:shadow-[2px_2px_0px_0px_#111111] active:shadow-[0px_0px_0px_0px_#111111] hover:bg-neutral-50 transition-colors',
-    outline: 'bg-transparent text-primary border-4 border-primary hover:bg-black/5',
+      'bg-white text-primary border-4 border-primary shadow-[4px_4px_0px_0px_var(--color-primary)] hover:shadow-[2px_2px_0px_0px_var(--color-primary)] active:shadow-[0px_0px_0px_0px_var(--color-primary)] hover:bg-primary hover:text-on-primary transition-all duration-200',
+    outline:
+      'bg-transparent text-primary border-4 border-primary hover:bg-primary hover:text-on-primary transition-all duration-200',
   };
 
   return (

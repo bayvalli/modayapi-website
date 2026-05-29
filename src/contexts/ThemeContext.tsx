@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type Theme = 'default' | 'alternative';
+type Mode = 'light' | 'dark';
 
 interface ThemeContextType {
   theme: Theme;
+  mode: Mode;
   toggleTheme: () => void;
+  toggleMode: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -20,14 +23,24 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return 'default';
   };
 
-  const [theme, setTheme] = useState<Theme>(getSavedTheme);
+  const getSavedMode = (): Mode => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('modayapi-mode') as Mode;
+      return saved || 'light';
+    }
+    return 'light';
+  };
 
-  // Apply theme to HTML element
+  const [theme, setTheme] = useState<Theme>(getSavedTheme);
+  const [mode, setMode] = useState<Mode>(getSavedMode);
+
+  // Apply theme and mode to HTML element
   useEffect(() => {
     if (typeof document !== 'undefined') {
       document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-mode', mode);
     }
-  }, [theme]);
+  }, [theme, mode]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'default' ? 'alternative' : 'default';
@@ -37,7 +50,17 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     window.history.replaceState({}, '', `/?theme=${newTheme}`);
   };
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  const toggleMode = () => {
+    const newMode = mode === 'light' ? 'dark' : 'light';
+    localStorage.setItem('modayapi-mode', newMode);
+    setMode(newMode);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, mode, toggleTheme, toggleMode }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
 
 export const useTheme = () => {

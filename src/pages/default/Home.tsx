@@ -6,7 +6,7 @@ import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
 
 const Home: React.FC = () => {
-  const { theme } = useTheme();
+  const { theme, mode } = useTheme();
   const isModern = theme === 'alternative';
 
   return (
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
         >
           <img
             alt="Steel and concrete texture"
-            className={`w-full h-full object-cover mix-blend-multiply transition-transform ${isModern ? 'duration-300 group-hover:scale-125 contrast-150' : 'duration-1000 group-hover:scale-110 grayscale opacity-80'}`}
+            className={`w-full h-full object-cover transition-transform ${mode === 'dark' ? 'mix-blend-normal opacity-50' : 'mix-blend-multiply opacity-80'} ${isModern ? 'duration-300 group-hover:scale-125 contrast-150' : 'duration-1000 group-hover:scale-110 grayscale'}`}
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZK00LxqoKLnUFTh--0-WHtUKeByXQOeyXu-CEChrsNUToI01aleAupWUzhQbzVKuCNbR6LulgIsbuvyJvuk-FcLN2oBCAHOD95ww-ZpHOr2JTvLc572xtWUo9ZG8XTfqp-urIZfsVO2lL-CYawrfbsBkNHiwpqKCwo5DHYZR8NZaTF1q89xRwIHEpfeHBzXTzk0gURlt9EjSygmNMxwKuKXSi7aJWA0mKiMOW2x43uCZ6kP5Yw9yWqJMzZE36x0UqNGJI2PO_hSBN"
           />
           <div

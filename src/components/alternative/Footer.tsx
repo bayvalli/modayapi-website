@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Palette } from 'lucide-react';
+import { Mail, Phone, MapPin, Palette, Sun, Moon } from 'lucide-react';
 import { Logo } from './Logo';
 import { useTheme } from '../../contexts/ThemeContext';
 import { COMPANY_INFO } from '../../constants';
 
 export const Footer: React.FC = () => {
   const currentYear = 2026;
-  const { theme, toggleTheme } = useTheme();
+  const { theme, mode, toggleTheme, toggleMode } = useTheme();
 
   const quickLinks = [
     { to: '/projeler', label: 'PROJELERİMİZ' },
@@ -99,15 +99,27 @@ export const Footer: React.FC = () => {
               ))}
             </div>
 
-            <button
-              onClick={toggleTheme}
-              className="mt-6 inline-flex items-center gap-2 px-4 py-3 bg-on-primary/10 hover:bg-on-primary/20 text-on-primary transition-all border border-on-primary/30 hover:border-on-primary/50 font-mono text-[10px] uppercase font-bold"
-              aria-label="Tema değiştir"
-              title={`${theme === 'default' ? 'Alternatif' : 'Varsayılan'} temaya geç`}
-            >
-              <Palette size={12} />
-              <span>{theme === 'default' ? 'ALTERNATİF' : 'VARSAYILAN'}</span>
-            </button>
+            <div className="flex flex-wrap gap-3 mt-6">
+              <button
+                onClick={toggleTheme}
+                className="inline-flex items-center gap-2 px-4 py-3 bg-on-primary/10 hover:bg-on-primary/20 text-on-primary transition-all border border-on-primary/30 hover:border-on-primary/50 font-mono text-[10px] uppercase font-bold"
+                aria-label="Tema değiştir"
+                title={`${theme === 'default' ? 'Alternatif' : 'Varsayılan'} temaya geç`}
+              >
+                <Palette size={12} />
+                <span>{theme === 'default' ? 'ALTERNATİF' : 'VARSAYILAN'}</span>
+              </button>
+
+              <button
+                onClick={toggleMode}
+                className="inline-flex items-center gap-2 px-4 py-3 bg-on-primary/10 hover:bg-on-primary/20 text-on-primary transition-all border border-on-primary/30 hover:border-on-primary/50 font-mono text-[10px] uppercase font-bold"
+                aria-label="Koyu/Açık tema değiştir"
+                title={`${mode === 'light' ? 'Koyu' : 'Açık'} temaya geç`}
+              >
+                {mode === 'light' ? <Moon size={12} /> : <Sun size={12} />}
+                <span>{mode === 'light' ? 'KOYU' : 'AÇIK'}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Palette } from 'lucide-react';
+import { Palette, Sun, Moon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { COMPANY_INFO } from '../../constants';
 
 export const Footer: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, mode, toggleTheme, toggleMode } = useTheme();
   return (
     <motion.footer
       initial={{ opacity: 0, y: 20 }}
@@ -43,17 +43,31 @@ export const Footer: React.FC = () => {
               © Tüm hakları saklıdır.
             </p>
 
-            <motion.button
-              onClick={toggleTheme}
-              className="mt-8 inline-flex items-center gap-2 px-4 py-3 bg-surface-bright/10 hover:bg-surface-bright/20 text-surface-bright transition-all border-2 border-surface-bright/30 hover:border-surface-bright/50 font-mono text-xs uppercase font-bold"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="Tema değiştir"
-              title={`${theme === 'default' ? 'Alternatif' : 'Varsayılan'} temaya geç`}
-            >
-              <Palette size={16} />
-              <span>{theme === 'default' ? 'MODERN' : 'ORGANIK'}</span>
-            </motion.button>
+            <div className="flex flex-wrap gap-4">
+              <motion.button
+                onClick={toggleTheme}
+                className="inline-flex items-center gap-2 px-4 py-3 bg-surface-bright/10 hover:bg-surface-bright/20 text-surface-bright transition-all border-2 border-surface-bright/30 hover:border-surface-bright/50 font-mono text-xs uppercase font-bold"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Tema değiştir"
+                title={`${theme === 'default' ? 'Alternatif' : 'Varsayılan'} temaya geç`}
+              >
+                <Palette size={16} />
+                <span>{theme === 'default' ? 'MODERN' : 'ORGANIK'}</span>
+              </motion.button>
+
+              <motion.button
+                onClick={toggleMode}
+                className="inline-flex items-center gap-2 px-4 py-3 bg-surface-bright/10 hover:bg-surface-bright/20 text-surface-bright transition-all border-2 border-surface-bright/30 hover:border-surface-bright/50 font-mono text-xs uppercase font-bold"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Koyu/Açık tema değiştir"
+                title={`${mode === 'light' ? 'Koyu' : 'Açık'} temaya geç`}
+              >
+                {mode === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+                <span>{mode === 'light' ? 'KOYU' : 'AÇIK'}</span>
+              </motion.button>
+            </div>
           </div>
 
           {/* Legal Links */}

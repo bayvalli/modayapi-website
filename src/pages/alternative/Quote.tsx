@@ -401,7 +401,7 @@ export const Quote: React.FC = () => {
                   </p>
 
                   <div className="border-4 border-green-200 bg-white p-6 max-w-sm mx-auto shadow-sm">
-                    <div className="flex items-center gap-2 justify-center text-[#111111] font-mono text-xs mb-1">
+                    <div className="flex items-center gap-2 justify-center text-secondary font-mono text-xs mb-1">
                       <Hash size={14} className="opacity-40" />
                       <span>TEKLİF PROTOKOL NO:</span>
                     </div>
