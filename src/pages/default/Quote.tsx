@@ -92,7 +92,7 @@ const Quote: React.FC = () => {
       payload['Ozel_Notlar'] = trimmedNotes;
       payload['_required'] = 'Ad_Soyad,Eposta,Telefon,Ozel_Notlar';
 
-      const response = await fetch(COMPANY_INFO.formEndpoint, {
+      const response = await fetch(COMPANY_INFO.quoteDefaultEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

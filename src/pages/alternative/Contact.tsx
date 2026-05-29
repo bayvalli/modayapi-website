@@ -66,7 +66,7 @@ export const Contact: React.FC = () => {
 
     try {
       // Direct FormSubmit integration for secure client-side delivery without backends
-      const response = await fetch(COMPANY_INFO.formEndpoint, {
+      const response = await fetch(COMPANY_INFO.contactAlternativeEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

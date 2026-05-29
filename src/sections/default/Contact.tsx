@@ -50,7 +50,7 @@ export const Contact: React.FC = () => {
     setSubmitError('');
 
     try {
-      const response = await fetch(COMPANY_INFO.formEndpoint, {
+      const response = await fetch(COMPANY_INFO.contactDefaultEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

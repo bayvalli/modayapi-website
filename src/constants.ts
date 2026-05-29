@@ -206,5 +206,8 @@ export const COMPANY_INFO: CompanyInfo = {
   instagramUrl:
     'https://www.instagram.com/modayapias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
   gpsCoordinates: { lat: 38.294812, lng: 31.178438 },
-  formEndpoint: 'https://formspree.io/info@modayapi.com',
+  contactDefaultEndpoint: 'https://formspree.io/f/mojbbnoq',
+  contactAlternativeEndpoint: 'https://formspree.io/f/xvzyybja',
+  quoteDefaultEndpoint: 'https://formspree.io/f/mbdbbava',
+  quoteAlternativeEndpoint: 'https://formspree.io/f/xnjrrbkg',
 };
