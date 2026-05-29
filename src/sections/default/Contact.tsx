@@ -15,7 +15,7 @@ export const Contact: React.FC = () => {
   const borderLgClass = isModern ? 'border-4' : 'border-4';
   const officeLocation = COMPANY_INFO.gpsCoordinates;
 
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [ticketId, setTicketId] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,11 +23,11 @@ export const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim()) {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
       alert(
         language === 'tr'
-          ? 'Lütfen Ad Soyad ve E-posta alanlarını doldurun.'
-          : 'Please fill in the Full Name and Email fields.'
+          ? 'Lütfen Ad Soyad, E-posta ve Telefon alanlarını doldurun.'
+          : 'Please fill in the Full Name, Email, and Phone fields.'
       );
       return;
     }
@@ -42,9 +42,11 @@ export const Contact: React.FC = () => {
           Accept: 'application/json',
         },
         body: JSON.stringify({
+          _subject: `${COMPANY_INFO.shortName} Web İletişim - ${formData.name}`,
           'Source / Form': `${COMPANY_INFO.shortName} Contact Form`,
           'Full Name': formData.name,
           Email: formData.email,
+          Phone: formData.phone,
           Message: formData.message || 'None.',
         }),
       });
@@ -227,6 +229,14 @@ export const Contact: React.FC = () => {
                 </div>
                 <div className="flex justify-between border-b border-primary/10 pb-2">
                   <span className="text-secondary">
+                    {language === 'tr' ? 'İLETİŞİM //' : 'CONTACT //'}
+                  </span>
+                  <span className="font-bold text-primary">
+                    {formData.email} / {formData.phone}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-primary/10 pb-2">
+                  <span className="text-secondary">
                     {language === 'tr' ? 'ALICI //' : 'RECIPIENT //'}
                   </span>
                   <span className="font-bold text-primary">{COMPANY_INFO.shortNameUpper} A.Ş.</span>
@@ -256,7 +266,7 @@ export const Contact: React.FC = () => {
               <button
                 onClick={() => {
                   setSubmitted(false);
-                  setFormData({ name: '', email: '', message: '' });
+                  setFormData({ name: '', email: '', phone: '', message: '' });
                 }}
                 className="w-full border-4 border-primary bg-surface py-4 font-mono text-xs font-bold text-primary hover:bg-primary hover:text-on-primary transition-colors duration-200 uppercase tracking-widest"
               >
@@ -293,6 +303,19 @@ export const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder={t('contact.placeholderEmail')}
+                  />
+                </div>
+                <div className="flex flex-col relative group">
+                  <label className="font-label-caps text-secondary mb-2 uppercase tracking-widest text-xs">
+                    {t('contact.phone')}
+                  </label>
+                  <input
+                    className="w-full bg-transparent border-0 border-b-2 border-primary px-0 py-2 text-body-lg text-primary focus:ring-0 focus:border-b-4 focus:border-primary transition-all outline-none"
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder={t('contact.placeholderPhone')}
                   />
                 </div>
                 <div className="flex flex-col relative group mb-8">

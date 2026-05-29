@@ -15,14 +15,25 @@ const Quote: React.FC = () => {
   const [sector, setSector] = useState<'construction' | 'materials' | 'coal' | 'software'>(
     'construction'
   );
-  const [formData, setFormData] = useState({ name: '', location: '', area: '', notes: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    location: '',
+    areaSize: '',
+    constructionType: 'Kat Karşılığı Taahhüt',
+    materialRequest: '',
+    coalAmount: '',
+    softwarePackage: 'Tutar.io Muhasebe Standard',
+    notes: '',
+  });
   const [submitted, setSubmitted] = useState(false);
   const [ticketId, setTicketId] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
   const showProjectLocation = sector !== 'software';
-  const showTotalArea = sector === 'construction';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,23 +45,48 @@ const Quote: React.FC = () => {
       );
       return;
     }
+    if (!formData.email.trim()) {
+      alert(
+        language === 'tr' ? 'Lütfen E-posta alanını doldurun.' : 'Please fill in the Email field.'
+      );
+      return;
+    }
+    if (!formData.phone.trim()) {
+      alert(
+        language === 'tr' ? 'Lütfen Telefon alanını doldurun.' : 'Please fill in the Phone field.'
+      );
+      return;
+    }
     setIsSubmitting(true);
     setSubmitError('');
 
     try {
-      const payload: Record<string, string> = {
-        'Form / Source': `${COMPANY_INFO.shortName} Quote Request`,
-        'Name / Title': formData.name,
-        'Service Category': sector.toUpperCase(),
-        'Technical Notes': formData.notes || 'None',
+      const payload: Record<string, unknown> = {
+        _subject: `${COMPANY_INFO.shortName} Teklif Talebi [${sector.toUpperCase()}] - ${formData.name}`,
+        'Form Source': `${COMPANY_INFO.shortName} Default Quote`,
+        'Talep Turu': sector.toUpperCase(),
+        'Ad Soyad / Unvan': formData.name,
+        'Sirket / Kurum': formData.company || 'Bireysel',
+        'E-posta': formData.email,
+        Telefon: formData.phone,
       };
 
       if (showProjectLocation && formData.location) {
-        payload['Location'] = formData.location;
+        payload['Proje Konumu'] = formData.location;
       }
-      if (showTotalArea && formData.area) {
-        payload['Area (M²)'] = formData.area;
+
+      if (sector === 'construction') {
+        payload['Yapı Taahhüt Modeli'] = formData.constructionType;
+        payload['Proje Alanı (m²)'] = formData.areaSize;
+      } else if (sector === 'materials') {
+        payload['Talep Edilen Malzeme Sınıfı'] = formData.materialRequest;
+      } else if (sector === 'coal') {
+        payload['Kömür Miktarı'] = formData.coalAmount;
+      } else if (sector === 'software') {
+        payload['Yazılım Paketi'] = formData.softwarePackage;
       }
+
+      payload['Teknik Notlar'] = formData.notes || 'Yok';
 
       const response = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.email}`, {
         method: 'POST',
@@ -147,7 +183,7 @@ const Quote: React.FC = () => {
                     className={`w-3 h-3 bg-emerald-600 animate-pulse rounded-full ${isModern ? 'w-2 h-2' : ''}`}
                   ></div>
                   <span
-                    className={`font-mono text-xs uppercase tracking-widest text-emerald-600 font-bold ${isModern ? 'text-[10px] tracking-[0.2em]' : ''}`}
+                    className={`font-mono text-xs uppercase tracking-widest text-emerald-600 font-bold ${isModern ? 'text-[10px]' : ''}`}
                   >
                     {language === 'tr'
                       ? 'Mühendislik Talebi Kaydedildi'
@@ -179,6 +215,26 @@ const Quote: React.FC = () => {
                     </span>
                     <span className="font-bold text-primary uppercase">{formData.name}</span>
                   </div>
+                  {formData.company && (
+                    <div
+                      className={`flex justify-between border-b border-primary/10 pb-2 ${isModern ? 'pb-1' : ''}`}
+                    >
+                      <span className="text-secondary">
+                        {language === 'tr' ? 'ŞİRKET / KURUM //' : 'COMPANY / ORG //'}
+                      </span>
+                      <span className="font-bold text-primary uppercase">{formData.company}</span>
+                    </div>
+                  )}
+                  <div
+                    className={`flex justify-between border-b border-primary/10 pb-2 ${isModern ? 'pb-1' : ''}`}
+                  >
+                    <span className="text-secondary">
+                      {language === 'tr' ? 'İLETİŞİM //' : 'CONTACT //'}
+                    </span>
+                    <span className="font-bold text-primary uppercase">
+                      {formData.email} / {formData.phone}
+                    </span>
+                  </div>
                   {showProjectLocation && formData.location && (
                     <div
                       className={`flex justify-between border-b border-primary/10 pb-2 ${isModern ? 'pb-1' : ''}`}
@@ -189,16 +245,72 @@ const Quote: React.FC = () => {
                       <span className="font-bold text-primary uppercase">{formData.location}</span>
                     </div>
                   )}
-                  {showTotalArea && formData.area && (
+
+                  {/* Dynamic Sector Specs display in receipt */}
+                  {sector === 'construction' && (
+                    <>
+                      <div
+                        className={`flex justify-between border-b border-primary/10 pb-2 ${isModern ? 'pb-1' : ''}`}
+                      >
+                        <span className="text-secondary">
+                          {language === 'tr' ? 'TAAHHÜT MODELİ //' : 'CONTRACT MODEL //'}
+                        </span>
+                        <span className="font-bold text-primary uppercase">
+                          {formData.constructionType}
+                        </span>
+                      </div>
+                      {formData.areaSize && (
+                        <div
+                          className={`flex justify-between border-b border-primary/10 pb-2 ${isModern ? 'pb-1' : ''}`}
+                        >
+                          <span className="text-secondary">
+                            {language === 'tr' ? 'YAPISAL ALAN //' : 'STRUCTURAL AREA //'}
+                          </span>
+                          <span className="font-bold text-primary">{formData.areaSize} M²</span>
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  {sector === 'materials' && formData.materialRequest && (
                     <div
                       className={`flex justify-between border-b border-primary/10 pb-2 ${isModern ? 'pb-1' : ''}`}
                     >
                       <span className="text-secondary">
-                        {language === 'tr' ? 'YAPISAL ALAN //' : 'STRUCTURAL AREA //'}
+                        {language === 'tr' ? 'MALZEME TALEBİ //' : 'MATERIALS REQUEST //'}
                       </span>
-                      <span className="font-bold text-primary">{formData.area} M²</span>
+                      <span className="font-bold text-primary uppercase truncate max-w-[200px]">
+                        {formData.materialRequest}
+                      </span>
                     </div>
                   )}
+
+                  {sector === 'coal' && formData.coalAmount && (
+                    <div
+                      className={`flex justify-between border-b border-primary/10 pb-2 ${isModern ? 'pb-1' : ''}`}
+                    >
+                      <span className="text-secondary">
+                        {language === 'tr' ? 'KÖMÜR MİKTARI //' : 'COAL AMOUNT //'}
+                      </span>
+                      <span className="font-bold text-primary uppercase">
+                        {formData.coalAmount} TON
+                      </span>
+                    </div>
+                  )}
+
+                  {sector === 'software' && (
+                    <div
+                      className={`flex justify-between border-b border-primary/10 pb-2 ${isModern ? 'pb-1' : ''}`}
+                    >
+                      <span className="text-secondary">
+                        {language === 'tr' ? 'YAZILIM PAKETİ //' : 'SOFTWARE PACKAGE //'}
+                      </span>
+                      <span className="font-bold text-primary uppercase">
+                        {formData.softwarePackage}
+                      </span>
+                    </div>
+                  )}
+
                   <div
                     className={`flex justify-between border-b border-primary/10 pb-2 ${isModern ? 'pb-1' : ''}`}
                   >
@@ -248,7 +360,19 @@ const Quote: React.FC = () => {
                   variant="primary"
                   onClick={() => {
                     setSubmitted(false);
-                    setFormData({ name: '', location: '', area: '', notes: '' });
+                    setFormData({
+                      name: '',
+                      company: '',
+                      email: '',
+                      phone: '',
+                      location: '',
+                      areaSize: '',
+                      constructionType: 'Kat Karşılığı Taahhüt',
+                      materialRequest: '',
+                      coalAmount: '',
+                      softwarePackage: 'Tutar.io Muhasebe Standard',
+                      notes: '',
+                    });
                   }}
                   className={`w-full md:w-fit py-4 px-8 mt-4 font-mono text-xs font-bold uppercase tracking-widest text-center ${isModern ? 'py-3 px-6 mt-2' : ''}`}
                 >
@@ -257,81 +381,87 @@ const Quote: React.FC = () => {
               </div>
             ) : (
               <form className="space-y-12" onSubmit={handleSubmit}>
+                {/* Basic Info Group 1: Name and Company */}
                 <div
                   className={`grid grid-cols-1 md:grid-cols-2 gap-12 ${isModern ? 'gap-8' : ''}`}
                 >
-                  <div
-                    className={`flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:${isModern ? 'border-b-4' : 'border-b-4'} ${isModern ? 'duration-200' : 'duration-300'}`}
-                  >
-                    <label
-                      className={`font-label-caps text-secondary text-xs uppercase tracking-widest ${isModern ? 'text-[10px]' : ''}`}
-                    >
-                      {language === 'tr' ? 'AD SOYAD / UNVAN' : 'FULL NAME / TITLE'}
+                  <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                    <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                      {language === 'tr' ? 'AD SOYAD / UNVAN *' : 'FULL NAME / TITLE *'}
                     </label>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={`bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none ${isModern ? 'text-sm' : ''}`}
+                      className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none"
                       placeholder={
                         language === 'tr' ? 'İsim veya Kurum Giriniz' : 'Enter Name or Organization'
                       }
                     />
                   </div>
-                  {showProjectLocation && (
-                    <div
-                      className={`flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:${isModern ? 'border-b-4' : 'border-b-4'} ${isModern ? 'duration-200' : 'duration-300'}`}
-                    >
-                      <label
-                        className={`font-label-caps text-secondary text-xs uppercase tracking-widest ${isModern ? 'text-[10px]' : ''}`}
-                      >
-                        {language === 'tr' ? 'PROJE KONUMU' : 'PROJECT LOCATION'}
-                      </label>
-                      <input
-                        type="text"
-                        value={formData.location}
-                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                        className={`bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none ${isModern ? 'text-sm' : ''}`}
-                        placeholder={language === 'tr' ? 'Şehir / İlçe' : 'City / Town'}
-                      />
-                    </div>
-                  )}
+                  <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                    <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                      {t('quote.fields.companyName')}
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none"
+                      placeholder={t('quote.fields.companyPlaceholder')}
+                    />
+                  </div>
                 </div>
 
+                {/* Basic Info Group 2: Email and Phone */}
                 <div
                   className={`grid grid-cols-1 md:grid-cols-2 gap-12 ${isModern ? 'gap-8' : ''}`}
                 >
-                  {showTotalArea && (
-                    <div
-                      className={`flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:${isModern ? 'border-b-4' : 'border-b-4'} ${isModern ? 'duration-200' : 'duration-300'}`}
-                    >
-                      <label
-                        className={`font-label-caps text-secondary text-xs uppercase tracking-widest ${isModern ? 'text-[10px]' : ''}`}
-                      >
-                        {language === 'tr' ? 'TOPLAM ALAN (M²)' : 'TOTAL AREA (SQM)'}
-                      </label>
-                      <input
-                        type="number"
-                        value={formData.area}
-                        onChange={(e) => setFormData({ ...formData, area: e.target.value })}
-                        className={`bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none ${isModern ? 'text-sm' : ''}`}
-                        placeholder="Örn: 2500"
-                      />
-                    </div>
-                  )}
-                  <div
-                    className={`flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:${isModern ? 'border-b-4' : 'border-b-4'} ${isModern ? 'duration-200' : 'duration-300'}`}
-                  >
-                    <label
-                      className={`font-label-caps text-secondary text-xs uppercase tracking-widest ${isModern ? 'text-[10px]' : ''}`}
-                    >
+                  <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                    <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                      {t('contact.email')} *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none"
+                      placeholder={t('contact.placeholderEmail')}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                    <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                      {t('contact.phone')} *
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none"
+                      placeholder={t('contact.placeholderPhone')}
+                    />
+                  </div>
+                </div>
+
+                {/* Basic Info Group 3: Sector Selection and Project Location */}
+                <div
+                  className={`grid grid-cols-1 md:grid-cols-2 gap-12 ${isModern ? 'gap-8' : ''}`}
+                >
+                  <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                    <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
                       {language === 'tr' ? 'HİZMET TÜRÜ' : 'SERVICE TYPE'}
                     </label>
                     <select
                       value={sector}
-                      onChange={(e) => setSector(e.target.value)}
-                      className={`bg-transparent border-none p-0 text-body-lg focus:ring-0 font-sans cursor-pointer outline-none ${isModern ? 'text-sm' : ''}`}
+                      onChange={(e) =>
+                        setSector(
+                          e.target.value as 'construction' | 'materials' | 'coal' | 'software'
+                        )
+                      }
+                      className="bg-transparent border-none p-0 text-body-lg focus:ring-0 font-sans cursor-pointer outline-none"
                     >
                       <option value="construction">{t('quote.construction')}</option>
                       <option value="materials">{t('quote.materials')}</option>
@@ -339,26 +469,148 @@ const Quote: React.FC = () => {
                       <option value="software">{t('quote.software')}</option>
                     </select>
                   </div>
+                  {showProjectLocation && (
+                    <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                      <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                        {language === 'tr' ? 'PROJE KONUMU' : 'PROJECT LOCATION'}
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.location}
+                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none"
+                        placeholder={language === 'tr' ? 'Şehir / İlçe' : 'City / Town'}
+                      />
+                    </div>
+                  )}
                 </div>
 
-                <div
-                  className={`flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:${isModern ? 'border-b-4' : 'border-b-4'} ${isModern ? 'duration-200' : 'duration-300'}`}
-                >
-                  <label
-                    className={`font-label-caps text-secondary text-xs uppercase tracking-widest ${isModern ? 'text-[10px]' : ''}`}
+                {/* Dynamic Sector Specifics */}
+                {sector === 'construction' && (
+                  <div
+                    className={`grid grid-cols-1 md:grid-cols-2 gap-12 ${isModern ? 'gap-8' : ''}`}
                   >
-                    {language === 'tr' ? 'TEKNİK NOTLAR' : 'TECHNICAL NOTES'}
+                    <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                      <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                        {t('quote.fields.taahhutModel')}
+                      </label>
+                      <select
+                        value={formData.constructionType}
+                        onChange={(e) =>
+                          setFormData({ ...formData, constructionType: e.target.value })
+                        }
+                        className="bg-transparent border-none p-0 text-body-lg focus:ring-0 font-sans cursor-pointer outline-none"
+                      >
+                        <option value="Kat Karşılığı Taahhüt">
+                          {t('quote.models.katKarsiligi')}
+                        </option>
+                        <option value="Anahtar Teslim İnşaat">
+                          {t('quote.models.anahtarTeslim')}
+                        </option>
+                        <option value="Kentsel Dönüşüm">
+                          {language === 'tr' ? 'Kentsel Dönüşüm' : 'Urban Renewal'}
+                        </option>
+                        <option value="Komple Daire / Bina Tadilatı">
+                          {language === 'tr'
+                            ? 'Komple Daire / Bina Tadilatı'
+                            : 'Full Apartment / Building Renovation'}
+                        </option>
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                      <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                        {t('quote.fields.projectArea')}
+                      </label>
+                      <input
+                        type="number"
+                        value={formData.areaSize}
+                        onChange={(e) => setFormData({ ...formData, areaSize: e.target.value })}
+                        className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none"
+                        placeholder={t('quote.fields.projectAreaPlaceholder')}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {sector === 'materials' && (
+                  <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                    <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                      {t('quote.fields.materialType')}
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={formData.materialRequest}
+                      onChange={(e) =>
+                        setFormData({ ...formData, materialRequest: e.target.value })
+                      }
+                      className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim resize-none font-sans outline-none"
+                      placeholder={
+                        language === 'tr'
+                          ? 'Kaba İnşaat Malzemeleri, Demir, C30 Hazır Beton numuneleri vb...'
+                          : 'Raw Concrete, Corrugated Steel, C30 Ready-mix specimens...'
+                      }
+                    />
+                  </div>
+                )}
+
+                {sector === 'coal' && (
+                  <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                    <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                      {t('quote.fields.quantity')}
+                    </label>
+                    <input
+                      type="number"
+                      value={formData.coalAmount}
+                      onChange={(e) => setFormData({ ...formData, coalAmount: e.target.value })}
+                      className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim font-sans outline-none"
+                      placeholder={t('quote.fields.quantityPlaceholder')}
+                    />
+                  </div>
+                )}
+
+                {sector === 'software' && (
+                  <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                    <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                      {t('quote.fields.softwareApp')}
+                    </label>
+                    <select
+                      value={formData.softwarePackage}
+                      onChange={(e) =>
+                        setFormData({ ...formData, softwarePackage: e.target.value })
+                      }
+                      className="bg-transparent border-none p-0 text-body-lg focus:ring-0 font-sans cursor-pointer outline-none"
+                    >
+                      <option value="Tutar.io Muhasebe Standard">
+                        {t('quote.softwaresList.tutario')}
+                      </option>
+                      <option value="Tutar.io Pro Multi-Company">
+                        {language === 'tr'
+                          ? 'Tutar.io Pro - Çoklu Şirket Yönetimi'
+                          : 'Tutar.io Pro - Multi-Company Management'}
+                      </option>
+                      <option value="CloudBook Enterprise">
+                        {t('quote.softwaresList.cloudbook')}
+                      </option>
+                      <option value="Tutar + Cloudbook Premium Kombin">
+                        {language === 'tr'
+                          ? 'Tutar & CloudBook - Tam Dijital Çözüm Paketi'
+                          : 'Tutar & CloudBook - Complete Digital Suite'}
+                      </option>
+                    </select>
+                  </div>
+                )}
+
+                {/* Technical Notes / Special requests */}
+                <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
+                  <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
+                    {t('quote.fields.notes')}
                   </label>
                   <textarea
                     rows={4}
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className={`bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim resize-none font-sans outline-none ${isModern ? 'text-sm' : ''}`}
-                    placeholder={
-                      language === 'tr'
-                        ? 'Projenizle ilgili özel gereksinimleri belirtiniz...'
-                        : 'Specify custom requirements regarding your project...'
-                    }
+                    className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim resize-none font-sans outline-none"
+                    placeholder={t('quote.fields.notesPlaceholder')}
                   />
                 </div>
 
