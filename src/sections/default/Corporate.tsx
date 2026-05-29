@@ -15,7 +15,7 @@ export const Corporate: React.FC = () => {
             </h1>
           </div>
 
-          <div className="col-span-12 md:col-span-12 -mt-24 md:-mt-48 z-10">
+          <div className="col-span-12 md:col-span-12 -mt-36 md:-mt-48 z-10">
             <div className="w-full h-[500px] border-heavy overflow-hidden bg-primary">
               <img
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxpG76DoAYO13UGlRRASrcKWIgxnVZe2U1U9eDF7HxS4Wc1gVJuv-S1uR1ftRr2yol0Bj0QLn4pHlWHKAfPYLhHQlHdgSai0ETm6d029U0NMFugMpnJl1Gf8W32-obLrnaMLj_1sbZK_4OAWlNqJPWhperM37WzSmNL62XixHHM_IoVG7Puq47aCk8cDNIMQ1xpg58UiQvoeVIDt6EQjuGF0OU-8jdhtn1r8D0LQTAD4-ylP6Lu_4EgUwyjddjAS3mgv6HgjSvPa8N"
