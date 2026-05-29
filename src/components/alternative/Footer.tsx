@@ -66,11 +66,11 @@ export const Footer: React.FC = () => {
             </span>
             <div className="space-y-4 text-sm opacity-80 font-mono">
               <a
-                href="tel:+902462181818"
+                href="tel:+905323118210"
                 className="flex items-center gap-3 hover:text-white transition-colors"
               >
                 <Phone size={14} />
-                +90 246 218 18 18
+                +90 532 311 82 10
               </a>
               <a
                 href="mailto:info@modayapi.com"
@@ -81,7 +81,7 @@ export const Footer: React.FC = () => {
               </a>
               <div className="flex items-start gap-3">
                 <MapPin size={14} className="mt-1 flex-shrink-0" />
-                <span>Sanayi Mahallesi, 104. Cadde, No: 42 Yalvaç / Isparta</span>
+                <span>Leblebiciler Mah. Hastane Cad. No:54 Yalvaç / Isparta</span>
               </div>
             </div>
           </div>

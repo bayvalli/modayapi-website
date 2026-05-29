@@ -301,10 +301,6 @@ export const Contact: React.FC = () => {
                       <a href="mailto:info@modayapi.com" className="hover:underline">
                         info@modayapi.com
                       </a>
-                      <br />
-                      <a href="mailto:destek@modayapi.com" className="hover:underline">
-                        destek@modayapi.com
-                      </a>
                     </p>
                   </div>
                 </div>
