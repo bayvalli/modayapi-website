@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  
+  --color-primary: #111111;
+  --color-on-primary: #ffffff;
+  --color-secondary: #555555;
+  --color-on-secondary: #ffffff;
+  --color-surface-container: #f9f9f9;
+  --color-surface-container-high: #f1f1f1;
+  --color-surface-variant: #e5e5e5;
+  
+  --border-heavy: 4px solid #111111;
+}
+
+@layer utilities {
+  .border-heavy {
+    border: 4px solid #111111;
+  }
+  .border-heavy-2 {
+    border: 2px solid #111111;
+  }
+  .px-margin {
+    padding-left: clamp(1.5rem, 5vw, 6rem);
+    padding-right: clamp(1.5rem, 5vw, 6rem);
+  }
+  .pb-block-gap {
+    padding-bottom: clamp(3rem, 8vw, 8rem);
+  }
+  .pt-block-gap {
+    padding-top: clamp(3rem, 8vw, 8rem);
+  }
+  .gap-gutter {
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+  .text-headline-xl {
+    font-size: clamp(2.25rem, 6vw, 6-rem);
+    font-weight: 700;
+  }
+  .text-headline-sm {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 600;
+  }
+  .text-body-lg {
+    font-size: clamp(1rem, 1.1vw, 1.15rem);
+  }
+  .font-label-caps {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom Base Brutalist Elements */
+body {
+  background-color: #fafafa;
+  color: #111111;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Brutalist Button Utility Hover Focus */
+button, a {
+  outline-color: var(--color-primary);
+}

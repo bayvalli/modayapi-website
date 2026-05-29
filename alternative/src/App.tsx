@@ -22,7 +22,7 @@ import NotFound from './pages/NotFound';
 import ProjectDetail from './pages/ProjectDetail';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTop from './components/BackToTop';
-import SEO from './components/SEO';
+import { SEO } from './components/SEO';
 
 export default function App() {
   return (

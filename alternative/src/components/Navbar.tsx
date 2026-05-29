@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { BrutalistButton } from './BrutalistButton';
+import { Logo } from './Logo';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const Navbar: React.FC = () => {
@@ -43,11 +44,8 @@ export const Navbar: React.FC = () => {
         className="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b-4 border-primary px-margin py-6"
       >
         <div className="max-w-[1440px] mx-auto flex justify-between items-center">
-          <Link
-            to="/"
-            className="font-serif text-headline-md font-bold text-primary tracking-tighter"
-          >
-            MODA YAPI
+          <Link to="/">
+            <Logo variant="dark" />
           </Link>
 
           <ul className="hidden md:flex gap-8 items-center font-label-caps uppercase tracking-widest text-secondary">

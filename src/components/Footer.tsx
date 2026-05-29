@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { Palette } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTheme } from '../contexts/ThemeContext';
 
 export const Footer: React.FC = () => {
+  const { theme, toggleTheme } = useTheme();
   return (
     <motion.footer
       initial={{ opacity: 0, y: 20 }}
@@ -39,6 +41,16 @@ export const Footer: React.FC = () => {
             <p className="text-surface-variant/40 font-label-caps text-[10px] tracking-widest pt-8 uppercase">
               © Tüm hakları saklıdır.
             </p>
+
+            <button
+              onClick={toggleTheme}
+              className="mt-8 inline-flex items-center gap-2 px-4 py-3 bg-surface-bright/10 hover:bg-surface-bright/20 text-surface-bright transition-all border-2 border-surface-bright/30 hover:border-surface-bright/50 font-mono text-xs uppercase font-bold"
+              aria-label="Tema değiştir"
+              title={`${theme === 'default' ? 'Alternatif' : 'Varsayılan'} temaya geç`}
+            >
+              <Palette size={16} />
+              <span>{theme === 'default' ? 'ALTERNATİF' : 'VARSAYILAN'}</span>
+            </button>
           </div>
 
           {/* Legal Links */}
