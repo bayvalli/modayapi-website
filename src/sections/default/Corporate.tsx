@@ -9,13 +9,13 @@ export const Corporate: React.FC = () => {
     <section id="corporate" className="py-block-gap">
       <div className="max-w-[1440px] mx-auto px-margin">
         <div className="grid grid-cols-12 gap-gutter items-center">
-          <div className="col-span-12 md:col-span-10 md:col-start-2 z-20">
+          <div className="col-span-12 md:col-span-10 z-20">
             <h1 className="text-headline-xl text-on-primary mb-12 uppercase">
               {t('corporate.title')}
             </h1>
           </div>
 
-          <div className="col-span-12 md:col-span-11 md:col-start-2 -mt-24 md:-mt-48 z-10">
+          <div className="col-span-12 md:col-span-12 -mt-24 md:-mt-48 z-10">
             <div className="w-full h-[500px] border-heavy overflow-hidden bg-primary">
               <img
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxpG76DoAYO13UGlRRASrcKWIgxnVZe2U1U9eDF7HxS4Wc1gVJuv-S1uR1ftRr2yol0Bj0QLn4pHlWHKAfPYLhHQlHdgSai0ETm6d029U0NMFugMpnJl1Gf8W32-obLrnaMLj_1sbZK_4OAWlNqJPWhperM37WzSmNL62XixHHM_IoVG7Puq47aCk8cDNIMQ1xpg58UiQvoeVIDt6EQjuGF0OU-8jdhtn1r8D0LQTAD4-ylP6Lu_4EgUwyjddjAS3mgv6HgjSvPa8N"
@@ -27,7 +27,7 @@ export const Corporate: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-12 gap-gutter mt-block-gap">
-          <div className="col-span-12 md:col-span-6 md:col-start-2">
+          <div className="col-span-12 md:col-span-6">
             <div className="bg-surface border-heavy p-12 -mt-32 md:-mt-64 relative z-30">
               <h3 className="text-headline-lg mb-8 leading-tight">
                 {language === 'tr' ? (

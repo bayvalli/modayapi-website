@@ -14,12 +14,14 @@ const Corporate: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={`pt-16 pb-block-gap ${isModern ? 'pt-24' : ''}`}
+      className={`pt-24 pb-block-gap ${isModern ? 'pt-24' : ''}`}
     >
       <CorporateSection />
 
+      <div className="border-t-4 border-primary w-full my-12 md:my-16"></div>
+
       {/* Faaliyet Konuları Section from the plan */}
-      <section className={`mt-block-gap px-margin relative ${isModern ? 'mt-block-gap-sm' : ''}`}>
+      <section className="px-margin relative">
         <div className="max-w-[1440px] mx-auto">
           <header className={`mb-24 text-center ${isModern ? 'mb-16' : ''}`}>
             <h2
@@ -111,10 +113,10 @@ const Corporate: React.FC = () => {
         </div>
       </section>
 
+      <div className="border-t-4 border-primary w-full mt-36 md:mt-48"></div>
+
       {/* Mühendislik Gücü Section */}
-      <section
-        className={`mt-block-gap px-margin pt-32 ${isModern ? 'pt-24 mt-block-gap-sm' : ''}`}
-      >
+      <section className={`px-margin pt-12 md:pt-24 ${isModern ? 'pt-8' : ''}`}>
         <div
           className={`max-w-[1440px] mx-auto grid grid-cols-12 gap-gutter relative ${isModern ? 'gap-6' : ''}`}
         >
