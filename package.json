@@ -9,6 +9,8 @@
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
+    "format:check": "prettier --check . && eslint .",
+    "format:fix": "eslint --fix . && prettier --write .",
     "prepare": "husky install"
   },
   "dependencies": {

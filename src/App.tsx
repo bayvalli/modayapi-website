@@ -32,7 +32,7 @@ export default function App() {
         <BackToTop />
         <div className="min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
           <Navbar />
-          
+
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />

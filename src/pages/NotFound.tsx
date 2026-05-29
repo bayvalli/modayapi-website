@@ -5,26 +5,31 @@ import { ArrowLeft } from 'lucide-react';
 
 const NotFound: React.FC = () => {
   return (
-    <motion.div 
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="min-h-[80vh] pt-32 flex items-center justify-center px-margin"
     >
       <div className="max-w-2xl w-full text-center">
         <header className="mb-12">
-          <span className="font-label-caps text-secondary text-sm tracking-[0.3em] mb-4 block">HATALI KOORDİNAT / ERROR 404</span>
-          <h1 className="font-serif text-[12vw] lg:text-headline-xl text-primary leading-none uppercase select-none">404</h1>
+          <span className="font-label-caps text-secondary text-sm tracking-[0.3em] mb-4 block">
+            HATALI KOORDİNAT / ERROR 404
+          </span>
+          <h1 className="font-serif text-[12vw] lg:text-headline-xl text-primary leading-none uppercase select-none">
+            404
+          </h1>
           <div className="h-2 w-24 bg-primary mx-auto mt-8"></div>
         </header>
 
         <div className="space-y-8">
           <p className="font-sans text-body-lg text-secondary max-w-md mx-auto leading-relaxed">
-            Aradığınız yapı veya sayfa mevcut planlarımızda bulunamadı. Lütfen adresi kontrol edin veya ana sayfaya dönün.
+            Aradığınız yapı veya sayfa mevcut planlarımızda bulunamadı. Lütfen adresi kontrol edin
+            veya ana sayfaya dönün.
           </p>
 
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="inline-flex items-center gap-4 bg-primary text-on-primary px-10 py-5 font-label-caps text-xs tracking-widest hover:bg-secondary transition-all group"
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />

@@ -4,35 +4,39 @@ export const SERVICES: Service[] = [
   {
     id: '01',
     title: 'Müteahhitlik',
-    description: 'Kentsel dönüşümden endüstriyel tesislere kadar, her ölçekteki projede yüksek mühendislik standartları ve iş güvenliği prensipleriyle anahtar teslim çözümler sunuyoruz.',
+    description:
+      'Kentsel dönüşümden endüstriyel tesislere kadar, her ölçekteki projede yüksek mühendislik standartları ve iş güvenliği prensipleriyle anahtar teslim çözümler sunuyoruz.',
     icon: 'Engineering',
     category: 'İNŞAAT',
-    colorClass: 'bg-surface-container-high'
+    colorClass: 'bg-surface-container-high',
   },
   {
     id: '02',
     title: 'İnşaat Malzemeleri',
-    description: 'Projenizin temelinden çatısına kadar ihtiyaç duyacağınız tüm kaba ve ince inşaat malzemelerini, kalite standartlarından ödün vermeden tedarik ediyoruz.',
+    description:
+      'Projenizin temelinden çatısına kadar ihtiyaç duyacağınız tüm kaba ve ince inşaat malzemelerini, kalite standartlarından ödün vermeden tedarik ediyoruz.',
     icon: 'Inventory',
     category: 'TEDARİK',
-    colorClass: 'bg-tertiary-fixed'
+    colorClass: 'bg-tertiary-fixed',
   },
   {
     id: '03',
     title: 'Kömür Satışı',
-    description: 'Yüksek kalorili ve çevre dostu yerli ve ithal kömür çeşitlerimizle, ısınma ihtiyaçlarınız için güvenilir ve ekonomik enerji çözümleri sağlıyoruz.',
+    description:
+      'Yüksek kalorili ve çevre dostu yerli ve ithal kömür çeşitlerimizle, ısınma ihtiyaçlarınız için güvenilir ve ekonomik enerji çözümleri sağlıyoruz.',
     icon: 'Flame',
     category: 'ENERJİ',
-    colorClass: 'bg-surface-container'
+    colorClass: 'bg-surface-container',
   },
   {
     id: '04',
     title: 'Yazılım Faaliyetleri',
-    description: 'Dijital dönüşüm yolculuğunuzda Tutar.io Muhasebe Yazılımı ve CloudBook gibi profesyonel yönetim araçlarıyla iş süreçlerinizi modernize ediyoruz.',
+    description:
+      'Dijital dönüşüm yolculuğunuzda Tutar.io Muhasebe Yazılımı ve CloudBook gibi profesyonel yönetim araçlarıyla iş süreçlerinizi modernize ediyoruz.',
     icon: 'Terminal',
     category: 'DİJİTAL',
-    colorClass: 'bg-surface-variant'
-  }
+    colorClass: 'bg-surface-variant',
+  },
 ];
 
 export const PROJECTS: Project[] = [
@@ -45,7 +49,8 @@ export const PROJECTS: Project[] = [
     features: 'C30 Beton, Çelik - Ahşap Çatı, Merkezi Uydu, Görüntülü Diafon',
     category: 'TAAHHÜT PROJESİ 01 - MONOLİTİK KONUT',
     imageUrl: '/assets/h_salih_1.png',
-    description: 'Yalvaç Isparta\'da yükselen Hacı Salih Apartmanı (Monolitik Konut), üstün yapı standartları ve kaliteli mühendislik prensipleriyle tasarlandı. C30 dayanıklılık sınıfı yüksek mukavemetli hazır beton teknolojisinin kullanıldığı projede, çelik destekli ahşap çatı konstrüksiyonu, modern ortak merkezi uydu altyapısı ve her dairede entegre görüntülü diafon güvenlik sistemleri standart olarak sunulmaktadır. 21 bağımsız birimden oluşan projemiz, deprem güvenliğini brütalist modern estetikle birleştirmektedir.',
+    description:
+      "Yalvaç Isparta'da yükselen Hacı Salih Apartmanı (Monolitik Konut), üstün yapı standartları ve kaliteli mühendislik prensipleriyle tasarlandı. C30 dayanıklılık sınıfı yüksek mukavemetli hazır beton teknolojisinin kullanıldığı projede, çelik destekli ahşap çatı konstrüksiyonu, modern ortak merkezi uydu altyapısı ve her dairede entegre görüntülü diafon güvenlik sistemleri standart olarak sunulmaktadır. 21 bağımsız birimden oluşan projemiz, deprem güvenliğini brütalist modern estetikle birleştirmektedir.",
     images: [
       '/assets/h_salih_1.png',
       '/assets/h_salih_2.png',
@@ -53,7 +58,7 @@ export const PROJECTS: Project[] = [
       '/assets/h_salih_4.png',
       '/assets/h_salih_5.png',
       '/assets/h_salih_6.png',
-      '/assets/h_salih_7.png'
+      '/assets/h_salih_7.png',
     ],
     floorPlans: [
       {
@@ -73,8 +78,8 @@ export const PROJECTS: Project[] = [
           { name: 'Balkon 2 (Mutfak)', area: '6.47 m²' },
           { name: 'Banyo', area: '6.68 m²' },
           { name: 'Duş (Ebeveyn)', area: '6.68 m²' },
-          { name: 'Lavabo + WC', area: '2.70 m²' }
-        ]
+          { name: 'Lavabo + WC', area: '2.70 m²' },
+        ],
       },
       {
         name: 'Daire: 21',
@@ -95,7 +100,7 @@ export const PROJECTS: Project[] = [
           { name: 'Balkon 2', area: '5.75 m²' },
           { name: 'Banyo', area: '5.75 m²' },
           { name: 'Duş', area: '3.55 m²' },
-          { name: 'Lavabo + WC (LVR-WC)', area: '1.55 m²' }
+          { name: 'Lavabo + WC (LVR-WC)', area: '1.55 m²' },
         ],
         upstairsArea: '92.71 m²',
         upstairsRooms: [
@@ -103,20 +108,22 @@ export const PROJECTS: Project[] = [
           { name: 'Oda', area: '15.75 m²' },
           { name: 'Hol / Koridor', area: '8.32 m²' },
           { name: 'Teras', area: '20.31 m²' },
-          { name: 'Duş', area: '3.33 m²' }
-        ]
-      }
-    ]
+          { name: 'Duş', area: '3.33 m²' },
+        ],
+      },
+    ],
   },
   {
     id: 'proj-02',
     title: 'Celalbey Apartmanı Tadilatı',
     location: 'Muratpaşa, Antalya',
     area: '150 m²',
-    features: 'Akıllı Ev Otomasyonu, Yerden Isıtma Sistemi, Özel Tasarım Ada Tezgah, A\'dan Z\'ye Komple Anahtar Teslim Modernizasyon, Premium Lüks Segment Malzeme & İşçilik',
+    features:
+      "Akıllı Ev Otomasyonu, Yerden Isıtma Sistemi, Özel Tasarım Ada Tezgah, A'dan Z'ye Komple Anahtar Teslim Modernizasyon, Premium Lüks Segment Malzeme & İşçilik",
     category: 'TADİLAT PROJESİ 02',
     imageUrl: '/assets/celalbey-tadilat-1.JPG',
-    description: 'Antalya Muratpaşa\'da yer alan Celalbey Apartmanı dairesinde, mevcut yıpranmış ve eskiyen iç mekân dokusu A\'dan Z\'ye tamamen yenilenerek modern mimari tasarım trendlerine ve lüks segment standartlara uygun olarak baştan inşa edilmiştir. Altyapı, sıhhi tesisat ve elektrik hatlarının modern regülasyonlara göre bütünüyle sıfırlanıp yenilendiği projede; entegre akıllı ev otomasyon sistemi, homojen ısı konforu sunan gelişmiş yerden ısıtma altyapısı ve fonksiyonel estetiği buluşturan özel tasarım geniş ada tezgahlı mutfak konsepti hayata geçirilmiştir. Lüks segment kaliteli malzeme seçimleri ve üstün işçilik standartlarıyla tamamlanan bu anahtar teslim daire tadilatı, modern ve prestijli bir yaşam alanı sunmaktadır.',
+    description:
+      "Antalya Muratpaşa'da yer alan Celalbey Apartmanı dairesinde, mevcut yıpranmış ve eskiyen iç mekân dokusu A'dan Z'ye tamamen yenilenerek modern mimari tasarım trendlerine ve lüks segment standartlara uygun olarak baştan inşa edilmiştir. Altyapı, sıhhi tesisat ve elektrik hatlarının modern regülasyonlara göre bütünüyle sıfırlanıp yenilendiği projede; entegre akıllı ev otomasyon sistemi, homojen ısı konforu sunan gelişmiş yerden ısıtma altyapısı ve fonksiyonel estetiği buluşturan özel tasarım geniş ada tezgahlı mutfak konsepti hayata geçirilmiştir. Lüks segment kaliteli malzeme seçimleri ve üstün işçilik standartlarıyla tamamlanan bu anahtar teslim daire tadilatı, modern ve prestijli bir yaşam alanı sunmaktadır.",
     images: [
       '/assets/celalbey-tadilat-1.JPG',
       '/assets/celalbey-tadilat-2.JPG',
@@ -134,8 +141,8 @@ export const PROJECTS: Project[] = [
       '/assets/celalbey-tadilat-14.JPG',
       '/assets/celalbey-tadilat-15.JPG',
       '/assets/celalbey-tadilat-16.JPG',
-      '/assets/celalbey-tadilat-17.JPG'
-    ]
+      '/assets/celalbey-tadilat-17.JPG',
+    ],
   },
   {
     id: 'proj-03',
@@ -145,33 +152,37 @@ export const PROJECTS: Project[] = [
     features: 'Asmolen Döşeme Sistemi, Kapalı Garaj, Bahçe Kullanımı, Kat Karşılığı Yapı Taahhüdü',
     category: 'TAAHHÜT PROJESİ 03',
     imageUrl: '/assets/moda-kizilca-1.JPG',
-    description: 'Isparta Yalvaç’ta hayata geçirilen Moda Kızılca projesi, kat karşılığı sözleşmesi doğrultusunda inşa edilmiş modern ve kapsamlı bir konut taahhüt projesidir. Toplam 770 m² proje alanına sahip olan yapı, yapısal dayanıklılığı ve üstün akustik-termal konforu garanti eden modern asmolen döşeme sistemiyle tasarlanmıştır. Sakinlerine her mevsim kullanım kolaylığı sağlayan kapalı garaj alanı ve geniş bahçe/yeşil alan entegrasyonu sunan projede, tüm mühendislik ve uygulama aşamaları kurumsal kalite standartlarımıza bağlı kalınarak tamamlanmıştır.',
+    description:
+      'Isparta Yalvaç’ta hayata geçirilen Moda Kızılca projesi, kat karşılığı sözleşmesi doğrultusunda inşa edilmiş modern ve kapsamlı bir konut taahhüt projesidir. Toplam 770 m² proje alanına sahip olan yapı, yapısal dayanıklılığı ve üstün akustik-termal konforu garanti eden modern asmolen döşeme sistemiyle tasarlanmıştır. Sakinlerine her mevsim kullanım kolaylığı sağlayan kapalı garaj alanı ve geniş bahçe/yeşil alan entegrasyonu sunan projede, tüm mühendislik ve uygulama aşamaları kurumsal kalite standartlarımıza bağlı kalınarak tamamlanmıştır.',
     images: [
       '/assets/moda-kizilca-1.JPG',
       '/assets/moda-kizilca-2.JPG',
       '/assets/moda-kizilca-3.JPG',
-      '/assets/moda-kizilca-4.JPG'
-    ]
-  }
+      '/assets/moda-kizilca-4.JPG',
+    ],
+  },
 ];
 
 export const PROCESS_STEPS: ProcessStep[] = [
   {
     id: 1,
     title: 'Planlama',
-    description: 'Mimari vizyonun temellerinin atıldığı ilk aşama. Kavramsal tasarımdan detaylı mühendislik çizimlerine kadar her unsur, çevresel etki ve sürdürülebilirlik ilkeleri gözetilerek titizlikle kurgulanır.',
-    items: ['Konsept Tasarım', 'Fizibilite', 'Bütçelendirme']
+    description:
+      'Mimari vizyonun temellerinin atıldığı ilk aşama. Kavramsal tasarımdan detaylı mühendislik çizimlerine kadar her unsur, çevresel etki ve sürdürülebilirlik ilkeleri gözetilerek titizlikle kurgulanır.',
+    items: ['Konsept Tasarım', 'Fizibilite', 'Bütçelendirme'],
   },
   {
     id: 2,
     title: 'Uygulama',
-    description: 'Çizgilerin gerçeğe dönüştüğü an. Alanında uzman ekiplerimiz, seçkin malzemeler ve ileri yapım teknikleri kullanarak projeyi hayata geçirir. Sahadaki her hareket, milimetrik bir hassasiyetle yönetilir.',
-    items: ['Temel Atma', 'Kaba İnşaat', 'İnce İşçilik']
+    description:
+      'Çizgilerin gerçeğe dönüştüğü an. Alanında uzman ekiplerimiz, seçkin malzemeler ve ileri yapım teknikleri kullanarak projeyi hayata geçirir. Sahadaki her hareket, milimetrik bir hassasiyetle yönetilir.',
+    items: ['Temel Atma', 'Kaba İnşaat', 'İnce İşçilik'],
   },
   {
     id: 3,
     title: 'Kalite Kontrol',
-    description: 'Teslimat öncesi son ve en kritik dokunuş. Yapının her detayı, uluslararası standartlar ve kendi katı kriterlerimiz doğrultusunda denetlenir. Kusursuzluk onaylanmadan süreç tamamlanmaz.',
-    items: ['Performans Testleri', 'Son Muayene', 'Anahtar Teslim']
-  }
+    description:
+      'Teslimat öncesi son ve en kritik dokunuş. Yapının her detayı, uluslararası standartlar ve kendi katı kriterlerimiz doğrultusunda denetlenir. Kusursuzluk onaylanmadan süreç tamamlanmaz.',
+    items: ['Performans Testleri', 'Son Muayene', 'Anahtar Teslim'],
+  },
 ];

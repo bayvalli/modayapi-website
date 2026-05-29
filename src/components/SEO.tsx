@@ -16,8 +16,9 @@ const SEO: React.FC<SEOProps> = ({
   ogType = 'website',
   ogImage,
 }) => {
-  const defaultTitle = "Moda Yapı - Sarsılmaz Temeller";
-  const defaultDescription = "Mühendisliğin estetikle buluştuğu MAY MODA YAPI projeleri. Depreme dayanıklı, modern tasarımlar ve kaliteli yaşam alanları inşa ediyoruz.";
+  const defaultTitle = 'Moda Yapı - Sarsılmaz Temeller';
+  const defaultDescription =
+    'Mühendisliğin estetikle buluştuğu MAY MODA YAPI projeleri. Depreme dayanıklı, modern tasarımlar ve kaliteli yaşam alanları inşa ediyoruz.';
 
   const finalTitle = title ? `${title} | Moda Yapı` : defaultTitle;
   const finalDescription = description || defaultDescription;

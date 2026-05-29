@@ -41,7 +41,8 @@ Uygulama modüler ve sürdürülebilir bir mimaride tasarlanmıştır:
 
 ## 📧 Form Gönderim Altyapısı
 
-İletişim sayfasındaki form alanı ile "Teklif Talep" sayfasındaki form, sunucu veya veritabanı kurulumuna ihtiyaç duymadan **FormSubmit** API'si aracılığıyla doğrudan **info@modayapi.com** adresine güvenli bir şekilde iletilir. 
+İletişim sayfasındaki form alanı ile "Teklif Talep" sayfasındaki form, sunucu veya veritabanı kurulumuna ihtiyaç duymadan **FormSubmit** API'si aracılığıyla doğrudan **info@modayapi.com** adresine güvenli bir şekilde iletilir.
+
 - Form gönderimi esnasında dinamik yükleme durumları (`isSubmitting`) yönetilir.
 - Olası ağ hatalarında kullanıcıya açıklayıcı hata mesajları sunulur.
 - Başarılı gönderimlerde rastgele üretilen ve takip kolaylığı sağlayan bilet numaraları (`MSG-XXXXX` ve `TLP-XXXX`) oluşturulur.
@@ -62,7 +63,7 @@ Hacı Salih Apartmanı projesi için yüksek çözünürlüklü gerçek çekimle
    - `h_salih_6.jpg` (Alternatif Lobi Görseli)
    - `h_salih_7.jpg` (Modern Mutfak İçi)
 
-*Sistem, `constants.ts` dosyasında yapılandırılan yerel yollardan (`/assets/h_salih_x.jpg`) bu görselleri otomatik olarak eşleştirecektir.*
+_Sistem, `constants.ts` dosyasında yapılandırılan yerel yollardan (`/assets/h_salih_x.jpg`) bu görselleri otomatik olarak eşleştirecektir._
 
 ---
 
@@ -71,9 +72,11 @@ Hacı Salih Apartmanı projesi için yüksek çözünürlüklü gerçek çekimle
 Statik Router yapıları barındıran React SPA uygulamaları Cloudflare Pages gibi statik barındırma platformlarında yayınlandığında alt sayfalara (örn: `/iletisim`, `/teklif`) doğrudan erişimde **404 Not Found** hatası verebilir.
 
 Bunu önlemek için projenin kök dizinine otomatik yönlendirme kurallarını barındıran dosya dahil edilmiştir:
+
 - `/public/_redirects` dosyası içerisinde yer alan `/* /index.html 200` kuralı sayesinde, Cloudflare Pages tüm alt sayfa isteklerini otomatik olarak ana istemciye yönlendirir ve React Router'ın kararlı çalışmasını sağlar.
 
 ### Yayınlama Adımları:
+
 1. Projeyi bir Git deposuna (GitHub, GitLab vb.) yükleyin.
 2. Cloudflare Pages paneline gidin ve **"Direct Upload"** veya **"Connect to Git"** seçeneğini kullanın.
 3. Derleme ayarlarını aşağıdaki şekilde yapılandırın:
@@ -87,22 +90,26 @@ Bunu önlemek için projenin kök dizinine otomatik yönlendirme kurallarını b
 ## 🛠️ Yerel Geliştirme (Local Development)
 
 ### Gereksinimler
+
 - Node.js (v18+)
 - npm
 
 ### Adımlar
 
 1. Bağımlılıkları yükleyin:
+
    ```bash
    npm install
    ```
 
 2. Geliştirme sunucusunu (Port 3000) başlatın:
+
    ```bash
    npm run dev
    ```
 
 3. Üretim (Production) derlemesi oluşturun:
+
    ```bash
    npm run build
    ```

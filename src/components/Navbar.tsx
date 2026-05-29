@@ -36,22 +36,25 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      <motion.nav 
+      <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
         className="fixed top-0 left-0 w-full z-50 bg-surface border-b-4 border-primary px-margin py-6"
       >
         <div className="max-w-[1440px] mx-auto flex justify-between items-center">
-          <Link to="/" className="font-serif text-headline-md font-bold text-primary tracking-tighter">
+          <Link
+            to="/"
+            className="font-serif text-headline-md font-bold text-primary tracking-tighter"
+          >
             MODA YAPI
           </Link>
-          
+
           <ul className="hidden md:flex gap-8 items-center font-label-caps uppercase tracking-widest text-secondary">
             {navLinks.map((link) => (
               <li key={link.to}>
-                <Link 
-                  to={link.to} 
+                <Link
+                  to={link.to}
                   className={`hover:text-primary transition-colors py-2 ${isActive(link.to) ? 'text-primary border-b-2 border-primary' : ''}`}
                 >
                   {link.label}
@@ -66,7 +69,7 @@ export const Navbar: React.FC = () => {
                 TEKLİF AL
               </BrutalistButton>
             </Link>
-            <button 
+            <button
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden text-primary p-1 hover:bg-black/5 transition-colors cursor-pointer border-2 border-transparent active:border-primary"
               aria-label="Menüyü Aç"
@@ -90,39 +93,48 @@ export const Navbar: React.FC = () => {
             className="fixed inset-0 z-40 bg-surface pt-28 pb-8 px-6 flex flex-col justify-between border-b-8 border-primary md:hidden overflow-y-auto"
           >
             <div className="flex flex-col gap-6 mt-8">
-              <span className="font-mono text-[10px] text-secondary tracking-widest uppercase">NAVİGASYON SİSTEMİ // MENÜ</span>
+              <span className="font-mono text-[10px] text-secondary tracking-widest uppercase">
+                NAVİGASYON SİSTEMİ // MENÜ
+              </span>
               <ul className="flex flex-col gap-6 font-serif text-3xl uppercase tracking-tight text-primary">
                 {navLinks.map((link, idx) => (
-                  <motion.li 
+                  <motion.li
                     key={link.to}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.05 }}
                   >
-                    <Link 
+                    <Link
                       to={link.to}
                       className={`flex items-center justify-between pb-3 border-b-2 ${
-                        isActive(link.to) 
-                          ? 'border-primary text-primary font-bold' 
+                        isActive(link.to)
+                          ? 'border-primary text-primary font-bold'
                           : 'border-black/5 text-primary/70 hover:text-primary hover:border-black/20'
                       }`}
                     >
                       <span>{link.label}</span>
-                      <ArrowRight size={20} className={isActive(link.to) ? 'opacity-100' : 'opacity-40'} />
+                      <ArrowRight
+                        size={20}
+                        className={isActive(link.to) ? 'opacity-100' : 'opacity-40'}
+                      />
                     </Link>
                   </motion.li>
                 ))}
               </ul>
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.25 }}
               className="flex flex-col gap-4 mt-auto pt-8"
             >
               <Link to="/teklif-al" className="w-full">
-                <BrutalistButton id="mobile-proposal-btn" variant="primary" className="w-full text-center py-4 flex justify-between items-center px-6">
+                <BrutalistButton
+                  id="mobile-proposal-btn"
+                  variant="primary"
+                  className="w-full text-center py-4 flex justify-between items-center px-6"
+                >
                   <span>TEKLİF ALIN</span>
                   <ArrowRight size={20} />
                 </BrutalistButton>
