@@ -3,6 +3,7 @@ import { APIProvider, Map, AdvancedMarker, Pin } from '@vis.gl/react-google-maps
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
+import { validateContactFields } from '../../utils/validation';
 
 const API_KEY = process.env.GOOGLE_MAPS_PLATFORM_KEY || '';
 const hasValidKey = Boolean(API_KEY) && API_KEY !== 'YOUR_API_KEY';
@@ -23,14 +24,28 @@ export const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
-      alert(
-        language === 'tr'
-          ? 'Lütfen Ad Soyad, E-posta ve Telefon alanlarını doldurun.'
-          : 'Please fill in the Full Name, Email, and Phone fields.'
-      );
+
+    // Unified Validation Call
+    const validation = validateContactFields(
+      {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      },
+      language
+    );
+
+    if (!validation.isValid) {
+      alert(validation.error);
       return;
     }
+
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedPhone = formData.phone.trim();
+    const trimmedMessage = formData.message.trim();
+
     setIsSubmitting(true);
     setSubmitError('');
 
@@ -42,12 +57,12 @@ export const Contact: React.FC = () => {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          _subject: `${COMPANY_INFO.shortName} Web İletişim - ${formData.name}`,
-          'Source / Form': `${COMPANY_INFO.shortName} Contact Form`,
-          'Full Name': formData.name,
-          Email: formData.email,
-          Phone: formData.phone,
-          Message: formData.message || 'None.',
+          Ad_Soyad: trimmedName,
+          Eposta: trimmedEmail,
+          Telefon: trimmedPhone,
+          Mesaj: trimmedMessage,
+          _required: 'Ad_Soyad,Eposta,Telefon,Mesaj',
+          _subject: `${COMPANY_INFO.shortName} Web İletişim - ${trimmedName}`,
         }),
       });
 
@@ -325,6 +340,7 @@ export const Contact: React.FC = () => {
                   <textarea
                     className="w-full bg-transparent border-0 border-b-2 border-primary px-0 py-2 text-body-lg text-primary focus:ring-0 focus:border-b-4 focus:border-primary transition-all outline-none resize-none"
                     rows={3}
+                    required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder={t('contact.placeholderMessage')}

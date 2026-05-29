@@ -6,6 +6,7 @@ import { SEO } from '../../components/alternative/SEO';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
 import { COMPANY_INFO } from '../../constants';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { validateContactFields } from '../../utils/validation';
 
 export const Contact: React.FC = () => {
   const { t, language } = useLanguage();
@@ -37,6 +38,28 @@ export const Contact: React.FC = () => {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Unified Validation Call
+    const validation = validateContactFields(
+      {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      },
+      language
+    );
+
+    if (!validation.isValid) {
+      alert(validation.error);
+      return;
+    }
+
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedPhone = formData.phone.trim();
+    const trimmedMessage = formData.message.trim();
+
     setIsSubmitting(true);
     setSubmitSuccess(false);
     setSubmitError(false);
@@ -50,11 +73,12 @@ export const Contact: React.FC = () => {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          Ad_Soyad: formData.name,
-          Eposta: formData.email,
-          Telefon: formData.phone,
-          Mesaj: formData.message,
-          _subject: `${COMPANY_INFO.shortName} Web İletişim - ${formData.name}`,
+          Ad_Soyad: trimmedName,
+          Eposta: trimmedEmail,
+          Telefon: trimmedPhone,
+          Mesaj: trimmedMessage,
+          _required: 'Ad_Soyad,Eposta,Telefon,Mesaj',
+          _subject: `${COMPANY_INFO.shortName} Web İletişim - ${trimmedName}`,
         }),
       });
 

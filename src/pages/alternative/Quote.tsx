@@ -5,6 +5,7 @@ import { SEO } from '../../components/alternative/SEO';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
 import { COMPANY_INFO } from '../../constants';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { validateQuoteFields } from '../../utils/validation';
 
 export const Quote: React.FC = () => {
   const { t, language } = useLanguage();
@@ -38,9 +39,55 @@ export const Quote: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Unified Validation Call
+    const validation = validateQuoteFields(
+      {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        notes: formData.notes,
+      },
+      language
+    );
+
+    if (!validation.isValid) {
+      alert(validation.error);
+      return;
+    }
+
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedPhone = formData.phone.trim();
+    const trimmedNotes = formData.notes.trim();
+
     setIsSubmitting(true);
 
     try {
+      const payload: Record<string, unknown> = {
+        _subject: `${COMPANY_INFO.shortName} Teklif Talebi [${sector.toUpperCase()}] - ${trimmedName}`,
+        'Form Source': `${COMPANY_INFO.shortName} Alternative Quote`,
+        Talep_Turu: sector.toUpperCase(),
+        Ad_Soyad: trimmedName,
+        Sirket_Kurum: formData.company || 'Bireysel',
+        Eposta: trimmedEmail,
+        Telefon: trimmedPhone,
+      };
+
+      if (sector === 'construction') {
+        payload['Yapı_Taahhüt_Modeli'] = formData.constructionType;
+        payload['Proje_Alanı_M2'] = formData.areaSize;
+      } else if (sector === 'materials') {
+        payload['Talep_Edilen_Malzeme_Sınıfı'] = formData.materialRequest;
+      } else if (sector === 'coal') {
+        payload['Kömür_Miktarı'] = formData.coalAmount;
+      } else if (sector === 'software') {
+        payload['Yazılım_Paketi'] = formData.softwarePackage;
+      }
+
+      payload['Ozel_Notlar'] = trimmedNotes;
+      payload['_required'] = 'Ad_Soyad,Eposta,Telefon,Ozel_Notlar';
+
       // Send payload via FormSubmit to {COMPANY_INFO.email}
       const res = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.email}`, {
         method: 'POST',
@@ -48,17 +95,7 @@ export const Quote: React.FC = () => {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({
-          Talep_Turu: sector.toUpperCase(),
-          Ad_Soyad: formData.name,
-          Sirket_Kurum: formData.company || 'Bireysel',
-          Eposta: formData.email,
-          Telefon: formData.phone,
-          Detaylar: {
-            ...formData,
-          },
-          _subject: `${COMPANY_INFO.shortName} Teklif Talebi [${sector.toUpperCase()}] - ${formData.name}`,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
@@ -375,12 +412,13 @@ export const Quote: React.FC = () => {
                         htmlFor="notes"
                         className="font-mono text-xs font-bold text-primary uppercase block mb-2"
                       >
-                        {t('quote.fields.notes')}
+                        {t('quote.fields.notes')} *
                       </label>
                       <textarea
                         id="notes"
                         name="notes"
                         rows={4}
+                        required
                         placeholder={t('quote.fields.notesPlaceholder')}
                         value={formData.notes}
                         onChange={handleChange}

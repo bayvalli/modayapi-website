@@ -5,6 +5,7 @@ import { BrutalistButton } from '../../components/BrutalistButton';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { COMPANY_INFO } from '../../constants';
+import { validateQuoteFields } from '../../utils/validation';
 
 const Quote: React.FC = () => {
   const { theme } = useTheme();
@@ -37,56 +38,59 @@ const Quote: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim()) {
-      alert(
-        language === 'tr'
-          ? 'Lütfen Ad Soyad / Unvan alanını doldurun.'
-          : 'Please fill in the Name / Title field.'
-      );
+
+    // Unified Validation Call
+    const validation = validateQuoteFields(
+      {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        notes: formData.notes,
+      },
+      language
+    );
+
+    if (!validation.isValid) {
+      alert(validation.error);
       return;
     }
-    if (!formData.email.trim()) {
-      alert(
-        language === 'tr' ? 'Lütfen E-posta alanını doldurun.' : 'Please fill in the Email field.'
-      );
-      return;
-    }
-    if (!formData.phone.trim()) {
-      alert(
-        language === 'tr' ? 'Lütfen Telefon alanını doldurun.' : 'Please fill in the Phone field.'
-      );
-      return;
-    }
+
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedPhone = formData.phone.trim();
+    const trimmedNotes = formData.notes.trim();
+
     setIsSubmitting(true);
     setSubmitError('');
 
     try {
       const payload: Record<string, unknown> = {
-        _subject: `${COMPANY_INFO.shortName} Teklif Talebi [${sector.toUpperCase()}] - ${formData.name}`,
+        _subject: `${COMPANY_INFO.shortName} Teklif Talebi [${sector.toUpperCase()}] - ${trimmedName}`,
         'Form Source': `${COMPANY_INFO.shortName} Default Quote`,
-        'Talep Turu': sector.toUpperCase(),
-        'Ad Soyad / Unvan': formData.name,
-        'Sirket / Kurum': formData.company || 'Bireysel',
-        'E-posta': formData.email,
-        Telefon: formData.phone,
+        Talep_Turu: sector.toUpperCase(),
+        Ad_Soyad: trimmedName,
+        Sirket_Kurum: formData.company || 'Bireysel',
+        Eposta: trimmedEmail,
+        Telefon: trimmedPhone,
       };
 
       if (showProjectLocation && formData.location) {
-        payload['Proje Konumu'] = formData.location;
+        payload['Proje_Konumu'] = formData.location;
       }
 
       if (sector === 'construction') {
-        payload['Yapı Taahhüt Modeli'] = formData.constructionType;
-        payload['Proje Alanı (m²)'] = formData.areaSize;
+        payload['Yapı_Taahhüt_Modeli'] = formData.constructionType;
+        payload['Proje_Alanı_M2'] = formData.areaSize;
       } else if (sector === 'materials') {
-        payload['Talep Edilen Malzeme Sınıfı'] = formData.materialRequest;
+        payload['Talep_Edilen_Malzeme_Sınıfı'] = formData.materialRequest;
       } else if (sector === 'coal') {
-        payload['Kömür Miktarı'] = formData.coalAmount;
+        payload['Kömür_Miktarı'] = formData.coalAmount;
       } else if (sector === 'software') {
-        payload['Yazılım Paketi'] = formData.softwarePackage;
+        payload['Yazılım_Paketi'] = formData.softwarePackage;
       }
 
-      payload['Teknik Notlar'] = formData.notes || 'Yok';
+      payload['Ozel_Notlar'] = trimmedNotes;
+      payload['_required'] = 'Ad_Soyad,Eposta,Telefon,Ozel_Notlar';
 
       const response = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.email}`, {
         method: 'POST',
@@ -603,10 +607,11 @@ const Quote: React.FC = () => {
                 {/* Technical Notes / Special requests */}
                 <div className="flex flex-col gap-2 border-b-2 border-primary pb-2 focus-within:border-b-4 duration-300">
                   <label className="font-label-caps text-secondary text-xs uppercase tracking-widest">
-                    {t('quote.fields.notes')}
+                    {t('quote.fields.notes')} *
                   </label>
                   <textarea
                     rows={4}
+                    required
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                     className="bg-transparent border-none p-0 text-body-lg focus:ring-0 placeholder:text-surface-dim resize-none font-sans outline-none"
