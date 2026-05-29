@@ -18,7 +18,7 @@ export const Manifesto: React.FC = () => {
           <span className="font-label-caps text-secondary mb-6 block">
             {language === 'tr' ? 'BİZİM MANİFESTOMUZ' : 'OUR MANIFESTO'}
           </span>
-          <p className="text-headline-lg text-on-surface leading-tight font-sans">
+          <p className="text-headline-md text-on-surface leading-tight font-sans">
             {language === 'tr' ? (
               <>
                 {COMPANY_INFO.shortName}, mühendislik mükemmelliği ve sarsılmaz temeller üzerine

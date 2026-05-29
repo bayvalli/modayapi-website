@@ -90,7 +90,7 @@ const Quote: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={`pt-32 pb-block-gap px-margin ${isModern ? 'bg-gradient-to-b from-surface via-surface-container/10 to-surface' : ''}`}
+      className={`pt-16 pb-block-gap px-margin ${isModern ? 'bg-gradient-to-b from-surface via-surface-container/10 to-surface' : ''}`}
     >
       <div className="max-w-[1440px] mx-auto">
         <header className="mb-block-gap">

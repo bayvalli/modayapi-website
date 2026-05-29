@@ -10,7 +10,7 @@ const Projects: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pt-32"
+      className="pt-16"
     >
       <ProjectsSection />
 

@@ -14,7 +14,7 @@ const Corporate: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={`pt-32 pb-block-gap ${isModern ? 'pt-24' : ''}`}
+      className={`pt-16 pb-block-gap ${isModern ? 'pt-24' : ''}`}
     >
       <CorporateSection />
 

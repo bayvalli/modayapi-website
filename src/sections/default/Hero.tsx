@@ -14,7 +14,7 @@ export const Hero: React.FC = () => {
 
   return (
     <section
-      className={`relative w-full pt-48 pb-block-gap px-margin overflow-hidden ${isModern ? 'bg-surface-container/20' : ''}`}
+      className={`relative w-full pt-16 pb-block-gap px-margin overflow-hidden ${isModern ? 'bg-surface-container/20' : ''}`}
     >
       <div className="max-w-[1440px] mx-auto grid grid-cols-12 gap-gutter relative">
         {/* Massive Text Column */}
@@ -22,7 +22,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: animationDuration, ease: 'easeOut' }}
-          className="col-span-12 md:col-span-9 z-10 pt-12"
+          className="col-span-12 md:col-span-9 z-10 pt-4"
         >
           <h1
             className={`text-headline-xl text-primary mix-blend-multiply leading-[0.9] ${isModern ? 'tracking-tighter' : ''}`}
@@ -52,7 +52,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: isModern ? 0.6 : 1.2, ease: 'easeOut' }}
-          className="col-span-12 md:col-span-8 md:col-start-5 mt-12 md:-mt-48 z-0"
+          className="col-span-16 md:col-span-8 md:col-start-5 mt-12 md:-mt-36 z-0"
         >
           <div
             className={`w-full h-[500px] md:h-[650px] ${borderClass} bg-surface-container relative overflow-hidden group ${shadowClass}`}

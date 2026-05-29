@@ -12,7 +12,7 @@ const Process: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={`pt-32 ${isModern ? 'pt-24' : ''}`}
+      className={`pt-16 ${isModern ? 'pt-24' : ''}`}
     >
       <ProcessSection />
 
