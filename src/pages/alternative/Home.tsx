@@ -115,7 +115,7 @@ export const Home: React.FC = () => {
               <span className="font-mono text-xs tracking-widest text-secondary block mb-4">
                 // {t('hero.manifestoTitle').toUpperCase()}
               </span>
-              <h2 className="font-serif text-[3.5rem] leading-[1] text-primary uppercase font-bold tracking-tight mb-8">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-[3.5rem] leading-[1] text-primary uppercase font-bold tracking-tight mb-8">
                 {language === 'tr' ? 'Mühendislik' : 'Engineering'}
                 <br />
                 {language === 'tr' ? 'Dürüstlüktür.' : 'is Integrity.'}
