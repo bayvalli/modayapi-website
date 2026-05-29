@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { COMPANY_INFO } from '../../constants';
 
 const PrivacyPolicy: React.FC = () => {
   const { theme } = useTheme();
@@ -37,8 +38,8 @@ const PrivacyPolicy: React.FC = () => {
               Genel Bilgilendirme
             </h2>
             <p>
-              May Moda Yapı İnşaat A.Ş. olarak, ziyaretçilerimizin gizliliğine önem veriyoruz. Bu
-              metin, verilerinizin nasıl toplandığını ve korunduğunu açıklamaktadır.
+              {COMPANY_INFO.shortName} İnşaat A.Ş. olarak, ziyaretçilerimizin gizliliğine önem
+              veriyoruz. Bu metin, verilerinizin nasıl toplandığını ve korunduğunu açıklamaktadır.
             </p>
           </section>
 

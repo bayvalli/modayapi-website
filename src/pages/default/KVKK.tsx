@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { COMPANY_INFO } from '../../constants';
 
 const KVKK: React.FC = () => {
   const { theme } = useTheme();
@@ -23,7 +24,7 @@ const KVKK: React.FC = () => {
             Kişisel Verilerin Korunması Kanunu (KVKK)
           </h1>
           <p className={`text-secondary font-sans mt-4 ${isModern ? 'text-sm mt-3' : ''}`}>
-            May Moda Yapı İnşaat A.Ş. Aydınlatma Metni
+            {COMPANY_INFO.shortName} İnşaat A.Ş. Aydınlatma Metni
           </p>
         </header>
 
@@ -37,8 +38,8 @@ const KVKK: React.FC = () => {
               1. Veri Sorumlusu
             </h2>
             <p>
-              6698 sayılı Kişisel Verilerin Korunması Kanunu uyarınca, May Moda Yapı İnşaat Anonim
-              Şirketi olarak kişisel verilerinizi veri sorumlusu sıfatıyla işliyoruz.
+              6698 sayılı Kişisel Verilerin Korunması Kanunu uyarınca, {COMPANY_INFO.legalName}{' '}
+              olarak kişisel verilerinizi veri sorumlusu sıfatıyla işliyoruz.
             </p>
           </section>
 

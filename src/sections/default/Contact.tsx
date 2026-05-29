@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { APIProvider, Map, AdvancedMarker, Pin } from '@vis.gl/react-google-maps';
 import { useTheme } from '../../contexts/ThemeContext';
+import { COMPANY_INFO } from '../../constants';
 
 const API_KEY = process.env.GOOGLE_MAPS_PLATFORM_KEY || '';
 const hasValidKey = Boolean(API_KEY) && API_KEY !== 'YOUR_API_KEY';
@@ -10,7 +11,7 @@ export const Contact: React.FC = () => {
   const isModern = theme === 'alternative';
   const borderClass = isModern ? 'border-4' : 'border-2';
   const borderLgClass = isModern ? 'border-4' : 'border-4';
-  const officeLocation = { lat: 38.294812, lng: 31.178438 };
+  const officeLocation = COMPANY_INFO.gpsCoordinates;
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -28,14 +29,14 @@ export const Contact: React.FC = () => {
     setSubmitError('');
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/info@modayapi.com', {
+      const response = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.email}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          'Katılımcı / Form': 'Moda Yapı İletişim Formu',
+          'Katılımcı / Form': `${COMPANY_INFO.shortName} İletişim Formu`,
           'Ad Soyad': formData.name,
           'E-posta': formData.email,
           Mesaj: formData.message || 'Mesaj belirtilmedi.',
@@ -121,11 +122,11 @@ export const Contact: React.FC = () => {
               Merkez Ofis
             </h3>
             <p className="text-body-lg text-primary font-sans">
-              Leblebiciler Mah. Hastane Cad. No:54
+              {COMPANY_INFO.addressLine1}
               <br />
-              Yalvaç, Isparta
+              {COMPANY_INFO.addressLine2}
               <br />
-              Türkiye, 32400
+              {COMPANY_INFO.country}, {COMPANY_INFO.postalCode}
             </p>
           </div>
 
@@ -134,9 +135,13 @@ export const Contact: React.FC = () => {
               İrtibat
             </h3>
             <p className="text-body-lg text-primary font-sans">
-              +90 532 311 82 10
+              <a href={`tel:${COMPANY_INFO.phoneCall}`} className="hover:underline">
+                {COMPANY_INFO.phone}
+              </a>
               <br />
-              info@modayapi.com
+              <a href={`mailto:${COMPANY_INFO.email}`} className="hover:underline">
+                {COMPANY_INFO.email}
+              </a>
             </p>
           </div>
 
@@ -144,7 +149,7 @@ export const Contact: React.FC = () => {
             <h3 className="font-label-caps text-secondary mb-4 tracking-widest uppercase">Ağlar</h3>
             <div className="flex flex-col gap-2">
               <a
-                href="https://www.instagram.com/modayapias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                href={COMPANY_INFO.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-serif text-headline-md text-primary hover:text-secondary transition-colors underline decoration-2 underline-offset-4 uppercase"
@@ -188,7 +193,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <div className="flex justify-between border-b border-primary/10 pb-2">
                   <span className="text-secondary">ALICI //</span>
-                  <span className="font-bold text-primary">MODA YAPI A.Ş.</span>
+                  <span className="font-bold text-primary">{COMPANY_INFO.shortNameUpper} A.Ş.</span>
                 </div>
                 <div className="flex justify-between border-b border-primary/10 pb-2">
                   <span className="text-secondary">TARIH //</span>

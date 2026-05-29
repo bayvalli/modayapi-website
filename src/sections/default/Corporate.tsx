@@ -1,4 +1,5 @@
 import React from 'react';
+import { COMPANY_INFO } from '../../constants';
 
 export const Corporate: React.FC = () => {
   return (
@@ -28,10 +29,10 @@ export const Corporate: React.FC = () => {
                 Yenilikçi Gelecek.
               </h3>
               <p className="text-body-lg text-on-surface mb-8">
-                Moda Yapı İnşaat, mühendislik köklerinden filizlenerek bugün çok çeşitli sektörlerde
-                faaliyet gösteren köklü bir yapıya dönüşmüştür. Sağlam temeller üzerine inşa
-                ettiğimiz vizyonumuzla, sadece binalar değil, geleceğin yaşam alanlarını ve dijital
-                altyapılarını tasarlıyoruz.
+                {COMPANY_INFO.shortName} İnşaat, mühendislik köklerinden filizlenerek bugün çok
+                çeşitli sektörlerde faaliyet gösteren köklü bir yapıya dönüşmüştür. Sağlam temeller
+                üzerine inşa ettiğimiz vizyonumuzla, sadece binalar değil, geleceğin yaşam
+                alanlarını ve dijital altyapılarını tasarlıyoruz.
               </p>
 
               <div className="space-y-6">
@@ -56,7 +57,8 @@ export const Corporate: React.FC = () => {
                 <div className="border-b-2 border-primary pb-4">
                   <h4 className="text-headline-md leading-none mb-2">2017</h4>
                   <span className="font-label-caps text-secondary text-xs uppercase">
-                    Yeni bir kimlik ile inşaat sektörüne adım atılması ve Moda Yapı'nın kuruluşu
+                    Yeni bir kimlik ile inşaat sektörüne adım atılması ve {COMPANY_INFO.shortName}
+                    'nın kuruluşu
                   </span>
                 </div>
                 <div className="border-b-2 border-primary pb-4">

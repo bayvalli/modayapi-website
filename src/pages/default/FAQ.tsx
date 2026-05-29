@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
+import { COMPANY_INFO } from '../../constants';
 
 const AccordionItem: React.FC<{
   q: string;
@@ -60,7 +61,7 @@ const FAQ: React.FC = () => {
 
   const faqs = [
     {
-      q: 'MAY MODA YAPI PROJELERİNDE HANGİ STANDARTLARI KULLANIYOR?',
+      q: `${COMPANY_INFO.legalNameShortUpper} PROJELERİNDE HANGİ STANDARTLARI KULLANIYOR?`,
       a: 'Tüm projelerimizde Eurocode 8 ve güncel Türkiye Deprem Yönetmeliği standartlarını temel alıyoruz. Yapısal tasarımda C40 ve üzeri beton sınıflarını tercih etmekteyiz.',
     },
     {

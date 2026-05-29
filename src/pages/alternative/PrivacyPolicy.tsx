@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Lock } from 'lucide-react';
 import { SEO } from '../../components/alternative/SEO';
+import { COMPANY_INFO } from '../../constants';
 
 export const PrivacyPolicy: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ export const PrivacyPolicy: React.FC = () => {
     >
       <SEO
         title="Gizlilik Politikası"
-        description="MAY MODA YAPI web ve platform sistemleri genel gizlilik politikası prensipleri."
+        description={`${COMPANY_INFO.legalNameShortUpper} web ve platform sistemleri genel gizlilik politikası prensipleri.`}
       />
 
       <div className="max-w-[1440px] mx-auto px-margin">
@@ -35,9 +36,9 @@ export const PrivacyPolicy: React.FC = () => {
               GİZLİLİK PRENSİPLERİ
             </h2>
             <p>
-              Moda Yapı, kullanıcılarının dijital gizlilik haklarını korumak amacıyla gelişmiş veri
-              şifreleme ve güvenlik mimarilerini uygular. Form alanlarımız ile gönderilen tüm
-              bilgiler HTTPS / TLS şifreli tünellerle ulaştırılır.
+              {COMPANY_INFO.shortName}, kullanıcılarının dijital gizlilik haklarını korumak amacıyla
+              gelişmiş veri şifreleme ve güvenlik mimarilerini uygular. Form alanlarımız ile
+              gönderilen tüm bilgiler HTTPS / TLS şifreli tünellerle ulaştırılır.
             </p>
           </section>
 
@@ -46,9 +47,9 @@ export const PrivacyPolicy: React.FC = () => {
               ÇEREZ SİSTEMLERİ VE LOG KALIPLARI
             </h2>
             <p>
-              Moda Yapı internet portalında ziyaret seyirlerinin gözlemlenmesi ve kullanıcı
-              deneyiminin optimize edilmesinden başka bir amaçla kullanıcı verisi toplanıp sisteme
-              kaydedilmemektedir.
+              {COMPANY_INFO.shortName} internet portalında ziyaret seyirlerinin gözlemlenmesi ve
+              kullanıcı deneyiminin optimize edilmesinden başka bir amaçla kullanıcı verisi toplanıp
+              sisteme kaydedilmemektedir.
             </p>
           </section>
 

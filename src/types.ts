@@ -47,3 +47,23 @@ export interface ProcessStep {
   description: string;
   items: string[];
 }
+
+export interface CompanyInfo {
+  legalName: string;
+  legalNameUpper: string;
+  legalNameShortUpper: string;
+  shortName: string;
+  shortNameUpper: string;
+  phone: string;
+  phoneCall: string;
+  email: string;
+  addressLine1: string;
+  addressLine2: string;
+  addressFull: string;
+  postalCode: string;
+  country: string;
+  workingHours: string;
+  workingDays: string;
+  instagramUrl: string;
+  gpsCoordinates: { lat: number; lng: number };
+}

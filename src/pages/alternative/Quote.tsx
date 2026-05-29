@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, ChevronRight, Hash, ShieldAlert } from 'lucide-react';
 import { SEO } from '../../components/alternative/SEO';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
+import { COMPANY_INFO } from '../../constants';
 
 export const Quote: React.FC = () => {
   const [sector, setSector] = useState<'construction' | 'materials' | 'coal' | 'software'>(
@@ -38,8 +39,8 @@ export const Quote: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Send payload via FormSubmit to info@modayapi.com
-      const res = await fetch('https://formsubmit.co/ajax/info@modayapi.com', {
+      // Send payload via FormSubmit to {COMPANY_INFO.email}
+      const res = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.email}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +55,7 @@ export const Quote: React.FC = () => {
           Detaylar: {
             ...formData,
           },
-          _subject: `Moda Yapı Teklif Talebi [${sector.toUpperCase()}] - ${formData.name}`,
+          _subject: `${COMPANY_INFO.shortName} Teklif Talebi [${sector.toUpperCase()}] - ${formData.name}`,
         }),
       });
 
@@ -394,7 +395,7 @@ export const Quote: React.FC = () => {
                     SİSTEM KEŞFİ YAPILDI
                   </h3>
                   <p className="text-sm font-sans mb-8">
-                    Teklif ve şartname ön-talebiniz info@modayapi.com idaresine başarıyla
+                    Teklif ve şartname ön-talebiniz {COMPANY_INFO.email} idaresine başarıyla
                     iletilmiştir. Yapı mühendislerimiz detayları en kısa sürede analiz ederek size
                     e-posta ve telefon üzerinden bir teklif tablosu gönderecektir.
                   </p>

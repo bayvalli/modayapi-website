@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck } from 'lucide-react';
 import { SEO } from '../../components/alternative/SEO';
+import { COMPANY_INFO } from '../../constants';
 
 export const KVKK: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ export const KVKK: React.FC = () => {
     >
       <SEO
         title="KVKK Aydınlatma Metni"
-        description="6698 sayılı Kişisel Verilerin Korunması Kanunu uyarınca MAY MODA YAPI kişisel veri aydınlatma ve koruma politikası."
+        description={`6698 sayılı Kişisel Verilerin Korunması Kanunu uyarınca ${COMPANY_INFO.legalNameShortUpper} kişisel veri aydınlatma ve koruma politikası.`}
       />
 
       <div className="max-w-[1440px] mx-auto px-margin">
@@ -35,8 +36,9 @@ export const KVKK: React.FC = () => {
               1. VERİ SORUMLUSU
             </h2>
             <p>
-              6698 sayılı Kişisel Verilerin Korunması Kanunu ('KVKK') uyarınca, MAY MODA YAPI
-              LİMİTED ŞİRKETİ olarak kişisel verilerinizi güvenli sınırlarda saklıyoruz.
+              6698 sayılı Kişisel Verilerin Korunması Kanunu ('KVKK') uyarınca,{' '}
+              {COMPANY_INFO.legalNameUpper}
+              olarak kişisel verilerinizi güvenli sınırlarda saklıyoruz.
             </p>
           </section>
 
@@ -63,7 +65,7 @@ export const KVKK: React.FC = () => {
           </section>
 
           <div className="border-t border-dashed border-primary/25 pt-6 font-mono text-[10px] text-primary">
-            SON GÜNCELLEME: 29.05.2026 // HUKUK DEPARTMANI // MODA YAPI
+            SON GÜNCELLEME: 29.05.2026 // HUKUK DEPARTMANI // {COMPANY_INFO.shortNameUpper}
           </div>
         </div>
       </div>

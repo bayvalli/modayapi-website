@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { COMPANY_INFO } from '../../constants';
 
 interface SEOProps {
   title?: string;
@@ -16,11 +17,10 @@ const SEO: React.FC<SEOProps> = ({
   ogType = 'website',
   ogImage,
 }) => {
-  const defaultTitle = 'Moda Yapı - Sarsılmaz Temeller';
-  const defaultDescription =
-    'Mühendisliğin estetikle buluştuğu MAY MODA YAPI projeleri. Depreme dayanıklı, modern tasarımlar ve kaliteli yaşam alanları inşa ediyoruz.';
+  const defaultTitle = `${COMPANY_INFO.shortName} - Sarsılmaz Temeller`;
+  const defaultDescription = `Mühendisliğin estetikle buluştuğu ${COMPANY_INFO.legalNameShortUpper} projeleri. Depreme dayanıklı, modern tasarımlar ve kaliteli yaşam alanları inşa ediyoruz.`;
 
-  const finalTitle = title ? `${title} | Moda Yapı` : defaultTitle;
+  const finalTitle = title ? `${title} | ${COMPANY_INFO.shortName}` : defaultTitle;
   const finalDescription = description || defaultDescription;
 
   // Safe window location retrieval for canonical URLs

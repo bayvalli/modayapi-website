@@ -11,7 +11,7 @@ import {
   ArrowRight,
   ZoomIn,
 } from 'lucide-react';
-import { PROJECTS } from '../../constants';
+import { PROJECTS, COMPANY_INFO } from '../../constants';
 import { Project, FloorPlan, Room } from '../../types';
 import { ZoomLightbox } from '../../components/alternative/ZoomLightbox';
 import { SEO } from '../../components/alternative/SEO';
@@ -63,7 +63,7 @@ const ProjectDetail: React.FC = () => {
         title={project.title}
         description={
           project.description ||
-          `Bu proje MAY MODA YAPI'nın yüksek mühendislik standartları ve yenilikçi tasarım anlayışıyla hayata geçirilmiştir.`
+          `Bu proje ${COMPANY_INFO.legalNameShortUpper}'nın yüksek mühendislik standartları ve yenilikçi tasarım anlayışıyla hayata geçirilmiştir.`
         }
         ogImage={project.imageUrl}
       />
@@ -102,7 +102,7 @@ const ProjectDetail: React.FC = () => {
           <div className="col-span-12 lg:col-span-4 border-l-4 border-primary pl-8 pb-4">
             <p className="text-body-lg text-secondary leading-relaxed">
               {project.description ||
-                "Bu proje MAY MODA YAPI'nın yüksek mühendislik standartları ve yenilikçi tasarım anlayışıyla hayata geçirilmiştir."}
+                `Bu proje ${COMPANY_INFO.legalNameShortUpper}'nın yüksek mühendislik standartları ve yenilikçi tasarım anlayışıyla hayata geçirilmiştir.`}
             </p>
           </div>
         </div>
@@ -1263,7 +1263,7 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                         ALAN ANALİZ TABLOSU // VERIFIED M2
                       </text>
                       <text x="0" y="10">
-                        MAY MODA YAPI AR-GE YAPISAL STATİKLİK
+                        {COMPANY_INFO.legalNameShortUpper} AR-GE YAPISAL STATİKLİK
                       </text>
                     </g>
 
@@ -1396,7 +1396,7 @@ const FloorPlansContainer: React.FC<{ floorPlans: FloorPlan[] }> = ({ floorPlans
                   ALAN ANALİZ TABLOSU // VERIFIED M2
                 </text>
                 <text x="0" y="10">
-                  MAY MODA YAPI AR-GE YAPISAL STATİKLİK
+                  {COMPANY_INFO.legalNameShortUpper} AR-GE YAPISAL STATİKLİK
                 </text>
               </g>
 

@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
 import { BrutalistButton } from '../../components/BrutalistButton';
 import { useTheme } from '../../contexts/ThemeContext';
+import { COMPANY_INFO } from '../../constants';
 
 const Quote: React.FC = () => {
   const { theme } = useTheme();
@@ -30,7 +31,7 @@ const Quote: React.FC = () => {
 
     try {
       const payload: Record<string, string> = {
-        'Katılımcı / Form': 'Moda Yapı Teklif Talep Formu',
+        'Katılımcı / Form': `${COMPANY_INFO.shortName} Teklif Talep Formu`,
         'Ad Soyad / Unvan': formData.name,
         'Hizmet Türü': hizmetTuru,
         'Teknik Notlar / İstekler': formData.notes || 'Belirtilmedi',
@@ -43,7 +44,7 @@ const Quote: React.FC = () => {
         payload['Yapı Alanı (M²)'] = formData.area;
       }
 
-      const response = await fetch('https://formsubmit.co/ajax/info@modayapi.com', {
+      const response = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.email}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -339,11 +340,11 @@ const Quote: React.FC = () => {
                 <div className={`flex gap-4 ${isModern ? 'gap-3' : ''}`}>
                   <MapPin className={`shrink-0 ${isModern ? 'size-5' : 'size-6'}`} size={24} />
                   <p className={`font-sans text-body-md opacity-90 ${isModern ? 'text-sm' : ''}`}>
-                    Leblebiciler Mah. Hastane Cad. No:54
+                    {COMPANY_INFO.addressLine1}
                     <br />
-                    Yalvaç, Isparta
+                    {COMPANY_INFO.addressLine2}
                     <br />
-                    Türkiye, 32400
+                    {COMPANY_INFO.country}, {COMPANY_INFO.postalCode}
                   </p>
                 </div>
 
@@ -359,7 +360,9 @@ const Quote: React.FC = () => {
                       <p
                         className={`font-sans text-body-md opacity-90 ${isModern ? 'text-sm' : ''}`}
                       >
-                        +90 532 311 82 10
+                        <a href={`tel:${COMPANY_INFO.phoneCall}`} className="hover:underline">
+                          {COMPANY_INFO.phone}
+                        </a>
                       </p>
                     </div>
                     <div className={`flex gap-4 ${isModern ? 'gap-3' : ''}`}>
@@ -367,7 +370,9 @@ const Quote: React.FC = () => {
                       <p
                         className={`font-sans text-body-md opacity-90 ${isModern ? 'text-sm' : ''}`}
                       >
-                        info@modayapi.com
+                        <a href={`mailto:${COMPANY_INFO.email}`} className="hover:underline">
+                          {COMPANY_INFO.email}
+                        </a>
                       </p>
                     </div>
                   </div>

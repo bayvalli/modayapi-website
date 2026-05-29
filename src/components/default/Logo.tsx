@@ -1,4 +1,5 @@
 import React from 'react';
+import { COMPANY_INFO } from '../../constants';
 
 interface LogoProps {
   className?: string;
@@ -43,7 +44,7 @@ export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) 
         className="font-serif text-xl sm:text-2xl font-bold tracking-tighter"
         style={{ color: fillColor }}
       >
-        MODA YAPI
+        {COMPANY_INFO.shortNameUpper}
       </span>
     </div>
   );

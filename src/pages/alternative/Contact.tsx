@@ -4,6 +4,7 @@ import { Mail, Phone, MapPin, Send, CheckCircle2, AlertTriangle, ExternalLink } 
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import { SEO } from '../../components/alternative/SEO';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
+import { COMPANY_INFO } from '../../constants';
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ export const Contact: React.FC = () => {
   const [ticketId, setTicketId] = useState('');
 
   // Yalvaç Leblebiciler Coordinates for map
-  const position = { lat: 38.2949, lng: 31.1784 };
+  const position = COMPANY_INFO.gpsCoordinates;
 
   // Dynamic API Key extraction
   const mapsApiKey =
@@ -40,7 +41,7 @@ export const Contact: React.FC = () => {
 
     try {
       // Direct FormSubmit integration for secure client-side delivery without backends
-      const response = await fetch('https://formsubmit.co/ajax/info@modayapi.com', {
+      const response = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.email}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +52,7 @@ export const Contact: React.FC = () => {
           Eposta: formData.email,
           Telefon: formData.phone,
           Mesaj: formData.message,
-          _subject: `Moda Yapı Web İletişim - ${formData.name}`,
+          _subject: `${COMPANY_INFO.shortName} Web İletişim - ${formData.name}`,
         }),
       });
 
@@ -81,7 +82,7 @@ export const Contact: React.FC = () => {
     >
       <SEO
         title="Bize Ulaşın - Yalvaç İrtibat Ofisimiz"
-        description="MAY MODA YAPI Yalvaç Genel Ofisimiz ile irtibata geçin. Adres, telefon numaraları, e-posta adresleri ve canlı harita konumu."
+        description={`${COMPANY_INFO.legalNameShortUpper} Yalvaç Genel Ofisimiz ile irtibata geçin. Adres, telefon numaraları, e-posta adresleri ve canlı harita konumu.`}
       />
 
       <div className="max-w-[1440px] mx-auto px-margin">
@@ -194,7 +195,7 @@ export const Contact: React.FC = () => {
                       <div className="border-4 border-red-600 bg-red-50 text-red-900 p-4 font-mono text-xs flex gap-3 items-center">
                         <AlertTriangle size={18} className="text-red-700" />
                         <span>
-                          Bağlantı hatası: Mesaj iletilemedi, lütfen info@modayapi.com adresini
+                          Bağlantı hatası: Mesaj iletilemedi, lütfen {COMPANY_INFO.email} adresini
                           deneyin.
                         </span>
                       </div>
@@ -225,8 +226,8 @@ export const Contact: React.FC = () => {
                       İLETİNİZ ALINDI!
                     </h3>
                     <p className="text-sm font-sans mb-6">
-                      Mesajınız doğrudan info@modayapi.com ekibimize başarıyla ulaştırılmıştır. Kısa
-                      süre içinde dönüş sağlanacaktır.
+                      Mesajınız doğrudan {COMPANY_INFO.email} ekibimize başarıyla ulaştırılmıştır.
+                      Kısa süre içinde dönüş sağlanacaktır.
                     </p>
 
                     <div className="border-t border-dashed border-green-200 pt-6 mt-6 max-w-sm mx-auto font-mono text-xs">
@@ -266,9 +267,9 @@ export const Contact: React.FC = () => {
                       Adres Bilgisi
                     </h4>
                     <p className="text-sm leading-relaxed">
-                      Leblebiciler Mah. Hastane Cad. No: 54
+                      {COMPANY_INFO.addressLine1}
                       <br />
-                      Yalvaç / Isparta
+                      {COMPANY_INFO.addressLine2}
                     </p>
                   </div>
                 </div>
@@ -282,8 +283,8 @@ export const Contact: React.FC = () => {
                       Telefon Numarası
                     </h4>
                     <p className="text-sm leading-relaxed">
-                      <a href="tel:+905323118210" className="hover:underline">
-                        +90 532 311 82 10
+                      <a href={`tel:${COMPANY_INFO.phoneCall}`} className="hover:underline">
+                        {COMPANY_INFO.phone}
                       </a>
                     </p>
                   </div>
@@ -298,8 +299,8 @@ export const Contact: React.FC = () => {
                       E-Posta Kanalları
                     </h4>
                     <p className="text-sm leading-relaxed">
-                      <a href="mailto:info@modayapi.com" className="hover:underline">
-                        info@modayapi.com
+                      <a href={`mailto:${COMPANY_INFO.email}`} className="hover:underline">
+                        {COMPANY_INFO.email}
                       </a>
                     </p>
                   </div>
@@ -312,8 +313,8 @@ export const Contact: React.FC = () => {
                 ÇALIŞMA SAATLERİ
               </span>
               <div className="flex justify-between font-mono text-xs opacity-75">
-                <span>PAZARTESİ - CUMARTESİ:</span>
-                <span>08:30 - 18:30</span>
+                <span>{COMPANY_INFO.workingDays.toUpperCase()}:</span>
+                <span>{COMPANY_INFO.workingHours}</span>
               </div>
             </div>
           </div>

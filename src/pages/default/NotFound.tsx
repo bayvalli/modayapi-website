@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { COMPANY_INFO } from '../../constants';
 
 const NotFound: React.FC = () => {
   const { theme } = useTheme();
@@ -56,7 +57,7 @@ const NotFound: React.FC = () => {
           <p
             className={`font-mono text-[10px] text-secondary/30 uppercase tracking-[0.2em] ${isModern ? 'text-[8px] tracking-[0.15em]' : ''}`}
           >
-            MAY MODA YAPI / STRUCTURAL INTEGRITY VERIFIED
+            {COMPANY_INFO.legalNameShortUpper} / STRUCTURAL INTEGRITY VERIFIED
           </p>
         </div>
       </div>

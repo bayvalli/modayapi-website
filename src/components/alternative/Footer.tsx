@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Palette } from 'lucide-react';
 import { Logo } from './Logo';
 import { useTheme } from '../../contexts/ThemeContext';
+import { COMPANY_INFO } from '../../constants';
 
 export const Footer: React.FC = () => {
   const currentYear = 2026;
@@ -38,7 +39,7 @@ export const Footer: React.FC = () => {
             </p>
           </div>
           <div className="font-mono text-xs opacity-40">
-            © {currentYear} MODA YAPI // SİSTEM AKTİF
+            © {currentYear} {COMPANY_INFO.shortNameUpper} // SİSTEM AKTİF
           </div>
         </div>
 
@@ -66,22 +67,22 @@ export const Footer: React.FC = () => {
             </span>
             <div className="space-y-4 text-sm opacity-80 font-mono">
               <a
-                href="tel:+905323118210"
+                href={`tel:${COMPANY_INFO.phoneCall}`}
                 className="flex items-center gap-3 hover:text-white transition-colors"
               >
                 <Phone size={14} />
-                +90 532 311 82 10
+                {COMPANY_INFO.phone}
               </a>
               <a
-                href="mailto:info@modayapi.com"
+                href={`mailto:${COMPANY_INFO.email}`}
                 className="flex items-center gap-3 hover:text-white transition-colors"
               >
                 <Mail size={14} />
-                info@modayapi.com
+                {COMPANY_INFO.email}
               </a>
               <div className="flex items-start gap-3">
                 <MapPin size={14} className="mt-1 flex-shrink-0" />
-                <span>Leblebiciler Mah. Hastane Cad. No:54 Yalvaç / Isparta</span>
+                <span>{COMPANY_INFO.addressFull}</span>
               </div>
             </div>
           </div>

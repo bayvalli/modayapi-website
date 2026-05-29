@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Shield, Hammer, Cpu, ChevronRight } from 'lucide-react';
 import { SEO } from '../../components/alternative/SEO';
+import { COMPANY_INFO } from '../../constants';
 
 export const Corporate: React.FC = () => {
   return (
@@ -20,7 +21,7 @@ export const Corporate: React.FC = () => {
         {/* Title */}
         <div className="border-b-4 border-primary pb-8 mb-16">
           <span className="font-mono text-xs tracking-[0.2em] text-secondary uppercase block mb-3">
-            // MAY MODA YAPI LTD. ŞTİ.
+            // {COMPANY_INFO.legalNameUpper}
           </span>
           <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary leading-none">
             KURUMSAL PORTAL

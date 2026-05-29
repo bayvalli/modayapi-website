@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowRight, Flame, Shield, Terminal, HardHat, Layers, Award } from 'lucide-react';
-import { PROJECTS, SERVICES } from '../../constants';
+import { PROJECTS, SERVICES, COMPANY_INFO } from '../../constants';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
 import { SEO } from '../../components/alternative/SEO';
 
@@ -33,7 +33,7 @@ export const Home: React.FC = () => {
     >
       <SEO
         title="Güvene Atılan Sarsılmaz Temeller"
-        description="Mühendisliğin estetikle buluştuğu MAY MODA YAPI projeleri. Depreme dayanıklı, C30 beton standartlarında modern ve minimalist yarınlar inşa ediyoruz."
+        description={`Mühendisliğin estetikle buluştuğu ${COMPANY_INFO.legalNameShortUpper} projeleri. Depreme dayanıklı, C30 beton standartlarında modern ve minimalist yarınlar inşa ediyoruz.`}
       />
 
       {/* Hero Section */}
@@ -47,7 +47,7 @@ export const Home: React.FC = () => {
               transition={{ duration: 0.7 }}
             >
               <span className="font-mono text-xs md:text-sm tracking-[0.25em] text-secondary uppercase mb-6 block">
-                MODA YAPI // GÜVEN VE İHTİŞAM BİR ARADA
+                {COMPANY_INFO.shortNameUpper} // GÜVEN VE İHTİŞAM BİR ARADA
               </span>
               <h1 className="text-[11vw] lg:text-[7.5rem] font-bold text-primary leading-[0.85] uppercase tracking-tighter mb-8 font-sans">
                 SARSILMAZ
@@ -78,7 +78,7 @@ export const Home: React.FC = () => {
             >
               <img
                 src="/assets/h_salih_1.png"
-                alt="Moda Yapı Monolithic Structure"
+                alt={`${COMPANY_INFO.shortName} Monolithic Structure`}
                 className="w-full h-full object-cover contrast-115 grayscale hover:grayscale-0 transition-all duration-700"
                 onError={(e) => {
                   // Fallback if image doesn't exist
@@ -109,9 +109,9 @@ export const Home: React.FC = () => {
 
             <div className="col-span-12 lg:col-span-7 space-y-6">
               <p className="text-xl text-primary leading-relaxed font-sans">
-                Moda Yapı olarak her beton dökümünde, her demir bağında ve her mimari kararda
-                yalnızca bina değil; güven ve gelecek dokuyoruz. Estetik çizgilerimizin arkasında,
-                en zorlu zeminlerde dahi sarsılmaz kalacak matematik yatıyor.
+                {COMPANY_INFO.shortName} olarak her beton dökümünde, her demir bağında ve her mimari
+                kararda yalnızca bina değil; güven ve gelecek dokuyoruz. Estetik çizgilerimizin
+                arkasında, en zorlu zeminlerde dahi sarsılmaz kalacak matematik yatıyor.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                 <div className="flex items-start gap-4">

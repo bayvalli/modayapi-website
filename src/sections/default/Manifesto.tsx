@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { COMPANY_INFO } from '../../constants';
 
 export const Manifesto: React.FC = () => {
   return (
@@ -14,9 +15,10 @@ export const Manifesto: React.FC = () => {
         >
           <span className="font-label-caps text-secondary mb-6 block">BİZİM MANİFESTOMUZ</span>
           <p className="text-headline-lg text-on-surface leading-tight">
-            Moda Yapı, mühendislik mükemmelliği ve sarsılmaz temeller üzerine inşa eder. Gelecek
-            nesillere aktarılacak kalıcı yapılar oluşturmak için yapısal bütünlüğe, güvenliğe ve
-            dayanıklılığa odaklanıyoruz. Her projemiz, sağlamlığın ve güvenin birer simgesidir.
+            {COMPANY_INFO.shortName}, mühendislik mükemmelliği ve sarsılmaz temeller üzerine inşa
+            eder. Gelecek nesillere aktarılacak kalıcı yapılar oluşturmak için yapısal bütünlüğe,
+            güvenliğe ve dayanıklılığa odaklanıyoruz. Her projemiz, sağlamlığın ve güvenin birer
+            simgesidir.
           </p>
         </motion.div>
       </div>

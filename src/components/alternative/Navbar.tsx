@@ -4,6 +4,7 @@ import { Menu, X, ArrowRight } from 'lucide-react';
 import { BrutalistButton } from './BrutalistButton';
 import { Logo } from './Logo';
 import { motion, AnimatePresence } from 'motion/react';
+import { COMPANY_INFO } from '../../constants';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -138,7 +139,7 @@ export const Navbar: React.FC = () => {
                 </BrutalistButton>
               </Link>
               <div className="text-center font-mono text-[9px] text-secondary/50 uppercase tracking-widest pt-4 border-t border-black/5">
-                © 2026 MODA YAPI // TÜM HAKLARI SAKLIDIR
+                © 2026 {COMPANY_INFO.shortNameUpper} // TÜM HAKLARI SAKLIDIR
               </div>
             </motion.div>
           </motion.div>

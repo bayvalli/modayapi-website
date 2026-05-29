@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Settings } from 'lucide-react';
 import { SEO } from '../../components/alternative/SEO';
+import { COMPANY_INFO } from '../../constants';
 
 export const CookiePreferences: React.FC = () => {
   return (
@@ -35,10 +36,10 @@ export const CookiePreferences: React.FC = () => {
               MİNİMAL ÇEREZ SEÇENEKLERİ
             </h2>
             <p>
-              Moda Yapı portalını ziyaret ettiğinizde yasal mevzuat sınırlarında teknik çerezler
-              kullanılmaktadır. Üçüncü taraf reklam ağları veya davranış takip pikselleri sitemizde
-              aktif değildir. Sadece sayfa hızı ve temel stabilite optimizasyon çerezleri
-              barındırılır.
+              {COMPANY_INFO.shortName} portalını ziyaret ettiğinizde yasal mevzuat sınırlarında
+              teknik çerezler kullanılmaktadır. Üçüncü taraf reklam ağları veya davranış takip
+              pikselleri sitemizde aktif değildir. Sadece sayfa hızı ve temel stabilite optimizasyon
+              çerezleri barındırılır.
             </p>
           </section>
 
@@ -54,7 +55,7 @@ export const CookiePreferences: React.FC = () => {
           </section>
 
           <div className="border-t border-dashed border-primary/25 pt-6 font-mono text-[10px] text-primary">
-            SİSTEM GÜVENLİ // MAY MODA YAPI
+            SİSTEM GÜVENLİ // {COMPANY_INFO.legalNameShortUpper}
           </div>
         </div>
       </div>

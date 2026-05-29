@@ -1,4 +1,4 @@
-import { Service, Project, ProcessStep } from './types';
+import { Service, Project, ProcessStep, CompanyInfo } from './types';
 
 export const SERVICES: Service[] = [
   {
@@ -186,3 +186,24 @@ export const PROCESS_STEPS: ProcessStep[] = [
     items: ['Performans Testleri', 'Son Muayene', 'Anahtar Teslim'],
   },
 ];
+
+export const COMPANY_INFO: CompanyInfo = {
+  legalName: '2017 May Moda Yapı İnşaat Anonim Şirketi',
+  legalNameUpper: 'MAY MODA YAPI İNŞAAT ANONİM ŞİRKETİ',
+  legalNameShortUpper: 'MAY MODA YAPI',
+  shortName: 'Moda Yapı',
+  shortNameUpper: 'MODA YAPI',
+  phone: '+90 532 311 82 10',
+  phoneCall: '+905323118210',
+  email: 'info@modayapi.com',
+  addressLine1: 'Leblebiciler Mah. Hastane Cad. No:54',
+  addressLine2: 'Yalvaç, Isparta',
+  addressFull: 'Leblebiciler Mah. Hastane Cad. No:54 Yalvaç / Isparta',
+  postalCode: '32400',
+  country: 'Türkiye',
+  workingHours: '08:30 - 18:30',
+  workingDays: 'Pazartesi - Cumartesi',
+  instagramUrl:
+    'https://www.instagram.com/modayapias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+  gpsCoordinates: { lat: 38.294812, lng: 31.178438 },
+};

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { MapPin, ArrowRight, Grid, List } from 'lucide-react';
-import { PROJECTS } from '../../constants';
+import { PROJECTS, COMPANY_INFO } from '../../constants';
 import { BrutalistButton } from '../../components/alternative/BrutalistButton';
 import { SEO } from '../../components/alternative/SEO';
 
@@ -24,7 +24,7 @@ export const Projects: React.FC = () => {
     >
       <SEO
         title="Mimari ve Mühendislik Projelerimiz"
-        description="MAY MODA YAPI tarafından titizlikle inşa edilen konut projeleri, daire tadilatları ve kat karşılığı yapı taahhütleri."
+        description={`${COMPANY_INFO.legalNameShortUpper} tarafından titizlikle inşa edilen konut projeleri, daire tadilatları ve kat karşılığı yapı taahhütleri.`}
       />
 
       <div className="max-w-[1440px] mx-auto px-margin">

@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Clock, CheckSquare, Hammer, ShieldAlert, Award } from 'lucide-react';
 import { PROCESS_STEPS } from '../../constants';
 import { SEO } from '../../components/alternative/SEO';
+import { COMPANY_INFO } from '../../constants';
 
 export const Process: React.FC = () => {
   const getStepIcon = (id: number) => {
@@ -106,7 +107,7 @@ export const Process: React.FC = () => {
                 adıma geçiş izni verilmez.
               </p>
               <span className="font-mono text-[9px] opacity-40">
-                MÜHENDİSLİK KURULU // MAY MODA YAPI
+                MÜHENDİSLİK KURULU // {COMPANY_INFO.legalNameShortUpper}
               </span>
             </div>
           </div>

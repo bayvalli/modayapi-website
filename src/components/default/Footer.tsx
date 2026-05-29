@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Palette } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { COMPANY_INFO } from '../../constants';
 
 export const Footer: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -20,7 +21,7 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-6 space-y-12">
             <div>
               <h2 className="font-serif text-headline-lg text-surface-bright mb-6 uppercase tracking-tighter">
-                MODA YAPI
+                {COMPANY_INFO.shortNameUpper}
               </h2>
               <div className="h-2 w-32 bg-surface-bright mb-8"></div>
               <p className="text-surface-variant opacity-80 max-w-sm font-sans text-body-md leading-relaxed">
@@ -34,7 +35,7 @@ export const Footer: React.FC = () => {
                 KAYITLI TİCARİ UNVAN:
               </p>
               <p className="text-surface-variant font-sans text-body-sm uppercase">
-                2017 May Moda Yapı İnşaat Anonim Şirketi
+                {COMPANY_INFO.legalName}
               </p>
             </div>
 
